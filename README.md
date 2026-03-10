@@ -1,2 +1,4 @@
-# MicrocontrollerLab
+# Laboruebungen mit Susi
+# Microcontroller
+# Datenbanksysteme
 
