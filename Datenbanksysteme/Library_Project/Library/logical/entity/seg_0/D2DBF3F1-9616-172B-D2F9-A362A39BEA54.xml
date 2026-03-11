@@ -1,7 +1,7 @@
 <?xml version = '1.0' encoding = 'UTF-8'?>
-<Entity class="oracle.dbtools.crest.model.design.logical.Entity" directorySegmentName="seg_0" id="A5D0453E-C346-346B-9A41-6A1C62AE793E" name="AUDIO">
-<createdBy>User</createdBy>
-<createdTime>2026-03-10 14:38:53 UTC</createdTime>
+<Entity class="oracle.dbtools.crest.model.design.logical.Entity" directorySegmentName="seg_0" id="D2DBF3F1-9616-172B-D2F9-A362A39BEA54" name="COPIES">
+<createdBy>susan</createdBy>
+<createdTime>2026-03-11 14:40:08 UTC</createdTime>
 <ownerDesignName>Library</ownerDesignName>
 <engineerTo>
 <item key="E47EBF60-E032-408D-574B-6D7273F66E66" value="true"/>
@@ -11,14 +11,13 @@
 <fwdEngineeringStrategyName>Single Table</fwdEngineeringStrategyName>
 <growthPercent>0</growthPercent>
 <growthType>Year</growthType>
-<hierarchicalParent>9ECC3BC1-5152-9E44-28AD-262CD652FFF9</hierarchicalParent>
 <maxVolumes>9999999</maxVolumes>
 <minVolumes>0</minVolumes>
 <normalForm>Third</normalForm>
 <attributes itemClass="oracle.dbtools.crest.model.design.logical.Attribute">
-<Attribute name="codec" id="996C0799-942F-E4EF-6A80-00F15E4A2622">
+<Attribute name="barcode_id" id="AD1D1AA4-A69B-84F8-3FCE-BCBE4832C615">
 <createdBy>susan</createdBy>
-<createdTime>2026-03-11 14:23:59 UTC</createdTime>
+<createdTime>2026-03-11 14:40:30 UTC</createdTime>
 <ownerDesignName>Library</ownerDesignName>
 <engineerTo>
 <item key="E47EBF60-E032-408D-574B-6D7273F66E66" value="true"/>
@@ -26,20 +25,22 @@
 <useDomainConstraints>false</useDomainConstraints>
 <use>1</use>
 <logicalDatatype>LOGDT024</logicalDatatype>
-<dataTypeSize>20</dataTypeSize>
-<ownDataTypeParameters>20,,</ownDataTypeParameters>
+<dataTypeSize>15</dataTypeSize>
+<ownDataTypeParameters>15,,</ownDataTypeParameters>
 </Attribute>
-<Attribute name="duration" id="E567E1AE-4995-3947-6065-C9694F2E311B">
+</attributes>
+<identifiers itemClass="oracle.dbtools.crest.model.design.logical.CandidateKey">
+<identifier id="A99DDEB3-044D-F077-F2F1-80C8EC5455E0" name="COPIES PK">
 <createdBy>susan</createdBy>
-<createdTime>2026-03-11 14:24:26 UTC</createdTime>
+<createdTime>2026-03-11 14:40:54 UTC</createdTime>
 <ownerDesignName>Library</ownerDesignName>
 <engineerTo>
 <item key="E47EBF60-E032-408D-574B-6D7273F66E66" value="true"/>
 </engineerTo>
-<useDomainConstraints>false</useDomainConstraints>
-<use>1</use>
-<logicalDatatype>LOGDT014</logicalDatatype>
-<ownDataTypeParameters>,,</ownDataTypeParameters>
-</Attribute>
-</attributes>
+<pk>true</pk>
+<usedAttributes>
+<attributeRef>AD1D1AA4-A69B-84F8-3FCE-BCBE4832C615</attributeRef>
+</usedAttributes>
+</identifier>
+</identifiers>
 </Entity>

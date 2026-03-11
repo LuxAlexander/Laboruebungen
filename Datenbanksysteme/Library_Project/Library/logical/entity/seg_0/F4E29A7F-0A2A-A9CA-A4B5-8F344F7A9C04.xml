@@ -1,7 +1,7 @@
 <?xml version = '1.0' encoding = 'UTF-8'?>
-<Entity class="oracle.dbtools.crest.model.design.logical.Entity" directorySegmentName="seg_0" id="A5D0453E-C346-346B-9A41-6A1C62AE793E" name="AUDIO">
-<createdBy>User</createdBy>
-<createdTime>2026-03-10 14:38:53 UTC</createdTime>
+<Entity class="oracle.dbtools.crest.model.design.logical.Entity" directorySegmentName="seg_0" id="F4E29A7F-0A2A-A9CA-A4B5-8F344F7A9C04" name="LOCATION">
+<createdBy>susan</createdBy>
+<createdTime>2026-03-11 14:31:36 UTC</createdTime>
 <ownerDesignName>Library</ownerDesignName>
 <engineerTo>
 <item key="E47EBF60-E032-408D-574B-6D7273F66E66" value="true"/>
@@ -11,35 +11,35 @@
 <fwdEngineeringStrategyName>Single Table</fwdEngineeringStrategyName>
 <growthPercent>0</growthPercent>
 <growthType>Year</growthType>
-<hierarchicalParent>9ECC3BC1-5152-9E44-28AD-262CD652FFF9</hierarchicalParent>
 <maxVolumes>9999999</maxVolumes>
 <minVolumes>0</minVolumes>
 <normalForm>Third</normalForm>
 <attributes itemClass="oracle.dbtools.crest.model.design.logical.Attribute">
-<Attribute name="codec" id="996C0799-942F-E4EF-6A80-00F15E4A2622">
+<Attribute name="loc_id" id="B03C0AEC-04B9-CCD1-4C72-2520A84B96B5">
 <createdBy>susan</createdBy>
-<createdTime>2026-03-11 14:23:59 UTC</createdTime>
+<createdTime>2026-03-11 14:31:45 UTC</createdTime>
 <ownerDesignName>Library</ownerDesignName>
 <engineerTo>
 <item key="E47EBF60-E032-408D-574B-6D7273F66E66" value="true"/>
 </engineerTo>
 <useDomainConstraints>false</useDomainConstraints>
 <use>1</use>
-<logicalDatatype>LOGDT024</logicalDatatype>
-<dataTypeSize>20</dataTypeSize>
-<ownDataTypeParameters>20,,</ownDataTypeParameters>
-</Attribute>
-<Attribute name="duration" id="E567E1AE-4995-3947-6065-C9694F2E311B">
-<createdBy>susan</createdBy>
-<createdTime>2026-03-11 14:24:26 UTC</createdTime>
-<ownerDesignName>Library</ownerDesignName>
-<engineerTo>
-<item key="E47EBF60-E032-408D-574B-6D7273F66E66" value="true"/>
-</engineerTo>
-<useDomainConstraints>false</useDomainConstraints>
-<use>1</use>
-<logicalDatatype>LOGDT014</logicalDatatype>
+<logicalDatatype>LOGDT011</logicalDatatype>
 <ownDataTypeParameters>,,</ownDataTypeParameters>
 </Attribute>
 </attributes>
+<identifiers itemClass="oracle.dbtools.crest.model.design.logical.CandidateKey">
+<identifier id="B3E2BD71-7E95-63B5-8103-6BDCB35AB15D" name="LOCATION PK">
+<createdBy>susan</createdBy>
+<createdTime>2026-03-11 14:32:13 UTC</createdTime>
+<ownerDesignName>Library</ownerDesignName>
+<engineerTo>
+<item key="E47EBF60-E032-408D-574B-6D7273F66E66" value="true"/>
+</engineerTo>
+<pk>true</pk>
+<usedAttributes>
+<attributeRef>B03C0AEC-04B9-CCD1-4C72-2520A84B96B5</attributeRef>
+</usedAttributes>
+</identifier>
+</identifiers>
 </Entity>

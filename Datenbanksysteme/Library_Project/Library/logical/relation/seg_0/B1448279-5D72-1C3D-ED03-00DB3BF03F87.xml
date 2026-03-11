@@ -1,0 +1,21 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Relation class="oracle.dbtools.crest.model.design.logical.Relation" name="Shelves/Comp Relation" directorySegmentName="seg_0" id="B1448279-5D72-1C3D-ED03-00DB3BF03F87">
+<createdBy>susan</createdBy>
+<createdTime>2026-03-11 14:38:29 UTC</createdTime>
+<ownerDesignName>Library</ownerDesignName>
+<engineerTo>
+<item key="E47EBF60-E032-408D-574B-6D7273F66E66" value="true"/>
+</engineerTo>
+<sourcePk>A503D670-FBE2-9864-92CC-3A53A5AD1EB3</sourcePk>
+<identifying>false</identifying>
+<nameOnSource>is in</nameOnSource>
+<nameOnTarget>has</nameOnTarget>
+<optionalSource>false</optionalSource>
+<optionalTarget>false</optionalTarget>
+<sourceCardinality>1</sourceCardinality>
+<sourceEntity>5E5AA319-E833-D033-9131-B2775A467CAD</sourceEntity>
+<targetCardinalityString>*</targetCardinalityString>
+<targetEntity>1B26950B-4DEA-BE93-171B-14859B0CABC7</targetEntity>
+<transferable>true</transferable>
+<deleteRule>NO ACTION</deleteRule>
+</Relation>
