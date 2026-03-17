@@ -58,6 +58,19 @@
 <logicalDatatype>LOGDT011</logicalDatatype>
 <ownDataTypeParameters>,,</ownDataTypeParameters>
 </Attribute>
+<Attribute name="statistic_id" id="A46A7E28-8310-5438-F2AB-B0A58739542B">
+<createdBy>User</createdBy>
+<createdTime>2026-03-17 13:39:53 UTC</createdTime>
+<generatorID>FDDDFDA5-342C-A0D1-E487-6EF4614F556A</generatorID>
+<ownerDesignName>Library</ownerDesignName>
+<engineerTo>
+<item key="E47EBF60-E032-408D-574B-6D7273F66E66" value="true"/>
+</engineerTo>
+<referedAttribute>A352D196-4BE7-9C44-A79E-E02FFA3D32B3</referedAttribute>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
 </attributes>
 <identifiers itemClass="oracle.dbtools.crest.model.design.logical.CandidateKey">
 <identifier id="A99DDEB3-044D-F077-F2F1-80C8EC5455E0" name="COPIES PK">
