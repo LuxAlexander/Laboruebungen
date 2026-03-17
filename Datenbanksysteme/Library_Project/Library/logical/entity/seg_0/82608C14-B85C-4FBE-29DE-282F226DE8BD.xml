@@ -81,19 +81,6 @@
 <logicalDatatype>LOGDT011</logicalDatatype>
 <ownDataTypeParameters>,,</ownDataTypeParameters>
 </Attribute>
-<Attribute name="reservation" id="25E02581-EF99-668F-8AEA-0CF6D9CAA9F5">
-<createdBy>User</createdBy>
-<createdTime>2026-03-17 13:16:13 UTC</createdTime>
-<ownerDesignName>Library</ownerDesignName>
-<engineerTo>
-<item key="E47EBF60-E032-408D-574B-6D7273F66E66" value="true"/>
-</engineerTo>
-<nullsAllowed>true</nullsAllowed>
-<useDomainConstraints>false</useDomainConstraints>
-<use>1</use>
-<logicalDatatype>LOGDT008</logicalDatatype>
-<ownDataTypeParameters>,,</ownDataTypeParameters>
-</Attribute>
 <Attribute name="barcode_id" id="5F7D76FE-5159-E6D6-8AFD-EE43D78BEAE1">
 <createdBy>User</createdBy>
 <createdTime>2026-03-17 13:18:54 UTC</createdTime>
@@ -108,6 +95,48 @@
 <use>1</use>
 <logicalDatatype>LOGDT024</logicalDatatype>
 <dataTypeSize>15</dataTypeSize>
+<ownDataTypeParameters>15,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="media_id" id="A1E5A9D7-9240-FE19-E5FF-3072430E81ED">
+<createdBy>susan</createdBy>
+<createdTime>2026-03-17 13:52:03 UTC</createdTime>
+<generatorID>30068ECB-A996-9D2E-2326-022FAE12DD3B</generatorID>
+<ownerDesignName>Library</ownerDesignName>
+<engineerTo>
+<item key="E47EBF60-E032-408D-574B-6D7273F66E66" value="true"/>
+</engineerTo>
+<referedAttribute>F44F308A-F78F-4926-0213-9883D8C9746E</referedAttribute>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="cost_id" id="FA6C8258-25BD-3894-93AE-C44FDCD1864A">
+<createdBy>susan</createdBy>
+<createdTime>2026-03-17 13:52:03 UTC</createdTime>
+<generatorID>30068ECB-A996-9D2E-2326-022FAE12DD3B</generatorID>
+<ownerDesignName>Library</ownerDesignName>
+<engineerTo>
+<item key="E47EBF60-E032-408D-574B-6D7273F66E66" value="true"/>
+</engineerTo>
+<referedAttribute>DC957ADF-7EDC-DA1B-93CE-E10E075C7AC8</referedAttribute>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="reservation_id" id="299A4C9A-B6F3-AC97-F92F-CE1D44C9E12F">
+<createdBy>susan</createdBy>
+<createdTime>2026-03-17 13:58:52 UTC</createdTime>
+<generatorID>53FF10BF-BED9-B5C0-8C7A-24DFEFD596B5</generatorID>
+<ownerDesignName>Library</ownerDesignName>
+<engineerTo>
+<item key="E47EBF60-E032-408D-574B-6D7273F66E66" value="true"/>
+</engineerTo>
+<referedAttribute>9312F4BB-4B84-A0CE-01B2-3561F5D9B003</referedAttribute>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
 <ownDataTypeParameters>,,</ownDataTypeParameters>
 </Attribute>
 </attributes>
