@@ -1,7 +1,7 @@
 <?xml version = '1.0' encoding = 'UTF-8'?>
-<Entity class="oracle.dbtools.crest.model.design.logical.Entity" directorySegmentName="seg_0" id="D2DBF3F1-9616-172B-D2F9-A362A39BEA54" name="COPIES">
-<createdBy>susan</createdBy>
-<createdTime>2026-03-11 14:40:08 UTC</createdTime>
+<Entity class="oracle.dbtools.crest.model.design.logical.Entity" directorySegmentName="seg_0" id="EABB263E-675E-68FA-17EE-2041EF9E8AEA" name="COST_EVALUATION">
+<createdBy>User</createdBy>
+<createdTime>2026-03-17 12:39:24 UTC</createdTime>
 <ownerDesignName>Library</ownerDesignName>
 <engineerTo>
 <item key="E47EBF60-E032-408D-574B-6D7273F66E66" value="true"/>
@@ -15,61 +15,60 @@
 <minVolumes>0</minVolumes>
 <normalForm>Third</normalForm>
 <attributes itemClass="oracle.dbtools.crest.model.design.logical.Attribute">
-<Attribute name="barcode_id" id="AD1D1AA4-A69B-84F8-3FCE-BCBE4832C615">
-<createdBy>susan</createdBy>
-<createdTime>2026-03-11 14:40:30 UTC</createdTime>
-<ownerDesignName>Library</ownerDesignName>
-<engineerTo>
-<item key="E47EBF60-E032-408D-574B-6D7273F66E66" value="true"/>
-</engineerTo>
-<useDomainConstraints>false</useDomainConstraints>
-<use>1</use>
-<logicalDatatype>LOGDT024</logicalDatatype>
-<dataTypeSize>15</dataTypeSize>
-<ownDataTypeParameters>15,,</ownDataTypeParameters>
-</Attribute>
-<Attribute name="comp_id" id="04993ED1-19CE-34FE-72FF-579224E1D967">
+<Attribute name="cost_id" id="DC957ADF-7EDC-DA1B-93CE-E10E075C7AC8">
 <createdBy>User</createdBy>
-<createdTime>2026-03-17 12:44:36 UTC</createdTime>
-<generatorID>1F8DB4E8-D9CE-2AB0-D570-F21BFDA08F19</generatorID>
+<createdTime>2026-03-17 13:29:42 UTC</createdTime>
 <ownerDesignName>Library</ownerDesignName>
 <engineerTo>
 <item key="E47EBF60-E032-408D-574B-6D7273F66E66" value="true"/>
 </engineerTo>
-<nullsAllowed>true</nullsAllowed>
-<referedAttribute>ADD9C9CF-F4BE-88E4-89B8-968A7F507650</referedAttribute>
 <useDomainConstraints>false</useDomainConstraints>
 <use>1</use>
 <logicalDatatype>LOGDT011</logicalDatatype>
 <ownDataTypeParameters>,,</ownDataTypeParameters>
 </Attribute>
-<Attribute name="media_id" id="E52C319D-FA78-BA90-C581-3C238877684B">
+<Attribute name="media_id" id="F44F308A-F78F-4926-0213-9883D8C9746E">
 <createdBy>User</createdBy>
-<createdTime>2026-03-17 12:48:45 UTC</createdTime>
-<generatorID>56B0D6ED-0FC8-76BC-719C-E198E095CD53</generatorID>
+<createdTime>2026-03-17 12:53:40 UTC</createdTime>
+<generatorID>4B0F3BFD-C8C8-772F-8AE6-822B5C18490A</generatorID>
 <ownerDesignName>Library</ownerDesignName>
 <engineerTo>
 <item key="E47EBF60-E032-408D-574B-6D7273F66E66" value="true"/>
 </engineerTo>
-<nullsAllowed>true</nullsAllowed>
 <referedAttribute>ADD935F8-AE7F-3468-551B-F426B389C450</referedAttribute>
 <useDomainConstraints>false</useDomainConstraints>
 <use>1</use>
 <logicalDatatype>LOGDT011</logicalDatatype>
 <ownDataTypeParameters>,,</ownDataTypeParameters>
 </Attribute>
+<Attribute name="cost" id="DD61659A-F66B-1CF3-45E9-A1A97C57F34F">
+<createdBy>User</createdBy>
+<createdTime>2026-03-17 12:41:36 UTC</createdTime>
+<ownerDesignName>Library</ownerDesignName>
+<engineerTo>
+<item key="E47EBF60-E032-408D-574B-6D7273F66E66" value="true"/>
+</engineerTo>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT043</logicalDatatype>
+<dataTypePrecision>9</dataTypePrecision>
+<dataTypeScale>2</dataTypeScale>
+<ownDataTypeParameters>,9,2</ownDataTypeParameters>
+</Attribute>
 </attributes>
 <identifiers itemClass="oracle.dbtools.crest.model.design.logical.CandidateKey">
-<identifier id="A99DDEB3-044D-F077-F2F1-80C8EC5455E0" name="COPIES PK">
-<createdBy>susan</createdBy>
-<createdTime>2026-03-11 14:40:54 UTC</createdTime>
+<identifier id="1B382577-2204-9BBE-1EE7-33082B31A2A7" name="COST_Management PK">
+<createdBy>User</createdBy>
+<createdTime>2026-03-17 12:53:02 UTC</createdTime>
 <ownerDesignName>Library</ownerDesignName>
 <engineerTo>
 <item key="E47EBF60-E032-408D-574B-6D7273F66E66" value="true"/>
 </engineerTo>
 <pk>true</pk>
 <usedAttributes>
-<attributeRef>AD1D1AA4-A69B-84F8-3FCE-BCBE4832C615</attributeRef>
+<attributeRef>F44F308A-F78F-4926-0213-9883D8C9746E</attributeRef>
+<attributeRef>DC957ADF-7EDC-DA1B-93CE-E10E075C7AC8</attributeRef>
 </usedAttributes>
 </identifier>
 </identifiers>

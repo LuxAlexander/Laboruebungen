@@ -1,0 +1,19 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Relation class="oracle.dbtools.crest.model.design.logical.Relation" name="physical_copy" directorySegmentName="seg_0" id="56B0D6ED-0FC8-76BC-719C-E198E095CD53">
+<createdBy>User</createdBy>
+<createdTime>2026-03-17 12:48:45 UTC</createdTime>
+<ownerDesignName>Library</ownerDesignName>
+<engineerTo>
+<item key="E47EBF60-E032-408D-574B-6D7273F66E66" value="true"/>
+</engineerTo>
+<sourcePk>B971710D-350C-8821-27FC-612E2E52E04B</sourcePk>
+<identifying>false</identifying>
+<optionalSource>false</optionalSource>
+<optionalTarget>true</optionalTarget>
+<sourceCardinality>1</sourceCardinality>
+<sourceEntity>9ECC3BC1-5152-9E44-28AD-262CD652FFF9</sourceEntity>
+<targetCardinalityString>*</targetCardinalityString>
+<targetEntity>D2DBF3F1-9616-172B-D2F9-A362A39BEA54</targetEntity>
+<transferable>true</transferable>
+<deleteRule>NO ACTION</deleteRule>
+</Relation>

@@ -1,0 +1,75 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Table class="oracle.dbtools.crest.model.design.relational.Table" directorySegmentName="seg_0" id="9028FC35-1DA9-7F77-72B1-1B602773D04D" name="Genre/Media_Relation">
+<createdBy>User</createdBy>
+<createdTime>2026-03-17 13:30:10 UTC</createdTime>
+<ownerDesignName>Library</ownerDesignName>
+<allowColumnReorder>false</allowColumnReorder>
+<existDependencyGenerateInDDl>true</existDependencyGenerateInDDl>
+<parsed>true</parsed>
+<columns itemClass="oracle.dbtools.crest.model.design.relational.Column">
+<Column name="GENRE_genre_id" id="4E03167B-FE27-95BE-60B1-2B3F8DA244D8">
+<createdBy>User</createdBy>
+<createdTime>2026-03-17 13:30:10 UTC</createdTime>
+<ownerDesignName>Library</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<previousColumn>false</previousColumn>
+<autoIncrementCycle>false</autoIncrementCycle>
+<associations>
+<colAssociation fkAssociation="54C8C2CA-FC17-FA0D-3E10-1E2E77432272" referredColumn="51DF502A-19B6-A19E-FEE8-D050C7D87B08"/>
+</associations>
+</Column>
+<Column name="MEDIA_media_id" id="F4F5BDB0-E95D-68FD-EA89-9D5A9DB93AEC">
+<createdBy>User</createdBy>
+<createdTime>2026-03-17 13:30:10 UTC</createdTime>
+<ownerDesignName>Library</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<previousColumn>false</previousColumn>
+<autoIncrementCycle>false</autoIncrementCycle>
+<associations>
+<colAssociation fkAssociation="754E007B-CFCF-F7D2-DDC2-25D33C29A4DC" referredColumn="B3830F36-54AF-06D3-DB49-F714403E4A60"/>
+</associations>
+</Column>
+</columns>
+<indexes itemClass="oracle.dbtools.crest.model.design.relational.Index">
+<ind_PK_UK id="583EA43F-56B9-09EC-3F98-FF17A3A99FC9" name="Genre/Media_Relation_PK">
+<createdBy>User</createdBy>
+<createdTime>2026-03-17 13:30:10 UTC</createdTime>
+<ownerDesignName>Library</ownerDesignName>
+<pk>true</pk>
+<indexState>Primary Constraint</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="4E03167B-FE27-95BE-60B1-2B3F8DA244D8"/>
+<colUsage columnID="F4F5BDB0-E95D-68FD-EA89-9D5A9DB93AEC"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="3C09A2B5-485B-2A25-A4C1-56CE48225CBF" name="Genre/Media_Relation_GENRE_FK">
+<createdBy>User</createdBy>
+<createdTime>2026-03-17 13:30:10 UTC</createdTime>
+<generatorID>9D4F7ADF-7380-21AB-1AE5-5ED0956D91D2</generatorID>
+<ownerDesignName>Library</ownerDesignName>
+<indexState>Foreign Key</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="4E03167B-FE27-95BE-60B1-2B3F8DA244D8"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="11F02E94-477C-F1B1-7CAD-3846DF228D0E" name="Genre/Media_Relation_MEDIA_FK">
+<createdBy>User</createdBy>
+<createdTime>2026-03-17 13:30:10 UTC</createdTime>
+<generatorID>9D4F7ADF-7380-21AB-1AE5-5ED0956D91D2</generatorID>
+<ownerDesignName>Library</ownerDesignName>
+<indexState>Foreign Key</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="F4F5BDB0-E95D-68FD-EA89-9D5A9DB93AEC"/>
+</indexColumnUsage>
+</ind_PK_UK>
+</indexes>
+</Table>

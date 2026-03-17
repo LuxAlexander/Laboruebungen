@@ -1,0 +1,74 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Table class="oracle.dbtools.crest.model.design.relational.Table" directorySegmentName="seg_0" id="382080EE-7184-1B30-F78C-206051F327E5" name="MOVIES">
+<createdBy>User</createdBy>
+<createdTime>2026-03-17 13:30:10 UTC</createdTime>
+<generatorID>2E4FC4AA-AC4D-D2CA-7387-AADBA40E2081</generatorID>
+<ownerDesignName>Library</ownerDesignName>
+<allowColumnReorder>false</allowColumnReorder>
+<existDependencyGenerateInDDl>true</existDependencyGenerateInDDl>
+<parsed>true</parsed>
+<columns itemClass="oracle.dbtools.crest.model.design.relational.Column">
+<Column name="media_id" id="A11BFFBB-5076-E38F-11B1-75AA79D9C598">
+<createdBy>User</createdBy>
+<createdTime>2026-03-17 13:30:10 UTC</createdTime>
+<generatorID>ADD935F8-AE7F-3468-551B-F426B389C450</generatorID>
+<ownerDesignName>Library</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+<associations>
+<colAssociation fkAssociation="1565A015-9D36-748B-4055-FC9C0AACB1D7" referredColumn="B3830F36-54AF-06D3-DB49-F714403E4A60"/>
+</associations>
+</Column>
+<Column name="format" id="119F8A86-BDC8-1445-4CFD-D6F80A3D5776">
+<createdBy>User</createdBy>
+<createdTime>2026-03-17 13:30:10 UTC</createdTime>
+<generatorID>C9F7052C-BCE3-16E9-C9D6-B4719A55B4DC</generatorID>
+<ownerDesignName>Library</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>20</dataTypeSize>
+<ownDataTypeParameters>20,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="duration" id="6F4E4C2D-07BF-7F4C-937A-454985E46229">
+<createdBy>User</createdBy>
+<createdTime>2026-03-17 13:30:10 UTC</createdTime>
+<generatorID>5C74D3EB-DBC0-3D7F-8B03-85422D6F1AA5</generatorID>
+<ownerDesignName>Library</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT014</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+</columns>
+<indexes itemClass="oracle.dbtools.crest.model.design.relational.Index">
+<ind_PK_UK id="4A287715-D8EE-23CE-1597-8B28B3B89695" name="MOVIES_PK">
+<createdBy>User</createdBy>
+<createdTime>2026-03-17 13:30:10 UTC</createdTime>
+<generatorID>B971710D-350C-8821-27FC-612E2E52E04B</generatorID>
+<ownerDesignName>Library</ownerDesignName>
+<pk>true</pk>
+<indexState>Primary Constraint</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="A11BFFBB-5076-E38F-11B1-75AA79D9C598"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="A8043A8A-F15E-7FCA-7617-C23406E5BCF8" name="MOVIES_MEDIA_FK">
+<createdBy>User</createdBy>
+<createdTime>2026-03-17 13:30:10 UTC</createdTime>
+<generatorID>8F6898AE-7257-8DA9-C02B-6FB2803346AE</generatorID>
+<ownerDesignName>Library</ownerDesignName>
+<indexState>Foreign Key</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="A11BFFBB-5076-E38F-11B1-75AA79D9C598"/>
+</indexColumnUsage>
+</ind_PK_UK>
+</indexes>
+</Table>

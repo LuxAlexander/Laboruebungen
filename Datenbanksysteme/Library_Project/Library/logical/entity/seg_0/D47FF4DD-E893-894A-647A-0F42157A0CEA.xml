@@ -1,7 +1,7 @@
 <?xml version = '1.0' encoding = 'UTF-8'?>
-<Entity class="oracle.dbtools.crest.model.design.logical.Entity" directorySegmentName="seg_0" id="D2DBF3F1-9616-172B-D2F9-A362A39BEA54" name="COPIES">
-<createdBy>susan</createdBy>
-<createdTime>2026-03-11 14:40:08 UTC</createdTime>
+<Entity class="oracle.dbtools.crest.model.design.logical.Entity" directorySegmentName="seg_0" id="D47FF4DD-E893-894A-647A-0F42157A0CEA" name="CUSTOMER">
+<createdBy>User</createdBy>
+<createdTime>2026-03-17 12:36:12 UTC</createdTime>
 <ownerDesignName>Library</ownerDesignName>
 <engineerTo>
 <item key="E47EBF60-E032-408D-574B-6D7273F66E66" value="true"/>
@@ -15,9 +15,35 @@
 <minVolumes>0</minVolumes>
 <normalForm>Third</normalForm>
 <attributes itemClass="oracle.dbtools.crest.model.design.logical.Attribute">
-<Attribute name="barcode_id" id="AD1D1AA4-A69B-84F8-3FCE-BCBE4832C615">
-<createdBy>susan</createdBy>
-<createdTime>2026-03-11 14:40:30 UTC</createdTime>
+<Attribute name="customer_id" id="CC90A360-5BFC-B89E-6612-98C0F6F92915">
+<createdBy>User</createdBy>
+<createdTime>2026-03-17 12:36:38 UTC</createdTime>
+<ownerDesignName>Library</ownerDesignName>
+<engineerTo>
+<item key="E47EBF60-E032-408D-574B-6D7273F66E66" value="true"/>
+</engineerTo>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="customer_first_name" id="6EB9648B-8812-2309-479D-424844F4AE02">
+<createdBy>User</createdBy>
+<createdTime>2026-03-17 12:37:11 UTC</createdTime>
+<ownerDesignName>Library</ownerDesignName>
+<engineerTo>
+<item key="E47EBF60-E032-408D-574B-6D7273F66E66" value="true"/>
+</engineerTo>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>50</dataTypeSize>
+<ownDataTypeParameters>50,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="customer_last_name" id="88A1603E-95B3-4B2D-FAFF-06A6351872DF">
+<createdBy>User</createdBy>
+<createdTime>2026-03-17 12:37:46 UTC</createdTime>
 <ownerDesignName>Library</ownerDesignName>
 <engineerTo>
 <item key="E47EBF60-E032-408D-574B-6D7273F66E66" value="true"/>
@@ -25,51 +51,33 @@
 <useDomainConstraints>false</useDomainConstraints>
 <use>1</use>
 <logicalDatatype>LOGDT024</logicalDatatype>
-<dataTypeSize>15</dataTypeSize>
-<ownDataTypeParameters>15,,</ownDataTypeParameters>
+<dataTypeSize>40</dataTypeSize>
+<ownDataTypeParameters>40,,</ownDataTypeParameters>
 </Attribute>
-<Attribute name="comp_id" id="04993ED1-19CE-34FE-72FF-579224E1D967">
+<Attribute name="birth_date" id="662F6FED-9121-777F-3221-92BB478D425A">
 <createdBy>User</createdBy>
-<createdTime>2026-03-17 12:44:36 UTC</createdTime>
-<generatorID>1F8DB4E8-D9CE-2AB0-D570-F21BFDA08F19</generatorID>
+<createdTime>2026-03-17 12:38:08 UTC</createdTime>
 <ownerDesignName>Library</ownerDesignName>
 <engineerTo>
 <item key="E47EBF60-E032-408D-574B-6D7273F66E66" value="true"/>
 </engineerTo>
-<nullsAllowed>true</nullsAllowed>
-<referedAttribute>ADD9C9CF-F4BE-88E4-89B8-968A7F507650</referedAttribute>
 <useDomainConstraints>false</useDomainConstraints>
 <use>1</use>
-<logicalDatatype>LOGDT011</logicalDatatype>
-<ownDataTypeParameters>,,</ownDataTypeParameters>
-</Attribute>
-<Attribute name="media_id" id="E52C319D-FA78-BA90-C581-3C238877684B">
-<createdBy>User</createdBy>
-<createdTime>2026-03-17 12:48:45 UTC</createdTime>
-<generatorID>56B0D6ED-0FC8-76BC-719C-E198E095CD53</generatorID>
-<ownerDesignName>Library</ownerDesignName>
-<engineerTo>
-<item key="E47EBF60-E032-408D-574B-6D7273F66E66" value="true"/>
-</engineerTo>
-<nullsAllowed>true</nullsAllowed>
-<referedAttribute>ADD935F8-AE7F-3468-551B-F426B389C450</referedAttribute>
-<useDomainConstraints>false</useDomainConstraints>
-<use>1</use>
-<logicalDatatype>LOGDT011</logicalDatatype>
+<logicalDatatype>LOGDT007</logicalDatatype>
 <ownDataTypeParameters>,,</ownDataTypeParameters>
 </Attribute>
 </attributes>
 <identifiers itemClass="oracle.dbtools.crest.model.design.logical.CandidateKey">
-<identifier id="A99DDEB3-044D-F077-F2F1-80C8EC5455E0" name="COPIES PK">
-<createdBy>susan</createdBy>
-<createdTime>2026-03-11 14:40:54 UTC</createdTime>
+<identifier id="1FCB68D1-1FA4-549B-485E-E9BBBD8F7E59" name="CUSTOMER PK">
+<createdBy>User</createdBy>
+<createdTime>2026-03-17 12:37:08 UTC</createdTime>
 <ownerDesignName>Library</ownerDesignName>
 <engineerTo>
 <item key="E47EBF60-E032-408D-574B-6D7273F66E66" value="true"/>
 </engineerTo>
 <pk>true</pk>
 <usedAttributes>
-<attributeRef>AD1D1AA4-A69B-84F8-3FCE-BCBE4832C615</attributeRef>
+<attributeRef>CC90A360-5BFC-B89E-6612-98C0F6F92915</attributeRef>
 </usedAttributes>
 </identifier>
 </identifiers>

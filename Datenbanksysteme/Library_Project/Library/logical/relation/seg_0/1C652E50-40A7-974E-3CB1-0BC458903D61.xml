@@ -1,20 +1,18 @@
 <?xml version = '1.0' encoding = 'UTF-8'?>
-<Relation class="oracle.dbtools.crest.model.design.logical.Relation" name="MEDIA_GENRE" directorySegmentName="seg_0" id="9D4F7ADF-7380-21AB-1AE5-5ED0956D91D2">
-<createdBy>susan</createdBy>
-<createdTime>2026-03-11 14:28:00 UTC</createdTime>
+<Relation class="oracle.dbtools.crest.model.design.logical.Relation" name="cost_per_genre" directorySegmentName="seg_0" id="1C652E50-40A7-974E-3CB1-0BC458903D61">
+<createdBy>User</createdBy>
+<createdTime>2026-03-17 12:54:19 UTC</createdTime>
 <ownerDesignName>Library</ownerDesignName>
 <engineerTo>
 <item key="E47EBF60-E032-408D-574B-6D7273F66E66" value="true"/>
 </engineerTo>
 <identifying>false</identifying>
-<nameOnSource>assigned</nameOnSource>
-<nameOnTarget>in</nameOnTarget>
-<optionalSource>false</optionalSource>
+<optionalSource>true</optionalSource>
 <optionalTarget>false</optionalTarget>
 <sourceCardinality>*</sourceCardinality>
 <sourceEntity>64AF4950-9497-737C-4024-18EA8405AF83</sourceEntity>
 <targetCardinalityString>*</targetCardinalityString>
-<targetEntity>9ECC3BC1-5152-9E44-28AD-262CD652FFF9</targetEntity>
+<targetEntity>EABB263E-675E-68FA-17EE-2041EF9E8AEA</targetEntity>
 <transferable>true</transferable>
 <deleteRule>NO ACTION</deleteRule>
 </Relation>

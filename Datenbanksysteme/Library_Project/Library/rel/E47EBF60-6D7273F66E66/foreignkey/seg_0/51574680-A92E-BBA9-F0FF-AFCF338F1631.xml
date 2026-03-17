@@ -1,0 +1,17 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<FKIndexAssociation class="oracle.dbtools.crest.model.design.relational.FKIndexAssociation" directorySegmentName="seg_0" id="51574680-A92E-BBA9-F0FF-AFCF338F1631" containerWithKeyObject="C9F38203-F99C-84A6-3F12-C5D551485317" localFKIndex="F7139E58-2C51-B035-505B-4E693A253514" name="cost_per_genre_GENRE_FK">
+<createdBy>User</createdBy>
+<createdTime>2026-03-17 13:30:10 UTC</createdTime>
+<generatorID>1C652E50-40A7-974E-3CB1-0BC458903D61</generatorID>
+<ownerDesignName>Library</ownerDesignName>
+<referredTableLongName>GENRE</referredTableLongName>
+<deleteRule>NO ACTION</deleteRule>
+<referredTableID>49829EC7-EE2F-9E9F-BA88-BEB7193B7D4B</referredTableID>
+<keyObject>DAD2485E-2035-E004-6C0A-2DDBB76E9A60</keyObject>
+<referredKeyID>DAD2485E-2035-E004-6C0A-2DDBB76E9A60</referredKeyID>
+<mandatory>true</mandatory>
+<refColNames>genre_id</refColNames>
+<transferable>true</transferable>
+<rely>false</rely>
+<columnDependencyConstraintGenerateInDDL>true</columnDependencyConstraintGenerateInDDL>
+</FKIndexAssociation>

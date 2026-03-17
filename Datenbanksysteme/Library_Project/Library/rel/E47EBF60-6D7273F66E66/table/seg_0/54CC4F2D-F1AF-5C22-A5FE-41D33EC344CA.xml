@@ -1,0 +1,64 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Table class="oracle.dbtools.crest.model.design.relational.Table" directorySegmentName="seg_0" id="54CC4F2D-F1AF-5C22-A5FE-41D33EC344CA" name="COMPARTMENTS">
+<createdBy>User</createdBy>
+<createdTime>2026-03-17 13:30:09 UTC</createdTime>
+<generatorID>1B26950B-4DEA-BE93-171B-14859B0CABC7</generatorID>
+<ownerDesignName>Library</ownerDesignName>
+<allowColumnReorder>false</allowColumnReorder>
+<existDependencyGenerateInDDl>true</existDependencyGenerateInDDl>
+<parsed>true</parsed>
+<columns itemClass="oracle.dbtools.crest.model.design.relational.Column">
+<Column name="comp_id" id="2D6A228A-E441-C453-807D-7C87A2FA2411">
+<createdBy>User</createdBy>
+<createdTime>2026-03-17 13:30:09 UTC</createdTime>
+<generatorID>ADD9C9CF-F4BE-88E4-89B8-968A7F507650</generatorID>
+<ownerDesignName>Library</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="SHELVES_shelf_id" id="C87C69FB-8A4E-1707-7FDB-935D5D821AD1">
+<createdBy>User</createdBy>
+<createdTime>2026-03-17 13:30:09 UTC</createdTime>
+<generatorID>B75FCB6C-9B9C-7C5D-740B-C0DBE2797E72</generatorID>
+<ownerDesignName>Library</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>10</dataTypeSize>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<previousColumn>false</previousColumn>
+<autoIncrementCycle>false</autoIncrementCycle>
+<associations>
+<colAssociation fkAssociation="DFDB679B-D5C0-AFD9-E5B9-405AC73F8F51" referredColumn="3D5BFF87-3AFD-EB17-3CDD-C7DC758CA5AD"/>
+</associations>
+</Column>
+</columns>
+<indexes itemClass="oracle.dbtools.crest.model.design.relational.Index">
+<ind_PK_UK id="4820245C-BCF6-67D6-249C-511AD30FB02A" name="COMPARTMENTS_PK">
+<createdBy>User</createdBy>
+<createdTime>2026-03-17 13:30:09 UTC</createdTime>
+<generatorID>12EA7A6F-71BB-DF8D-C9CC-2EC784D8936E</generatorID>
+<ownerDesignName>Library</ownerDesignName>
+<pk>true</pk>
+<indexState>Primary Constraint</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="2D6A228A-E441-C453-807D-7C87A2FA2411"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="978FC4EE-26AD-2547-7981-9D0FD2E7FAA8" name="COMPARTMENTS_SHELVES_FK">
+<createdBy>User</createdBy>
+<createdTime>2026-03-17 13:30:10 UTC</createdTime>
+<generatorID>B1448279-5D72-1C3D-ED03-00DB3BF03F87</generatorID>
+<ownerDesignName>Library</ownerDesignName>
+<indexState>Foreign Key</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="C87C69FB-8A4E-1707-7FDB-935D5D821AD1"/>
+</indexColumnUsage>
+</ind_PK_UK>
+</indexes>
+</Table>

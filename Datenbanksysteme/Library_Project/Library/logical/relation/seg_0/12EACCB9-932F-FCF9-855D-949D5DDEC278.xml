@@ -1,0 +1,19 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Relation class="oracle.dbtools.crest.model.design.logical.Relation" name="book_in_ledger" directorySegmentName="seg_0" id="12EACCB9-932F-FCF9-855D-949D5DDEC278">
+<createdBy>User</createdBy>
+<createdTime>2026-03-17 13:18:24 UTC</createdTime>
+<ownerDesignName>Library</ownerDesignName>
+<engineerTo>
+<item key="E47EBF60-E032-408D-574B-6D7273F66E66" value="true"/>
+</engineerTo>
+<targetPk>A99DDEB3-044D-F077-F2F1-80C8EC5455E0</targetPk>
+<identifying>false</identifying>
+<optionalSource>true</optionalSource>
+<optionalTarget>false</optionalTarget>
+<sourceCardinality>*</sourceCardinality>
+<sourceEntity>82608C14-B85C-4FBE-29DE-282F226DE8BD</sourceEntity>
+<targetCardinalityString>1</targetCardinalityString>
+<targetEntity>D2DBF3F1-9616-172B-D2F9-A362A39BEA54</targetEntity>
+<transferable>true</transferable>
+<deleteRule>NO ACTION</deleteRule>
+</Relation>

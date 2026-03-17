@@ -1,0 +1,17 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<FKIndexAssociation class="oracle.dbtools.crest.model.design.relational.FKIndexAssociation" directorySegmentName="seg_0" id="DFDB679B-D5C0-AFD9-E5B9-405AC73F8F51" containerWithKeyObject="54CC4F2D-F1AF-5C22-A5FE-41D33EC344CA" localFKIndex="978FC4EE-26AD-2547-7981-9D0FD2E7FAA8" name="COMPARTMENTS_SHELVES_FK">
+<createdBy>User</createdBy>
+<createdTime>2026-03-17 13:30:10 UTC</createdTime>
+<generatorID>B1448279-5D72-1C3D-ED03-00DB3BF03F87</generatorID>
+<ownerDesignName>Library</ownerDesignName>
+<referredTableLongName>SHELVES</referredTableLongName>
+<deleteRule>NO ACTION</deleteRule>
+<referredTableID>5AA5FD07-EA16-ABD1-C279-1F0518597DDB</referredTableID>
+<keyObject>61EB0EB5-4214-7C76-E3CD-3811027C4F2B</keyObject>
+<referredKeyID>61EB0EB5-4214-7C76-E3CD-3811027C4F2B</referredKeyID>
+<mandatory>true</mandatory>
+<refColNames>shelf_id</refColNames>
+<transferable>true</transferable>
+<rely>false</rely>
+<columnDependencyConstraintGenerateInDDL>true</columnDependencyConstraintGenerateInDDL>
+</FKIndexAssociation>
