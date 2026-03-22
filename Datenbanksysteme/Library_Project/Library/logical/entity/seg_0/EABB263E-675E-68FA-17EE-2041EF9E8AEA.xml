@@ -27,6 +27,18 @@
 <logicalDatatype>LOGDT011</logicalDatatype>
 <ownDataTypeParameters>,,</ownDataTypeParameters>
 </Attribute>
+<Attribute name="creation_date" id="961E2FBE-3E07-7ADF-0A89-D5AC081D114F">
+<createdBy>Alex</createdBy>
+<createdTime>2026-03-22 12:24:02 UTC</createdTime>
+<ownerDesignName>Library</ownerDesignName>
+<engineerTo>
+<item key="E47EBF60-E032-408D-574B-6D7273F66E66" value="true"/>
+</engineerTo>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT008</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
 <Attribute name="cost" id="DD61659A-F66B-1CF3-45E9-A1A97C57F34F">
 <createdBy>User</createdBy>
 <createdTime>2026-03-17 12:41:36 UTC</createdTime>
@@ -41,19 +53,6 @@
 <dataTypePrecision>9</dataTypePrecision>
 <dataTypeScale>2</dataTypeScale>
 <ownDataTypeParameters>,9,2</ownDataTypeParameters>
-</Attribute>
-<Attribute name="creation_date" id="961E2FBE-3E07-7ADF-0A89-D5AC081D114F">
-<createdBy>Alex</createdBy>
-<createdTime>2026-03-22 12:24:02 UTC</createdTime>
-<ownerDesignName>Library</ownerDesignName>
-<engineerTo>
-<item key="E47EBF60-E032-408D-574B-6D7273F66E66" value="true"/>
-</engineerTo>
-<nullsAllowed>true</nullsAllowed>
-<useDomainConstraints>false</useDomainConstraints>
-<use>1</use>
-<logicalDatatype>LOGDT008</logicalDatatype>
-<ownDataTypeParameters>,,</ownDataTypeParameters>
 </Attribute>
 <Attribute name="valid" id="8A77E038-24C3-E74E-0A7F-836DB8069781">
 <createdBy>Alex</createdBy>
@@ -95,6 +94,8 @@
 <pk>true</pk>
 <usedAttributes>
 <attributeRef>DC957ADF-7EDC-DA1B-93CE-E10E075C7AC8</attributeRef>
+<attributeRef>961E2FBE-3E07-7ADF-0A89-D5AC081D114F</attributeRef>
+<attributeRef>B8F17024-E215-2FE9-8749-C7D8B9EDAE45</attributeRef>
 </usedAttributes>
 </identifier>
 </identifiers>

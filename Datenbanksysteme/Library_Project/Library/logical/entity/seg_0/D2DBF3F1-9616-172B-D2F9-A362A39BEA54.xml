@@ -72,7 +72,7 @@
 <use>1</use>
 <logicalDatatype>LOGDT024</logicalDatatype>
 <dataTypeSize>10</dataTypeSize>
-<ownDataTypeParameters>,,</ownDataTypeParameters>
+<ownDataTypeParameters>10,,</ownDataTypeParameters>
 </Attribute>
 <Attribute name="loc_id" id="A62F02B6-829C-ED9C-83A3-3F2EECF9809D">
 <createdBy>Alex</createdBy>

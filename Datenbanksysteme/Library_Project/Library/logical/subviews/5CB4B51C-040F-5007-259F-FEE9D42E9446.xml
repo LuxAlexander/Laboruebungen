@@ -34,7 +34,7 @@
 </OView>
 <OView class="oracle.dbtools.crest.swingui.logical.TVEntity" oid="5AC17FC7-D784-C27E-297E-3EE9187BC695" otype="Entity" vid="279C3597-11F2-9403-D3E5-8A0153EB46E2">
 <hideElementsInCurrentOnly>false</hideElementsInCurrentOnly>
-<bounds x="100" y="10" width="200" height="119"/>
+<bounds x="260" y="0" width="200" height="119"/>
 </OView>
 <OView class="oracle.dbtools.crest.swingui.logical.TVEntity" oid="5E5AA319-E833-D033-9131-B2775A467CAD" otype="Entity" vid="65A7A2BA-50D0-0117-C9DE-6C8766DFDF31">
 <hideElementsInCurrentOnly>false</hideElementsInCurrentOnly>
@@ -360,8 +360,8 @@ Genre. Klingt für mich wie eine Kombinatorik und diese Liste wird verglichen mi
 <backgroundColor>-16777216</backgroundColor>
 <lineWidth>1</lineWidth>
 <points>
-<point x="300" y="67"/>
-<point x="630" y="67"/>
+<point x="460" y="59"/>
+<point x="630" y="59"/>
 </points>
 </Connector>
 <Connector class="oracle.dbtools.crest.swingui.logical.TVRelation" oid="DD8BA6C3-631B-430E-8E15-9B6E8465088E" otype="Relation" vid_source="40F59F20-2287-A69F-89A8-7F6C411BFBFF" vid_target="74F00C6D-1A15-5C38-B6E8-90A91E4C4846">
