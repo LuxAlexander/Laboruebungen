@@ -30,18 +30,4 @@
 <ownDataTypeParameters>50,,</ownDataTypeParameters>
 </Attribute>
 </attributes>
-<identifiers itemClass="oracle.dbtools.crest.model.design.logical.CandidateKey">
-<identifier id="728923D1-2B61-4109-FCEA-5248306C646D" name="BOOKS PK">
-<createdBy>User</createdBy>
-<createdTime>2026-03-10 14:42:41 UTC</createdTime>
-<ownerDesignName>Library</ownerDesignName>
-<engineerTo>
-<item key="E47EBF60-E032-408D-574B-6D7273F66E66" value="true"/>
-</engineerTo>
-<pk>true</pk>
-<usedAttributes>
-<attributeRef>8AF876ED-6C0C-02E4-DB14-B7C53D8752BE</attributeRef>
-</usedAttributes>
-</identifier>
-</identifiers>
 </Entity>

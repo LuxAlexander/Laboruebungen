@@ -7,7 +7,7 @@
 <item key="E47EBF60-E032-408D-574B-6D7273F66E66" value="true"/>
 </engineerTo>
 <sourcePk>A503D670-FBE2-9864-92CC-3A53A5AD1EB3</sourcePk>
-<identifying>false</identifying>
+<identifying>true</identifying>
 <nameOnSource>is in</nameOnSource>
 <nameOnTarget>has</nameOnTarget>
 <optionalSource>false</optionalSource>

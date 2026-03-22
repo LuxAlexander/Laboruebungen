@@ -42,6 +42,20 @@
 <dataTypeSize>10</dataTypeSize>
 <ownDataTypeParameters>10,,</ownDataTypeParameters>
 </Attribute>
+<Attribute name="loc_id" id="94A6F9AA-3FD3-FB59-350A-765DFBD408C0">
+<createdBy>Alex</createdBy>
+<createdTime>2026-03-22 12:19:14 UTC</createdTime>
+<generatorID>B1448279-5D72-1C3D-ED03-00DB3BF03F87</generatorID>
+<ownerDesignName>Library</ownerDesignName>
+<engineerTo>
+<item key="E47EBF60-E032-408D-574B-6D7273F66E66" value="true"/>
+</engineerTo>
+<referedAttribute>2156D814-F055-F596-FB22-5D4DE5BDA0D2</referedAttribute>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
 </attributes>
 <identifiers itemClass="oracle.dbtools.crest.model.design.logical.CandidateKey">
 <identifier id="12EA7A6F-71BB-DF8D-C9CC-2EC784D8936E" name="COMPARTMENTS PK">
@@ -54,6 +68,8 @@
 <pk>true</pk>
 <usedAttributes>
 <attributeRef>ADD9C9CF-F4BE-88E4-89B8-968A7F507650</attributeRef>
+<attributeRef>B75FCB6C-9B9C-7C5D-740B-C0DBE2797E72</attributeRef>
+<attributeRef>94A6F9AA-3FD3-FB59-350A-765DFBD408C0</attributeRef>
 </usedAttributes>
 </identifier>
 </identifiers>

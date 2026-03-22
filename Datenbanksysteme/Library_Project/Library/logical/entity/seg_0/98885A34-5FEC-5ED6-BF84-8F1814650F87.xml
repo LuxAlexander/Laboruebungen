@@ -53,6 +53,21 @@
 <logicalDatatype>LOGDT011</logicalDatatype>
 <ownDataTypeParameters>,,</ownDataTypeParameters>
 </Attribute>
+<Attribute name="barcode_id" id="84E06D87-EFE4-27DE-78D2-D50A23AB9DAB">
+<createdBy>Alex</createdBy>
+<createdTime>2026-03-22 12:07:05 UTC</createdTime>
+<generatorID>BACED767-D281-2FE3-3A3C-614BEAC0461E</generatorID>
+<ownerDesignName>Library</ownerDesignName>
+<engineerTo>
+<item key="E47EBF60-E032-408D-574B-6D7273F66E66" value="true"/>
+</engineerTo>
+<referedAttribute>AD1D1AA4-A69B-84F8-3FCE-BCBE4832C615</referedAttribute>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>15</dataTypeSize>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
 </attributes>
 <identifiers itemClass="oracle.dbtools.crest.model.design.logical.CandidateKey">
 <identifier id="8356DABE-7932-5A74-73FA-21D24D5E8A8A" name="STATISTIC PK">
@@ -65,6 +80,7 @@
 <pk>true</pk>
 <usedAttributes>
 <attributeRef>A352D196-4BE7-9C44-A79E-E02FFA3D32B3</attributeRef>
+<attributeRef>84E06D87-EFE4-27DE-78D2-D50A23AB9DAB</attributeRef>
 </usedAttributes>
 </identifier>
 </identifiers>

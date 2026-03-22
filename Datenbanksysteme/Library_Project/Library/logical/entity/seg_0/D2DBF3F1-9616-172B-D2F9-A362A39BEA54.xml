@@ -58,15 +58,32 @@
 <logicalDatatype>LOGDT011</logicalDatatype>
 <ownDataTypeParameters>,,</ownDataTypeParameters>
 </Attribute>
-<Attribute name="statistic_id" id="A46A7E28-8310-5438-F2AB-B0A58739542B">
-<createdBy>User</createdBy>
-<createdTime>2026-03-17 13:39:53 UTC</createdTime>
-<generatorID>FDDDFDA5-342C-A0D1-E487-6EF4614F556A</generatorID>
+<Attribute name="shelf_id" id="C41209AC-3522-31C8-87A3-3B755BF93D86">
+<createdBy>Alex</createdBy>
+<createdTime>2026-03-22 12:19:19 UTC</createdTime>
+<generatorID>1F8DB4E8-D9CE-2AB0-D570-F21BFDA08F19</generatorID>
 <ownerDesignName>Library</ownerDesignName>
 <engineerTo>
 <item key="E47EBF60-E032-408D-574B-6D7273F66E66" value="true"/>
 </engineerTo>
-<referedAttribute>A352D196-4BE7-9C44-A79E-E02FFA3D32B3</referedAttribute>
+<nullsAllowed>true</nullsAllowed>
+<referedAttribute>B75FCB6C-9B9C-7C5D-740B-C0DBE2797E72</referedAttribute>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>10</dataTypeSize>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="loc_id" id="A62F02B6-829C-ED9C-83A3-3F2EECF9809D">
+<createdBy>Alex</createdBy>
+<createdTime>2026-03-22 12:19:19 UTC</createdTime>
+<generatorID>1F8DB4E8-D9CE-2AB0-D570-F21BFDA08F19</generatorID>
+<ownerDesignName>Library</ownerDesignName>
+<engineerTo>
+<item key="E47EBF60-E032-408D-574B-6D7273F66E66" value="true"/>
+</engineerTo>
+<nullsAllowed>true</nullsAllowed>
+<referedAttribute>94A6F9AA-3FD3-FB59-350A-765DFBD408C0</referedAttribute>
 <useDomainConstraints>false</useDomainConstraints>
 <use>1</use>
 <logicalDatatype>LOGDT011</logicalDatatype>

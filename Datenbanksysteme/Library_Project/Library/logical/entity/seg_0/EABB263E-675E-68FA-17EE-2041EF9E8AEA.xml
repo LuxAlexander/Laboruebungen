@@ -27,20 +27,6 @@
 <logicalDatatype>LOGDT011</logicalDatatype>
 <ownDataTypeParameters>,,</ownDataTypeParameters>
 </Attribute>
-<Attribute name="media_id" id="F44F308A-F78F-4926-0213-9883D8C9746E">
-<createdBy>User</createdBy>
-<createdTime>2026-03-17 12:53:40 UTC</createdTime>
-<generatorID>4B0F3BFD-C8C8-772F-8AE6-822B5C18490A</generatorID>
-<ownerDesignName>Library</ownerDesignName>
-<engineerTo>
-<item key="E47EBF60-E032-408D-574B-6D7273F66E66" value="true"/>
-</engineerTo>
-<referedAttribute>ADD935F8-AE7F-3468-551B-F426B389C450</referedAttribute>
-<useDomainConstraints>false</useDomainConstraints>
-<use>1</use>
-<logicalDatatype>LOGDT011</logicalDatatype>
-<ownDataTypeParameters>,,</ownDataTypeParameters>
-</Attribute>
 <Attribute name="cost" id="DD61659A-F66B-1CF3-45E9-A1A97C57F34F">
 <createdBy>User</createdBy>
 <createdTime>2026-03-17 12:41:36 UTC</createdTime>
@@ -56,6 +42,47 @@
 <dataTypeScale>2</dataTypeScale>
 <ownDataTypeParameters>,9,2</ownDataTypeParameters>
 </Attribute>
+<Attribute name="creation_date" id="961E2FBE-3E07-7ADF-0A89-D5AC081D114F">
+<createdBy>Alex</createdBy>
+<createdTime>2026-03-22 12:24:02 UTC</createdTime>
+<ownerDesignName>Library</ownerDesignName>
+<engineerTo>
+<item key="E47EBF60-E032-408D-574B-6D7273F66E66" value="true"/>
+</engineerTo>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT008</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="valid" id="8A77E038-24C3-E74E-0A7F-836DB8069781">
+<createdBy>Alex</createdBy>
+<createdTime>2026-03-22 12:23:33 UTC</createdTime>
+<ownerDesignName>Library</ownerDesignName>
+<engineerTo>
+<item key="E47EBF60-E032-408D-574B-6D7273F66E66" value="true"/>
+</engineerTo>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT006</logicalDatatype>
+<dataTypeSize>1</dataTypeSize>
+<ownDataTypeParameters>1,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="type_id" id="B8F17024-E215-2FE9-8749-C7D8B9EDAE45">
+<createdBy>Alex</createdBy>
+<createdTime>2026-03-22 12:33:00 UTC</createdTime>
+<generatorID>D6902637-2407-0E4F-4CC0-1A932FCAF50B</generatorID>
+<ownerDesignName>Library</ownerDesignName>
+<engineerTo>
+<item key="E47EBF60-E032-408D-574B-6D7273F66E66" value="true"/>
+</engineerTo>
+<referedAttribute>410742B4-055F-FFA2-6420-47507BB39F4C</referedAttribute>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
 </attributes>
 <identifiers itemClass="oracle.dbtools.crest.model.design.logical.CandidateKey">
 <identifier id="1B382577-2204-9BBE-1EE7-33082B31A2A7" name="COST_Management PK">
@@ -67,7 +94,6 @@
 </engineerTo>
 <pk>true</pk>
 <usedAttributes>
-<attributeRef>F44F308A-F78F-4926-0213-9883D8C9746E</attributeRef>
 <attributeRef>DC957ADF-7EDC-DA1B-93CE-E10E075C7AC8</attributeRef>
 </usedAttributes>
 </identifier>
