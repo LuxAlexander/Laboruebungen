@@ -1,0 +1,17 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<FKIndexAssociation class="oracle.dbtools.crest.model.design.relational.FKIndexAssociation" directorySegmentName="seg_0" id="A7452AE6-8DF4-3E35-98BB-843068C2AE08" containerWithKeyObject="BC432D55-20A6-DD54-532F-54C533D79F06" localFKIndex="BFDCFDB3-FCAF-9BDF-47FF-AFAEA996B7B4" name="RESERVATIONS_LEDGER_FK">
+<createdBy>susan</createdBy>
+<createdTime>2026-03-23 08:15:01 UTC</createdTime>
+<generatorID>53FF10BF-BED9-B5C0-8C7A-24DFEFD596B5</generatorID>
+<ownerDesignName>Library</ownerDesignName>
+<referredTableLongName>LEDGER</referredTableLongName>
+<deleteRule>NO ACTION</deleteRule>
+<referredTableID>67553533-294A-811D-B41D-B2AC04EAF5A4</referredTableID>
+<keyObject>00F0D8CF-08F0-044E-1862-5A1FBFDC5DF6</keyObject>
+<referredKeyID>00F0D8CF-08F0-044E-1862-5A1FBFDC5DF6</referredKeyID>
+<mandatory>true</mandatory>
+<refColNames>ledger_id,CUSTOMER_customer_id,COPIES_barcode_id,COPIES_media_id</refColNames>
+<transferable>true</transferable>
+<rely>false</rely>
+<columnDependencyConstraintGenerateInDDL>true</columnDependencyConstraintGenerateInDDL>
+</FKIndexAssociation>

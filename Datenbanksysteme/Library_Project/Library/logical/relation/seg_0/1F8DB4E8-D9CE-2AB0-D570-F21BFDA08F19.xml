@@ -10,8 +10,8 @@
 <identifying>false</identifying>
 <nameOnSource>found_in</nameOnSource>
 <nameOnTarget>has_books</nameOnTarget>
-<optionalSource>false</optionalSource>
-<optionalTarget>true</optionalTarget>
+<optionalSource>true</optionalSource>
+<optionalTarget>false</optionalTarget>
 <sourceCardinality>1</sourceCardinality>
 <sourceEntity>1B26950B-4DEA-BE93-171B-14859B0CABC7</sourceEntity>
 <targetCardinalityString>*</targetCardinalityString>

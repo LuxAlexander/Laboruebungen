@@ -1,0 +1,75 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Table class="oracle.dbtools.crest.model.design.relational.Table" directorySegmentName="seg_0" id="12C7AE8C-4C1E-D212-33A7-404FC27D7317" name="written_by">
+<createdBy>susan</createdBy>
+<createdTime>2026-03-23 08:15:01 UTC</createdTime>
+<ownerDesignName>Library</ownerDesignName>
+<allowColumnReorder>false</allowColumnReorder>
+<existDependencyGenerateInDDl>true</existDependencyGenerateInDDl>
+<parsed>true</parsed>
+<columns itemClass="oracle.dbtools.crest.model.design.relational.Column">
+<Column name="MEDIA_media_id" id="F1D9F7C1-E0A5-3C1D-6A53-A4ABDF7ED08B">
+<createdBy>susan</createdBy>
+<createdTime>2026-03-23 08:15:01 UTC</createdTime>
+<ownerDesignName>Library</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<previousColumn>false</previousColumn>
+<autoIncrementCycle>false</autoIncrementCycle>
+<associations>
+<colAssociation fkAssociation="2B541369-9612-274E-7A9F-B167B17B219E" referredColumn="A253FAFC-BC97-62F8-3D6C-37DD436330C8"/>
+</associations>
+</Column>
+<Column name="AUTHORS_author_id" id="FC6BE81D-E1E3-DF33-1552-5B61203A8CC4">
+<createdBy>susan</createdBy>
+<createdTime>2026-03-23 08:15:01 UTC</createdTime>
+<ownerDesignName>Library</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<previousColumn>false</previousColumn>
+<autoIncrementCycle>false</autoIncrementCycle>
+<associations>
+<colAssociation fkAssociation="0700A915-BD1D-1584-5EAC-910873977321" referredColumn="DA097FCB-6FEE-0F8A-EB1D-E4F1DC627B8B"/>
+</associations>
+</Column>
+</columns>
+<indexes itemClass="oracle.dbtools.crest.model.design.relational.Index">
+<ind_PK_UK id="798181E1-9231-70EC-03C4-90D12AEBD178" name="written_by_PK">
+<createdBy>susan</createdBy>
+<createdTime>2026-03-23 08:15:01 UTC</createdTime>
+<ownerDesignName>Library</ownerDesignName>
+<pk>true</pk>
+<indexState>Primary Constraint</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="F1D9F7C1-E0A5-3C1D-6A53-A4ABDF7ED08B"/>
+<colUsage columnID="FC6BE81D-E1E3-DF33-1552-5B61203A8CC4"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="422CAE4E-E85A-AC52-893D-9C3F64941D2C" name="written_by_MEDIA_FK">
+<createdBy>susan</createdBy>
+<createdTime>2026-03-23 08:15:01 UTC</createdTime>
+<generatorID>FD603298-082F-CD11-DBB2-FEB442102E7D</generatorID>
+<ownerDesignName>Library</ownerDesignName>
+<indexState>Foreign Key</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="F1D9F7C1-E0A5-3C1D-6A53-A4ABDF7ED08B"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="616B35B9-D5AB-9E7D-5BCE-DA9FD007A4F1" name="written_by_AUTHORS_FK">
+<createdBy>susan</createdBy>
+<createdTime>2026-03-23 08:15:01 UTC</createdTime>
+<generatorID>FD603298-082F-CD11-DBB2-FEB442102E7D</generatorID>
+<ownerDesignName>Library</ownerDesignName>
+<indexState>Foreign Key</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="FC6BE81D-E1E3-DF33-1552-5B61203A8CC4"/>
+</indexColumnUsage>
+</ind_PK_UK>
+</indexes>
+</Table>

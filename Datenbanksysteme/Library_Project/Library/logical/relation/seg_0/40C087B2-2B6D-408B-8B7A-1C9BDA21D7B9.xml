@@ -1,0 +1,19 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Relation class="oracle.dbtools.crest.model.design.logical.Relation" name="MEDIA_IDENT" directorySegmentName="seg_0" id="40C087B2-2B6D-408B-8B7A-1C9BDA21D7B9">
+<createdBy>susan</createdBy>
+<createdTime>2026-03-23 08:12:20 UTC</createdTime>
+<ownerDesignName>Library</ownerDesignName>
+<engineerTo>
+<item key="E47EBF60-E032-408D-574B-6D7273F66E66" value="true"/>
+</engineerTo>
+<sourcePk>A2CDF2D7-50EB-97A3-6EF6-BA07D3C33409</sourcePk>
+<identifying>false</identifying>
+<optionalSource>true</optionalSource>
+<optionalTarget>false</optionalTarget>
+<sourceCardinality>1</sourceCardinality>
+<sourceEntity>5AC17FC7-D784-C27E-297E-3EE9187BC695</sourceEntity>
+<targetCardinalityString>*</targetCardinalityString>
+<targetEntity>9ECC3BC1-5152-9E44-28AD-262CD652FFF9</targetEntity>
+<transferable>true</transferable>
+<deleteRule>NO ACTION</deleteRule>
+</Relation>

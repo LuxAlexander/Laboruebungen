@@ -8,9 +8,9 @@
 </engineerTo>
 <sourcePk>E518E904-34EC-B632-7FBA-8B76A0F932DF</sourcePk>
 <targetPk>1FCB68D1-1FA4-549B-485E-E9BBBD8F7E59</targetPk>
-<identifying>false</identifying>
-<optionalSource>true</optionalSource>
-<optionalTarget>false</optionalTarget>
+<identifying>true</identifying>
+<optionalSource>false</optionalSource>
+<optionalTarget>true</optionalTarget>
 <sourceCardinality>*</sourceCardinality>
 <sourceEntity>C83441B5-908E-8311-4F72-3AE4E1284D54</sourceEntity>
 <targetCardinalityString>1</targetCardinalityString>

@@ -1,0 +1,17 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<FKIndexAssociation class="oracle.dbtools.crest.model.design.relational.FKIndexAssociation" directorySegmentName="seg_0" id="1F1A816C-175C-D784-229E-0CD591CB8FCA" containerWithKeyObject="D5493AA3-611C-E644-8B73-61C11E0B05DA" localFKIndex="29B910D6-4AFC-32CD-5C80-39FC9779D120" name="GENRE_COST_EVALUATION_FK">
+<createdBy>susan</createdBy>
+<createdTime>2026-03-23 08:15:01 UTC</createdTime>
+<generatorID>1C652E50-40A7-974E-3CB1-0BC458903D61</generatorID>
+<ownerDesignName>Library</ownerDesignName>
+<referredTableLongName>COST_EVALUATION</referredTableLongName>
+<deleteRule>NO ACTION</deleteRule>
+<referredTableID>54AAB4D4-8B84-DAEC-41F9-A4A1C0410171</referredTableID>
+<keyObject>5B31DC57-F076-9D5D-CED5-D68AF2308A6C</keyObject>
+<referredKeyID>5B31DC57-F076-9D5D-CED5-D68AF2308A6C</referredKeyID>
+<mandatory>false</mandatory>
+<refColNames>cost_id,MEDIA_TYPE_type_id</refColNames>
+<transferable>true</transferable>
+<rely>false</rely>
+<columnDependencyConstraintGenerateInDDL>true</columnDependencyConstraintGenerateInDDL>
+</FKIndexAssociation>

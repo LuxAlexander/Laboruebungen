@@ -68,6 +68,20 @@
 <dataTypeSize>15</dataTypeSize>
 <ownDataTypeParameters>15,,</ownDataTypeParameters>
 </Attribute>
+<Attribute name="media_id" id="05D65ECA-2D61-7EC4-521C-ACB695C2D607">
+<createdBy>susan</createdBy>
+<createdTime>2026-03-23 07:35:51 UTC</createdTime>
+<generatorID>BACED767-D281-2FE3-3A3C-614BEAC0461E</generatorID>
+<ownerDesignName>Library</ownerDesignName>
+<engineerTo>
+<item key="E47EBF60-E032-408D-574B-6D7273F66E66" value="true"/>
+</engineerTo>
+<referedAttribute>E52C319D-FA78-BA90-C581-3C238877684B</referedAttribute>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
 </attributes>
 <identifiers itemClass="oracle.dbtools.crest.model.design.logical.CandidateKey">
 <identifier id="8356DABE-7932-5A74-73FA-21D24D5E8A8A" name="STATISTIC PK">
@@ -81,6 +95,7 @@
 <usedAttributes>
 <attributeRef>A352D196-4BE7-9C44-A79E-E02FFA3D32B3</attributeRef>
 <attributeRef>84E06D87-EFE4-27DE-78D2-D50A23AB9DAB</attributeRef>
+<attributeRef>05D65ECA-2D61-7EC4-521C-ACB695C2D607</attributeRef>
 </usedAttributes>
 </identifier>
 </identifiers>

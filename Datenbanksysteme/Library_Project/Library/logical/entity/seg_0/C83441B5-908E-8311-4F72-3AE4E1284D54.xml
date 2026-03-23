@@ -47,23 +47,93 @@
 <engineerTo>
 <item key="E47EBF60-E032-408D-574B-6D7273F66E66" value="true"/>
 </engineerTo>
-<nullsAllowed>true</nullsAllowed>
 <referedAttribute>CC90A360-5BFC-B89E-6612-98C0F6F92915</referedAttribute>
 <useDomainConstraints>false</useDomainConstraints>
 <use>1</use>
 <logicalDatatype>LOGDT011</logicalDatatype>
 <ownDataTypeParameters>,,</ownDataTypeParameters>
 </Attribute>
-<Attribute name="media_id" id="EA0F3BE7-DCA7-E5AB-B6F3-F3DBB3B48717">
+<Attribute name="barcode_id" id="A8564FAA-0AA3-2B13-E8AA-877B7071F190">
 <createdBy>susan</createdBy>
-<createdTime>2026-03-17 14:09:06 UTC</createdTime>
+<createdTime>2026-03-23 07:47:33 UTC</createdTime>
 <generatorID>DD8BA6C3-631B-430E-8E15-9B6E8465088E</generatorID>
 <ownerDesignName>Library</ownerDesignName>
 <engineerTo>
 <item key="E47EBF60-E032-408D-574B-6D7273F66E66" value="true"/>
 </engineerTo>
-<nullsAllowed>true</nullsAllowed>
-<referedAttribute>ADD935F8-AE7F-3468-551B-F426B389C450</referedAttribute>
+<referedAttribute>AD1D1AA4-A69B-84F8-3FCE-BCBE4832C615</referedAttribute>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>15</dataTypeSize>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="media_id" id="D9BEDA6E-20E2-53D0-0BFA-F5460BBBF1BF">
+<createdBy>susan</createdBy>
+<createdTime>2026-03-23 07:47:33 UTC</createdTime>
+<generatorID>DD8BA6C3-631B-430E-8E15-9B6E8465088E</generatorID>
+<ownerDesignName>Library</ownerDesignName>
+<engineerTo>
+<item key="E47EBF60-E032-408D-574B-6D7273F66E66" value="true"/>
+</engineerTo>
+<referedAttribute>E52C319D-FA78-BA90-C581-3C238877684B</referedAttribute>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="ledger_id" id="38F7E514-8112-DA25-EB59-C5A242DFE2F6">
+<createdBy>susan</createdBy>
+<createdTime>2026-03-23 07:58:16 UTC</createdTime>
+<generatorID>53FF10BF-BED9-B5C0-8C7A-24DFEFD596B5</generatorID>
+<ownerDesignName>Library</ownerDesignName>
+<engineerTo>
+<item key="E47EBF60-E032-408D-574B-6D7273F66E66" value="true"/>
+</engineerTo>
+<referedAttribute>7F04366A-9B38-070A-6181-C59E8E78C931</referedAttribute>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="customer_id1" id="7731B92B-A729-FB48-F385-D5C9778A8128">
+<createdBy>susan</createdBy>
+<createdTime>2026-03-23 07:58:16 UTC</createdTime>
+<generatorID>53FF10BF-BED9-B5C0-8C7A-24DFEFD596B5</generatorID>
+<ownerDesignName>Library</ownerDesignName>
+<engineerTo>
+<item key="E47EBF60-E032-408D-574B-6D7273F66E66" value="true"/>
+</engineerTo>
+<referedAttribute>7F3FC43E-967E-D4B7-7DE3-5C918005E150</referedAttribute>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="barcode_id1" id="46450E29-2A12-D7E8-44C5-0FAF298148E3">
+<createdBy>susan</createdBy>
+<createdTime>2026-03-23 07:58:16 UTC</createdTime>
+<generatorID>53FF10BF-BED9-B5C0-8C7A-24DFEFD596B5</generatorID>
+<ownerDesignName>Library</ownerDesignName>
+<engineerTo>
+<item key="E47EBF60-E032-408D-574B-6D7273F66E66" value="true"/>
+</engineerTo>
+<referedAttribute>5F7D76FE-5159-E6D6-8AFD-EE43D78BEAE1</referedAttribute>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>15</dataTypeSize>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="media_id1" id="4DDA97BF-6865-8B0B-ED87-C301532CBCEE">
+<createdBy>susan</createdBy>
+<createdTime>2026-03-23 07:58:16 UTC</createdTime>
+<generatorID>53FF10BF-BED9-B5C0-8C7A-24DFEFD596B5</generatorID>
+<ownerDesignName>Library</ownerDesignName>
+<engineerTo>
+<item key="E47EBF60-E032-408D-574B-6D7273F66E66" value="true"/>
+</engineerTo>
+<referedAttribute>14967EFB-E8E6-7C42-BC71-F489BDAE52C1</referedAttribute>
 <useDomainConstraints>false</useDomainConstraints>
 <use>1</use>
 <logicalDatatype>LOGDT011</logicalDatatype>
@@ -81,6 +151,9 @@
 <pk>true</pk>
 <usedAttributes>
 <attributeRef>9312F4BB-4B84-A0CE-01B2-3561F5D9B003</attributeRef>
+<attributeRef>A8564FAA-0AA3-2B13-E8AA-877B7071F190</attributeRef>
+<attributeRef>D9BEDA6E-20E2-53D0-0BFA-F5460BBBF1BF</attributeRef>
+<attributeRef>A55E6BC8-56B9-6A86-CBAA-73010D8EF5E6</attributeRef>
 </usedAttributes>
 </identifier>
 </identifiers>

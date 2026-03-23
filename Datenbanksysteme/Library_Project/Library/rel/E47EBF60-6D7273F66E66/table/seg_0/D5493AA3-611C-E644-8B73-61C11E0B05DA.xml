@@ -1,0 +1,93 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Table class="oracle.dbtools.crest.model.design.relational.Table" directorySegmentName="seg_0" id="D5493AA3-611C-E644-8B73-61C11E0B05DA" name="GENRE">
+<createdBy>susan</createdBy>
+<createdTime>2026-03-23 08:15:01 UTC</createdTime>
+<generatorID>64AF4950-9497-737C-4024-18EA8405AF83</generatorID>
+<ownerDesignName>Library</ownerDesignName>
+<allowColumnReorder>false</allowColumnReorder>
+<existDependencyGenerateInDDl>true</existDependencyGenerateInDDl>
+<parsed>true</parsed>
+<columns itemClass="oracle.dbtools.crest.model.design.relational.Column">
+<Column name="genre_id" id="A85D416B-B842-DD6C-3945-CC0F9B70AEF7">
+<createdBy>susan</createdBy>
+<createdTime>2026-03-23 08:15:01 UTC</createdTime>
+<generatorID>2109A4A9-F286-C1E7-2FC0-341224721D54</generatorID>
+<ownerDesignName>Library</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="category" id="43842BC0-0B23-D5E2-7FD3-E057B647E1A2">
+<createdBy>susan</createdBy>
+<createdTime>2026-03-23 08:15:01 UTC</createdTime>
+<generatorID>4ECD8FBA-98C9-1D8C-318C-7D2FB4BBF0D5</generatorID>
+<ownerDesignName>Library</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>30</dataTypeSize>
+<ownDataTypeParameters>30,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="COST_EVALUATION_cost_id" id="B9F3A87A-11C4-6871-6241-576632960C4A">
+<createdBy>susan</createdBy>
+<createdTime>2026-03-23 08:15:01 UTC</createdTime>
+<generatorID>9023D5BF-30B1-BF67-CC25-811C7D6FD039</generatorID>
+<ownerDesignName>Library</ownerDesignName>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<previousColumn>false</previousColumn>
+<autoIncrementCycle>false</autoIncrementCycle>
+<associations>
+<colAssociation fkAssociation="1F1A816C-175C-D784-229E-0CD591CB8FCA" referredColumn="E1BEB706-288C-FB2B-BE86-D3EC19983961"/>
+</associations>
+</Column>
+<Column name="COST_EVALUATION_type_id" id="802D4C98-4D1E-B2E6-AE25-B90E14CAE4D5">
+<createdBy>susan</createdBy>
+<createdTime>2026-03-23 08:15:01 UTC</createdTime>
+<generatorID>76795403-F675-FAAF-ACC1-65E72DD5CF62</generatorID>
+<ownerDesignName>Library</ownerDesignName>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<previousColumn>false</previousColumn>
+<autoIncrementCycle>false</autoIncrementCycle>
+<associations>
+<colAssociation fkAssociation="1F1A816C-175C-D784-229E-0CD591CB8FCA" referredColumn="46AF9138-CAE8-C7EC-C6BE-6553789CD994"/>
+</associations>
+</Column>
+</columns>
+<indexes itemClass="oracle.dbtools.crest.model.design.relational.Index">
+<ind_PK_UK id="4191A4E0-10E7-74D2-E3DC-74E90251E2BC" name="GENRE_PK">
+<createdBy>susan</createdBy>
+<createdTime>2026-03-23 08:15:01 UTC</createdTime>
+<generatorID>24E2D7D1-A530-54B8-7DBB-071F888F672C</generatorID>
+<ownerDesignName>Library</ownerDesignName>
+<pk>true</pk>
+<indexState>Primary Constraint</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="A85D416B-B842-DD6C-3945-CC0F9B70AEF7"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="29B910D6-4AFC-32CD-5C80-39FC9779D120" name="GENRE_COST_EVALUATION_FK">
+<createdBy>susan</createdBy>
+<createdTime>2026-03-23 08:15:01 UTC</createdTime>
+<generatorID>1C652E50-40A7-974E-3CB1-0BC458903D61</generatorID>
+<ownerDesignName>Library</ownerDesignName>
+<indexState>Foreign Key</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="B9F3A87A-11C4-6871-6241-576632960C4A"/>
+<colUsage columnID="802D4C98-4D1E-B2E6-AE25-B90E14CAE4D5"/>
+</indexColumnUsage>
+</ind_PK_UK>
+</indexes>
+</Table>

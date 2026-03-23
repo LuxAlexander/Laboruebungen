@@ -14,6 +14,9 @@
 <maxVolumes>9999999</maxVolumes>
 <minVolumes>0</minVolumes>
 <normalForm>Third</normalForm>
+<generateDiscrimColumn>true</generateDiscrimColumn>
+<discriminatorAttributeID>D5660707-AA40-491F-2D7E-53D65A057F68</discriminatorAttributeID>
+<discriminatorColumnName>MEDIA_TYPE</discriminatorColumnName>
 <attributes itemClass="oracle.dbtools.crest.model.design.logical.Attribute">
 <Attribute name="media_id" id="ADD935F8-AE7F-3468-551B-F426B389C450">
 <createdBy>User</createdBy>
@@ -65,16 +68,32 @@
 <logicalDatatype>LOGDT011</logicalDatatype>
 <ownDataTypeParameters>,,</ownDataTypeParameters>
 </Attribute>
+<Attribute name="type_id" id="D5660707-AA40-491F-2D7E-53D65A057F68">
+<createdBy>susan</createdBy>
+<createdTime>2026-03-23 08:12:20 UTC</createdTime>
+<generatorID>40C087B2-2B6D-408B-8B7A-1C9BDA21D7B9</generatorID>
+<ownerDesignName>Library</ownerDesignName>
+<engineerTo>
+<item key="E47EBF60-E032-408D-574B-6D7273F66E66" value="true"/>
+</engineerTo>
+<referedAttribute>410742B4-055F-FFA2-6420-47507BB39F4C</referedAttribute>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
 </attributes>
 <identifiers itemClass="oracle.dbtools.crest.model.design.logical.CandidateKey">
 <identifier id="B971710D-350C-8821-27FC-612E2E52E04B" name="MEDIA PK">
 <createdBy>User</createdBy>
 <createdTime>2026-03-10 14:29:31 UTC</createdTime>
 <ownerDesignName>Library</ownerDesignName>
+<shouldEngineer>false</shouldEngineer>
 <engineerTo>
-<item key="E47EBF60-E032-408D-574B-6D7273F66E66" value="true"/>
+<item key="E47EBF60-E032-408D-574B-6D7273F66E66" value="false"/>
 </engineerTo>
 <pk>true</pk>
+<newElementsIDs>ADD935F8-AE7F-3468-551B-F426B389C450</newElementsIDs>
 <usedAttributes>
 <attributeRef>ADD935F8-AE7F-3468-551B-F426B389C450</attributeRef>
 </usedAttributes>

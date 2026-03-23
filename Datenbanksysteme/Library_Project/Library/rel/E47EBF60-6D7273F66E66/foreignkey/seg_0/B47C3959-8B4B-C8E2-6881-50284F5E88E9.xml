@@ -1,0 +1,17 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<FKIndexAssociation class="oracle.dbtools.crest.model.design.relational.FKIndexAssociation" directorySegmentName="seg_0" id="B47C3959-8B4B-C8E2-6881-50284F5E88E9" containerWithKeyObject="BC432D55-20A6-DD54-532F-54C533D79F06" localFKIndex="D896BAC5-5A83-9E89-9186-A2E30B9EB1A9" name="RESERVATIONS_COPIES_FK">
+<createdBy>susan</createdBy>
+<createdTime>2026-03-23 08:15:01 UTC</createdTime>
+<generatorID>DD8BA6C3-631B-430E-8E15-9B6E8465088E</generatorID>
+<ownerDesignName>Library</ownerDesignName>
+<referredTableLongName>COPIES</referredTableLongName>
+<deleteRule>NO ACTION</deleteRule>
+<referredTableID>00B49015-E728-4A53-C4F0-1EC5A369EE95</referredTableID>
+<keyObject>7741E0EF-9D9A-7241-E186-E923AB274C37</keyObject>
+<referredKeyID>7741E0EF-9D9A-7241-E186-E923AB274C37</referredKeyID>
+<mandatory>true</mandatory>
+<refColNames>barcode_id,MEDIA_media_id</refColNames>
+<transferable>true</transferable>
+<rely>false</rely>
+<columnDependencyConstraintGenerateInDDL>true</columnDependencyConstraintGenerateInDDL>
+</FKIndexAssociation>
