@@ -1,0 +1,17 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<FKIndexAssociation class="oracle.dbtools.crest.model.design.relational.FKIndexAssociation" directorySegmentName="seg_0" id="2B8F1614-E1B4-1CD4-D7F9-DD201B308DEE" containerWithKeyObject="8236B048-D3B4-7BF5-EE35-5ED3F06FFE7C" localFKIndex="FB956144-7015-0D6C-54A5-1C87F56AB2B6" name="LEDGER_COST_EVALUATION_FK">
+<createdBy>Alex</createdBy>
+<createdTime>2026-03-23 16:27:28 UTC</createdTime>
+<generatorID>30068ECB-A996-9D2E-2326-022FAE12DD3B</generatorID>
+<ownerDesignName>Library</ownerDesignName>
+<referredTableLongName>COST_EVALUATION</referredTableLongName>
+<deleteRule>NO ACTION</deleteRule>
+<referredTableID>DFF3E388-FC59-F191-3A9F-691796DFCA03</referredTableID>
+<keyObject>28A7CF84-8772-F086-C0A6-70EED4AAFB82</keyObject>
+<referredKeyID>28A7CF84-8772-F086-C0A6-70EED4AAFB82</referredKeyID>
+<mandatory>true</mandatory>
+<refColNames>cost_id,MEDIA_TYPE_type_id</refColNames>
+<transferable>true</transferable>
+<rely>false</rely>
+<columnDependencyConstraintGenerateInDDL>true</columnDependencyConstraintGenerateInDDL>
+</FKIndexAssociation>

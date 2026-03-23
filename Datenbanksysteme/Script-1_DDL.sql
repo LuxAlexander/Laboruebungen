@@ -11,7 +11,7 @@ END;
 -- ======================
 -- SEQUENCES
 -- ======================
---CREATE SEQUENCE media_seq START WITH 1;
+CREATE SEQUENCE media_seq START WITH 1;
 CREATE SEQUENCE author_seq START WITH 1;
 CREATE SEQUENCE customer_seq START WITH 1;
 CREATE SEQUENCE genre_seq START WITH 1;
@@ -125,12 +125,7 @@ CREATE TABLE LOCATION (
     location_id NUMBER PRIMARY KEY
 );
 
-CREATE TABLE SHELF (
-    shelf_id NUMBER PRIMARY KEY,
-    location_id NUMBER NOT NULL,
-    CONSTRAINT shelf_location_fk FOREIGN KEY (location_id)
-        REFERENCES LOCATION(location_id)
-);
+
 
 CREATE TABLE COMPARTMENT (
     compartment_id NUMBER PRIMARY KEY,
@@ -178,6 +173,158 @@ CREATE TABLE RESERVATION (
     CONSTRAINT reservation_copy_fk FOREIGN KEY (copy_id)
         REFERENCES COPY(copy_id)
 );
+
+-- =========================================
+-- 2. COST_EVALUATION (neu)
+-- =========================================
+CREATE TABLE COST_EVALUATION (
+    cost_id NUMBER PRIMARY KEY,
+    media_type_id NUMBER NOT NULL,
+    cost NUMBER(9,2),
+    valid CHAR(1),
+    creation_date DATE DEFAULT SYSDATE,
+    CONSTRAINT ce_media_type_fk FOREIGN KEY (media_type_id)
+        REFERENCES MEDIA_TYPE(media_type_id)
+);
+
+CREATE SEQUENCE cost_eval_seq START WITH 1;
+
+CREATE OR REPLACE TRIGGER cost_eval_bi
+BEFORE INSERT ON COST_EVALUATION
+FOR EACH ROW
+BEGIN
+    IF :NEW.cost_id IS NULL THEN
+        SELECT cost_eval_seq.NEXTVAL INTO :NEW.cost_id FROM dual;
+    END IF;
+END;
+/
+
+-- =========================================
+-- 3. LEDGER erweitern (Kostenbezug)
+-- =========================================
+ALTER TABLE LEDGER ADD (
+    cost_id NUMBER
+);
+
+ALTER TABLE LEDGER ADD CONSTRAINT ledger_cost_fk
+FOREIGN KEY (cost_id)
+REFERENCES COST_EVALUATION(cost_id);
+
+-- =========================================
+-- 4. STATISTIC Tabelle hinzufügen
+-- =========================================
+CREATE TABLE STATISTIC (
+    statistic_id NUMBER PRIMARY KEY,
+    copy_id NUMBER NOT NULL UNIQUE,
+    number_time_borrowed NUMBER DEFAULT 0,
+    sum_time_borrowed NUMBER DEFAULT 0,
+    CONSTRAINT stat_copy_fk FOREIGN KEY (copy_id)
+        REFERENCES COPY(copy_id)
+);
+
+CREATE SEQUENCE statistic_seq START WITH 1;
+
+CREATE OR REPLACE TRIGGER statistic_bi
+BEFORE INSERT ON STATISTIC
+FOR EACH ROW
+BEGIN
+    IF :NEW.statistic_id IS NULL THEN
+        SELECT statistic_seq.NEXTVAL INTO :NEW.statistic_id FROM dual;
+    END IF;
+END;
+/
+
+-- =========================================
+-- 5. RESERVATION → LEDGER Beziehung ergänzen
+-- =========================================
+ALTER TABLE RESERVATION ADD (
+    ledger_id NUMBER
+);
+
+ALTER TABLE RESERVATION ADD CONSTRAINT reservation_ledger_fk
+FOREIGN KEY (ledger_id)
+REFERENCES LEDGER(ledger_id);
+
+-- =========================================
+-- 6. ARC CONSTRAINTS (Subtyp-Validierung)
+-- =========================================
+
+-- BOOKS
+CREATE OR REPLACE TRIGGER trg_books_check
+BEFORE INSERT OR UPDATE ON BOOKS
+FOR EACH ROW
+DECLARE
+    v_type NUMBER;
+BEGIN
+    SELECT media_type_id INTO v_type
+    FROM MEDIA
+    WHERE media_id = :NEW.media_id;
+
+    IF v_type != 1 THEN -- Annahme: 1 = BOOK
+        raise_application_error(-20001, 'MEDIA is not type BOOK');
+    END IF;
+END;
+/
+
+-- AUDIO
+CREATE OR REPLACE TRIGGER trg_audio_check
+BEFORE INSERT OR UPDATE ON AUDIO
+FOR EACH ROW
+DECLARE
+    v_type NUMBER;
+BEGIN
+    SELECT media_type_id INTO v_type
+    FROM MEDIA
+    WHERE media_id = :NEW.media_id;
+
+    IF v_type != 2 THEN -- Annahme: 2 = AUDIO
+        raise_application_error(-20002, 'MEDIA is not type AUDIO');
+    END IF;
+END;
+/
+
+-- MOVIES
+CREATE OR REPLACE TRIGGER trg_movies_check
+BEFORE INSERT OR UPDATE ON MOVIES
+FOR EACH ROW
+DECLARE
+    v_type NUMBER;
+BEGIN
+    SELECT media_type_id INTO v_type
+    FROM MEDIA
+    WHERE media_id = :NEW.media_id;
+
+    IF v_type != 3 THEN -- Annahme: 3 = MOVIE
+        raise_application_error(-20003, 'MEDIA is not type MOVIE');
+    END IF;
+END;
+/
+
+-- MAGAZINES
+CREATE OR REPLACE TRIGGER trg_magazines_check
+BEFORE INSERT OR UPDATE ON MAGAZINES
+FOR EACH ROW
+DECLARE
+    v_type NUMBER;
+BEGIN
+    SELECT media_type_id INTO v_type
+    FROM MEDIA
+    WHERE media_id = :NEW.media_id;
+
+    IF v_type != 4 THEN -- Annahme: 4 = MAGAZINE
+        raise_application_error(-20004, 'MEDIA is not type MAGAZINE');
+    END IF;
+END;
+/
+
+-- =========================================
+-- 7. PERFORMANCE (Indizes wie im Original)
+-- =========================================
+
+CREATE INDEX idx_copy_media ON COPY(media_id);
+CREATE INDEX idx_ledger_customer ON LEDGER(customer_id);
+CREATE INDEX idx_reservation_customer ON RESERVATION(customer_id);
+
 
 -- ======================
 -- AUTO-INCREMENT TRIGGERS
@@ -289,3 +436,93 @@ BEGIN
 END;
 
 
+
+--LOCATION erweitern
+ALTER TABLE LOCATION ADD (
+    name VARCHAR2(30),
+    street VARCHAR2(50)
+);
+
+
+ALTER TABLE SHELVES ADD(
+    shelf_code VARCHAR2(30)
+);
+
+ALTER TABLE COMPARTMENT  ADD(
+    position VARCHAR2(30)
+);
+
+-- GENRE erweitern (Kostenbezug)
+ALTER TABLE GENRE ADD (
+    cost_id NUMBER
+);
+
+ALTER TABLE GENRE ADD CONSTRAINT genre_cost_fk
+FOREIGN KEY (cost_id)
+REFERENCES COST_EVALUATION(cost_id);
+
+-- LEDGER erweitern
+ALTER TABLE LEDGER ADD (
+    cost_paid NUMBER(9,2)
+);
+
+--  COPY verbessern
+
+ALTER TABLE COPY ADD (
+    created_at DATE DEFAULT SYSDATE
+);
+
+-- 8. RESERVATION erweitern
+ALTER TABLE RESERVATION ADD (
+    status VARCHAR2(20)
+);
+
+ALTER TABLE FHS52423.GENRE DROP COLUMN COST_ID;
+
+-- 1. Sicherstellen, dass die Spalten nicht leer sein dürfen
+ALTER TABLE FHS52423.COST_EVALUATION 
+MODIFY (GENRE_ID NOT NULL, MEDIA_TYPE_ID NOT NULL);
+
+-- 2. Bestehenden Primärschlüssel (falls vorhanden) löschen
+-- 1. Primärschlüssel und alle darauf basierenden Fremdschlüssel löschen
+ALTER TABLE FHS52423.COST_EVALUATION 
+DROP PRIMARY KEY CASCADE;
+
+-- 2. Jetzt den neuen zusammengesetzten Primärschlüssel anlegen
+ALTER TABLE FHS52423.COST_EVALUATION 
+ADD CONSTRAINT PK_COST_MATRIX PRIMARY KEY (GENRE_ID, MEDIA_TYPE_ID);
+
+-- 3. Den zusammengesetzten Primärschlüssel erstellen
+ALTER TABLE FHS52423.COST_EVALUATION 
+ADD CONSTRAINT PK_COST_MATRIX PRIMARY KEY (GENRE_ID, MEDIA_TYPE_ID);
+
+ALTER TABLE FHS52423.COST_EVALUATION 
+DROP COLUMN COST_ID;
+
+-- Wir fügen die zwei Spalten hinzu, die jetzt gemeinsam den Preis identifizieren
+ALTER TABLE FHS52423.LEDGER ADD (
+    GENRE_ID NUMBER,
+    MEDIA_TYPE_ID NUMBER
+);
+
+ALTER TABLE FHS52423.LEDGER 
+ADD CONSTRAINT FK_LEDGER_COST_MATRIX 
+FOREIGN KEY (GENRE_ID, MEDIA_TYPE_ID) 
+REFERENCES FHS52423.COST_EVALUATION (GENRE_ID, MEDIA_TYPE_ID);
+
+ALTER TABLE FHS52423.LEDGER DROP COLUMN COST_ID;
+
+DROP TRIGGER FHS52423.COST_EVAL_BI;
+
+-- AI SCRIPT Increase number time borrowed
+CREATE OR REPLACE TRIGGER trg_update_statistic
+AFTER INSERT ON LEDGER
+FOR EACH ROW
+BEGIN
+    UPDATE STATISTIC
+    SET number_time_borrowed = number_time_borrowed + 1,
+        sum_time_borrowed = sum_time_borrowed + 
+            (NVL(:NEW.return_date, SYSDATE) - :NEW.start_date)
+    WHERE copy_id = :NEW.copy_id;
+END;
+/

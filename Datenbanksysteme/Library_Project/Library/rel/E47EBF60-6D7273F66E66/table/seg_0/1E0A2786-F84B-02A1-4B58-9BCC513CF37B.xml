@@ -1,0 +1,108 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Table class="oracle.dbtools.crest.model.design.relational.Table" directorySegmentName="seg_0" id="1E0A2786-F84B-02A1-4B58-9BCC513CF37B" name="MEDIA">
+<createdBy>Alex</createdBy>
+<createdTime>2026-03-23 16:27:28 UTC</createdTime>
+<generatorID>9ECC3BC1-5152-9E44-28AD-262CD652FFF9</generatorID>
+<ownerDesignName>Library</ownerDesignName>
+<allowColumnReorder>false</allowColumnReorder>
+<existDependencyGenerateInDDl>true</existDependencyGenerateInDDl>
+<parsed>true</parsed>
+<columns itemClass="oracle.dbtools.crest.model.design.relational.Column">
+<Column name="media_id" id="C74F5E4C-E412-344F-9686-86724B7529DF">
+<createdBy>Alex</createdBy>
+<createdTime>2026-03-23 16:27:28 UTC</createdTime>
+<generatorID>ADD935F8-AE7F-3468-551B-F426B389C450</generatorID>
+<ownerDesignName>Library</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="title" id="0BAB139C-6D2D-237A-B300-1E52413D2492">
+<createdBy>Alex</createdBy>
+<createdTime>2026-03-23 16:27:28 UTC</createdTime>
+<generatorID>97856769-57BE-4A51-3D8A-8CD9D78432A5</generatorID>
+<ownerDesignName>Library</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>50</dataTypeSize>
+<ownDataTypeParameters>50,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="description" id="C186A945-0590-545E-3129-5394E8204C23">
+<createdBy>Alex</createdBy>
+<createdTime>2026-03-23 16:27:28 UTC</createdTime>
+<generatorID>2833DB72-FAE7-B9B1-4A2F-85E9A948F14E</generatorID>
+<ownerDesignName>Library</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>200</dataTypeSize>
+<ownDataTypeParameters>200,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="age_restriction" id="D8F07285-D0D3-7716-9C56-634AA8CB4BF9">
+<createdBy>Alex</createdBy>
+<createdTime>2026-03-23 16:27:28 UTC</createdTime>
+<generatorID>0E87AC6B-FA9D-4EEF-DB92-C622F5D6757E</generatorID>
+<ownerDesignName>Library</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="MEDIA_TYPE_type_id" id="D6ED1FC0-BEEA-6759-0D40-EBE7CFBC3C01">
+<createdBy>Alex</createdBy>
+<createdTime>2026-03-23 16:27:28 UTC</createdTime>
+<generatorID>D5660707-AA40-491F-2D7E-53D65A057F68</generatorID>
+<ownerDesignName>Library</ownerDesignName>
+<constraintName>CH_INH_MEDIA</constraintName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<dataTypeSize>9</dataTypeSize>
+<listOfValues>
+<valueDef value="AUDIO" description="entity AUDIO"/>
+<valueDef value="BOOKS" description="entity BOOKS"/>
+<valueDef value="MAGAZINES" description="entity MAGAZINES"/>
+<valueDef value="MEDIA" description="entity MEDIA"/>
+<valueDef value="MOVIES" description="entity MOVIES"/>
+</listOfValues>
+<ownDataTypeParameters>9,,</ownDataTypeParameters>
+<previousColumn>false</previousColumn>
+<autoIncrementCycle>false</autoIncrementCycle>
+<isDiscriminatorColumn>true</isDiscriminatorColumn>
+<associations>
+<colAssociation fkAssociation="F04E798B-283F-AD48-C025-8C5A59B19B96" referredColumn="9CA11C1B-1A11-B2BA-E6F2-E0D57A3B1542"/>
+</associations>
+</Column>
+</columns>
+<indexes itemClass="oracle.dbtools.crest.model.design.relational.Index">
+<ind_PK_UK id="3CBD1C94-100D-A88C-DE3F-B9E10176D200" name="MEDIA_PK">
+<createdBy>Alex</createdBy>
+<createdTime>2026-03-23 16:27:28 UTC</createdTime>
+<generatorID>B971710D-350C-8821-27FC-612E2E52E04B</generatorID>
+<ownerDesignName>Library</ownerDesignName>
+<pk>true</pk>
+<indexState>Primary Constraint</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="C74F5E4C-E412-344F-9686-86724B7529DF"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="19680FF9-AB00-A99E-5127-4C5A0473B759" name="MEDIA_MEDIA_TYPE_FK">
+<createdBy>Alex</createdBy>
+<createdTime>2026-03-23 16:27:28 UTC</createdTime>
+<generatorID>40C087B2-2B6D-408B-8B7A-1C9BDA21D7B9</generatorID>
+<ownerDesignName>Library</ownerDesignName>
+<indexState>Foreign Key</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="D6ED1FC0-BEEA-6759-0D40-EBE7CFBC3C01"/>
+</indexColumnUsage>
+</ind_PK_UK>
+</indexes>
+</Table>

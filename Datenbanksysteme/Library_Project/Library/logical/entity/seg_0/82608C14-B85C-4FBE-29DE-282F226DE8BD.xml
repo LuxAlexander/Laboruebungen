@@ -167,6 +167,20 @@
 <logicalDatatype>LOGDT011</logicalDatatype>
 <ownDataTypeParameters>,,</ownDataTypeParameters>
 </Attribute>
+<Attribute name="genre_id" id="CBC17BB0-1779-4570-7D63-DF1DD41DE742">
+<createdBy>Alex</createdBy>
+<createdTime>2026-03-23 17:13:34 UTC</createdTime>
+<generatorID>30068ECB-A996-9D2E-2326-022FAE12DD3B</generatorID>
+<ownerDesignName>Library</ownerDesignName>
+<engineerTo>
+<item key="E47EBF60-E032-408D-574B-6D7273F66E66" value="true"/>
+</engineerTo>
+<referedAttribute>4C57939C-A73E-8F79-576F-48B4246DD07E</referedAttribute>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
 </attributes>
 <identifiers itemClass="oracle.dbtools.crest.model.design.logical.CandidateKey">
 <identifier id="326866E5-54EA-CF70-B701-F52E8EFCC657" name="LEDGER PK">

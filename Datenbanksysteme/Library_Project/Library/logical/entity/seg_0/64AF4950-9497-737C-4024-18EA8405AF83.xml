@@ -40,36 +40,6 @@
 <dataTypeSize>30</dataTypeSize>
 <ownDataTypeParameters>30,,</ownDataTypeParameters>
 </Attribute>
-<Attribute name="cost_id" id="9023D5BF-30B1-BF67-CC25-811C7D6FD039">
-<createdBy>Alex</createdBy>
-<createdTime>2026-03-22 12:13:02 UTC</createdTime>
-<generatorID>1C652E50-40A7-974E-3CB1-0BC458903D61</generatorID>
-<ownerDesignName>Library</ownerDesignName>
-<engineerTo>
-<item key="E47EBF60-E032-408D-574B-6D7273F66E66" value="true"/>
-</engineerTo>
-<nullsAllowed>true</nullsAllowed>
-<referedAttribute>DC957ADF-7EDC-DA1B-93CE-E10E075C7AC8</referedAttribute>
-<useDomainConstraints>false</useDomainConstraints>
-<use>1</use>
-<logicalDatatype>LOGDT011</logicalDatatype>
-<ownDataTypeParameters>,,</ownDataTypeParameters>
-</Attribute>
-<Attribute name="type_id" id="76795403-F675-FAAF-ACC1-65E72DD5CF62">
-<createdBy>susan</createdBy>
-<createdTime>2026-03-23 07:29:26 UTC</createdTime>
-<generatorID>1C652E50-40A7-974E-3CB1-0BC458903D61</generatorID>
-<ownerDesignName>Library</ownerDesignName>
-<engineerTo>
-<item key="E47EBF60-E032-408D-574B-6D7273F66E66" value="true"/>
-</engineerTo>
-<nullsAllowed>true</nullsAllowed>
-<referedAttribute>61B4F44F-B504-503E-BB4C-FC28C9FC0D5B</referedAttribute>
-<useDomainConstraints>false</useDomainConstraints>
-<use>1</use>
-<logicalDatatype>LOGDT011</logicalDatatype>
-<ownDataTypeParameters>,,</ownDataTypeParameters>
-</Attribute>
 </attributes>
 <identifiers itemClass="oracle.dbtools.crest.model.design.logical.CandidateKey">
 <identifier id="24E2D7D1-A530-54B8-7DBB-071F888F672C" name="GENRE PK">

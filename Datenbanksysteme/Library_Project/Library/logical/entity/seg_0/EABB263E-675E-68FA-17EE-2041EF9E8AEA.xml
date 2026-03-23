@@ -82,6 +82,20 @@
 <logicalDatatype>LOGDT011</logicalDatatype>
 <ownDataTypeParameters>,,</ownDataTypeParameters>
 </Attribute>
+<Attribute name="genre_id" id="4C57939C-A73E-8F79-576F-48B4246DD07E">
+<createdBy>Alex</createdBy>
+<createdTime>2026-03-23 17:13:34 UTC</createdTime>
+<generatorID>1C652E50-40A7-974E-3CB1-0BC458903D61</generatorID>
+<ownerDesignName>Library</ownerDesignName>
+<engineerTo>
+<item key="E47EBF60-E032-408D-574B-6D7273F66E66" value="true"/>
+</engineerTo>
+<referedAttribute>2109A4A9-F286-C1E7-2FC0-341224721D54</referedAttribute>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
 </attributes>
 <identifiers itemClass="oracle.dbtools.crest.model.design.logical.CandidateKey">
 <identifier id="1B382577-2204-9BBE-1EE7-33082B31A2A7" name="COST_Management PK">
@@ -95,6 +109,7 @@
 <usedAttributes>
 <attributeRef>DC957ADF-7EDC-DA1B-93CE-E10E075C7AC8</attributeRef>
 <attributeRef>61B4F44F-B504-503E-BB4C-FC28C9FC0D5B</attributeRef>
+<attributeRef>4C57939C-A73E-8F79-576F-48B4246DD07E</attributeRef>
 </usedAttributes>
 </identifier>
 </identifiers>

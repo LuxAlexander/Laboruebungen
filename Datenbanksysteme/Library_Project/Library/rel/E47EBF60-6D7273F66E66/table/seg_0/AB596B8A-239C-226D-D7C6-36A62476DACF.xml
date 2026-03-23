@@ -1,0 +1,95 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Table class="oracle.dbtools.crest.model.design.relational.Table" directorySegmentName="seg_0" id="AB596B8A-239C-226D-D7C6-36A62476DACF" name="COMPARTMENTS">
+<createdBy>Alex</createdBy>
+<createdTime>2026-03-23 16:27:28 UTC</createdTime>
+<generatorID>1B26950B-4DEA-BE93-171B-14859B0CABC7</generatorID>
+<ownerDesignName>Library</ownerDesignName>
+<allowColumnReorder>false</allowColumnReorder>
+<existDependencyGenerateInDDl>true</existDependencyGenerateInDDl>
+<parsed>true</parsed>
+<columns itemClass="oracle.dbtools.crest.model.design.relational.Column">
+<Column name="comp_id" id="EAD7782E-ADAA-2913-526B-3A146110E9AB">
+<createdBy>Alex</createdBy>
+<createdTime>2026-03-23 16:27:28 UTC</createdTime>
+<generatorID>ADD9C9CF-F4BE-88E4-89B8-968A7F507650</generatorID>
+<ownerDesignName>Library</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="SHELVES_shelf_id" id="B0611476-707C-62AE-882C-C221BDF11975">
+<createdBy>Alex</createdBy>
+<createdTime>2026-03-23 16:27:28 UTC</createdTime>
+<generatorID>B75FCB6C-9B9C-7C5D-740B-C0DBE2797E72</generatorID>
+<ownerDesignName>Library</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>10</dataTypeSize>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<previousColumn>false</previousColumn>
+<autoIncrementCycle>false</autoIncrementCycle>
+<associations>
+<colAssociation fkAssociation="B2E9CFAC-EA0E-94F4-0462-74CA2A35A38E" referredColumn="B19F1A99-AD4C-E8EA-EA44-169519468FE6"/>
+</associations>
+</Column>
+<Column name="SHELVES_LOCATION_loc_id" id="2B6179C4-1584-BCC5-97A2-D1C629BC5A48">
+<createdBy>Alex</createdBy>
+<createdTime>2026-03-23 16:27:28 UTC</createdTime>
+<generatorID>94A6F9AA-3FD3-FB59-350A-765DFBD408C0</generatorID>
+<ownerDesignName>Library</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<previousColumn>false</previousColumn>
+<autoIncrementCycle>false</autoIncrementCycle>
+<associations>
+<colAssociation fkAssociation="B2E9CFAC-EA0E-94F4-0462-74CA2A35A38E" referredColumn="D11663DC-FB47-71DB-73B9-4B91B2A1D577"/>
+</associations>
+</Column>
+<Column name="position" id="335D0382-BDCD-16A3-48EB-A14BB99C7F85">
+<createdBy>Alex</createdBy>
+<createdTime>2026-03-23 16:27:28 UTC</createdTime>
+<generatorID>38B411C5-E859-7DAA-430E-95CD590CDCD9</generatorID>
+<ownerDesignName>Library</ownerDesignName>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>20</dataTypeSize>
+<ownDataTypeParameters>20,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+</columns>
+<indexes itemClass="oracle.dbtools.crest.model.design.relational.Index">
+<ind_PK_UK id="DA3EF938-1904-FD85-2010-9B5E14CF6322" name="COMPARTMENTS_PK">
+<createdBy>Alex</createdBy>
+<createdTime>2026-03-23 16:27:28 UTC</createdTime>
+<generatorID>12EA7A6F-71BB-DF8D-C9CC-2EC784D8936E</generatorID>
+<ownerDesignName>Library</ownerDesignName>
+<pk>true</pk>
+<indexState>Primary Constraint</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="EAD7782E-ADAA-2913-526B-3A146110E9AB"/>
+<colUsage columnID="B0611476-707C-62AE-882C-C221BDF11975"/>
+<colUsage columnID="2B6179C4-1584-BCC5-97A2-D1C629BC5A48"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="4393E3BC-1718-248B-B0E7-1201638C2B0B" name="COMPARTMENTS_SHELVES_FK">
+<createdBy>Alex</createdBy>
+<createdTime>2026-03-23 16:27:28 UTC</createdTime>
+<generatorID>B1448279-5D72-1C3D-ED03-00DB3BF03F87</generatorID>
+<ownerDesignName>Library</ownerDesignName>
+<indexState>Foreign Key</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="B0611476-707C-62AE-882C-C221BDF11975"/>
+<colUsage columnID="2B6179C4-1584-BCC5-97A2-D1C629BC5A48"/>
+</indexColumnUsage>
+</ind_PK_UK>
+</indexes>
+</Table>

@@ -166,7 +166,7 @@ Genre. Klingt für mich wie eine Kombinatorik und diese Liste wird verglichen mi
 </OView>
 <OView class="oracle.dbtools.crest.swingui.logical.TVEntity" oid="F4E29A7F-0A2A-A9CA-A4B5-8F344F7A9C04" otype="Entity" vid="6138204E-6E6C-EA30-E185-01FE7A2BA540">
 <hideElementsInCurrentOnly>false</hideElementsInCurrentOnly>
-<bounds x="1181" y="332" width="170" height="111"/>
+<bounds x="1190" y="330" width="190" height="140"/>
 </OView>
 </objectViews>
 <connectors>
@@ -289,19 +289,19 @@ Genre. Klingt für mich wie eine Kombinatorik und diese Liste wird verglichen mi
 <lineWidth>1</lineWidth>
 <sourceLabel class="oracle.dbtools.crest.model.design.Label">
 <site>0</site>
-<labelBounds x="1199" y="482" width="59" height="33"/>
+<labelBounds x="1203" y="509" width="59" height="33"/>
 <noBackgroundColor>true</noBackgroundColor>
 <noForegroundColor>true</noForegroundColor>
 </sourceLabel>
 <targetLabel class="oracle.dbtools.crest.model.design.Label">
 <site>2</site>
-<labelBounds x="1199" y="522" width="29" height="31"/>
+<labelBounds x="1203" y="522" width="29" height="31"/>
 <noBackgroundColor>true</noBackgroundColor>
 <noForegroundColor>true</noForegroundColor>
 </targetLabel>
 <points>
-<point x="1199" y="443"/>
-<point x="1199" y="559"/>
+<point x="1203" y="470"/>
+<point x="1203" y="559"/>
 </points>
 </Connector>
 <Connector class="oracle.dbtools.crest.swingui.logical.TVInheritanceRelation" oid="8F6898AE-7257-8DA9-C02B-6FB2803346AE" otype="Hierarchy relation" vid_source="40F59F20-2287-A69F-89A8-7F6C411BFBFF" vid_target="F9814FA5-B73B-FD26-C4BC-7956D450CAA7">
