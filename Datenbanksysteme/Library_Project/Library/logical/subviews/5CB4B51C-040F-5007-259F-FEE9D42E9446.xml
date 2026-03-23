@@ -132,12 +132,6 @@
 Hell-X: Vererbung
 Grün: Bewegungsdaten</comment>
 </OView>
-<OView class="oracle.dbtools.crest.swingui.TVNote" oid="C66CA4D5-56ED-279A-D62E-2D1BA97BDE04" otype="Note" vid="9AB8BF82-61FE-7458-2083-75100B5614A1">
-<hideElementsInCurrentOnly>false</hideElementsInCurrentOnly>
-<bounds x="840" y="90" width="221" height="131"/>
-<comment>Die Preise sind abhängig von der Kombination aus Medienart (Buch, Film, ...) und
-Genre. Klingt für mich wie eine Kombinatorik und diese Liste wird verglichen mit dem wircklichen Exemplar und daraus wird MAX Preis bestimmt</comment>
-</OView>
 <OView class="oracle.dbtools.crest.swingui.logical.TVEntity" oid="C83441B5-908E-8311-4F72-3AE4E1284D54" otype="Entity" vid="74F00C6D-1A15-5C38-B6E8-90A91E4C4846">
 <hideElementsInCurrentOnly>false</hideElementsInCurrentOnly>
 <bounds x="700" y="610" width="170" height="111"/>
