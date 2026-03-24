@@ -125,13 +125,6 @@
 <backgroundColor>-13369345</backgroundColor>
 <foregroundColor>-16776961</foregroundColor>
 </OView>
-<OView class="oracle.dbtools.crest.swingui.TVNote" oid="AFF645E5-E40E-7AAB-7F5C-0782FA5DB471" otype="Note" vid="86A534BA-8A5A-AC5F-6372-22028AADC5B8">
-<hideElementsInCurrentOnly>false</hideElementsInCurrentOnly>
-<bounds x="1090" y="90" width="221" height="115"/>
-<comment>Blau: Stammdaten
-Hell-X: Vererbung
-Grün: Bewegungsdaten</comment>
-</OView>
 <OView class="oracle.dbtools.crest.swingui.logical.TVEntity" oid="C83441B5-908E-8311-4F72-3AE4E1284D54" otype="Entity" vid="74F00C6D-1A15-5C38-B6E8-90A91E4C4846">
 <hideElementsInCurrentOnly>false</hideElementsInCurrentOnly>
 <bounds x="700" y="610" width="170" height="111"/>
