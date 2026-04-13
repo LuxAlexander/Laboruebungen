@@ -78,6 +78,36 @@ VALUES (
 
 ---AI FAKE DATA
 
+-- PREISE FÜR BÜCHER (Type_id 1)
+INSERT INTO PRICES (cost, valid, creation_date, MEDIA_TYPES_type_id, GENRES_genre_id)
+VALUES (1.50, 'Y', SYSDATE, 1, (SELECT genre_id FROM GENRES WHERE category = 'SCI-FI'));
+
+INSERT INTO PRICES (cost, valid, creation_date, MEDIA_TYPES_type_id, GENRES_genre_id)
+VALUES (1.20, 'Y', SYSDATE, 1, (SELECT genre_id FROM GENRES WHERE category = 'Fantasy'));
+
+INSERT INTO PRICES (cost, valid, creation_date, MEDIA_TYPES_type_id, GENRES_genre_id)
+VALUES (2.00, 'Y', SYSDATE, 1, (SELECT genre_id FROM GENRES WHERE category = 'Dystopie'));
+
+
+-- PREISE FÜR FILME (Type_id 2)
+INSERT INTO PRICES (cost, valid, creation_date, MEDIA_TYPES_type_id, GENRES_genre_id)
+VALUES (3.50, 'Y', SYSDATE, 2, (SELECT genre_id FROM GENRES WHERE category = 'SCI-FI'));
+
+INSERT INTO PRICES (cost, valid, creation_date, MEDIA_TYPES_type_id, GENRES_genre_id)
+VALUES (3.00, 'Y', SYSDATE, 2, (SELECT genre_id FROM GENRES WHERE category = 'Action'));
+
+
+-- PREISE FÜR AUDIO (Type_id 3)
+INSERT INTO PRICES (cost, valid, creation_date, MEDIA_TYPES_type_id, GENRES_genre_id)
+VALUES (1.00, 'Y', SYSDATE, 3, (SELECT genre_id FROM GENRES WHERE category = 'Romance'));
+
+
+-- PREISE FÜR MAGAZINE (Type_id 4)
+INSERT INTO PRICES (cost, valid, creation_date, MEDIA_TYPES_type_id, GENRES_genre_id)
+VALUES (0.80, 'Y', SYSDATE, 4, (SELECT genre_id FROM GENRES WHERE category = 'Lifestyle'));
+
+COMMIT;
+
 -- Authors
 INSERT INTO AUTHORS (first_name, last_name) VALUES ('Frank', 'Herbert');
 INSERT INTO AUTHORS (first_name, last_name) VALUES ('J.R.R.', 'Tolkien');
@@ -106,6 +136,46 @@ VALUES ('Interstellar', 'Exploring the stars to save humanity', 12, 2);
 INSERT INTO MOVIES (media_id, format, duration)
 VALUES (MEDIA_SEQ.CURRVAL, 'IMAX', TO_DATE('02:49:00', 'HH24:MI:SS'));
 
+-- 1. Star Wars Episode I -> SCI-FI
+INSERT INTO MEDIA_GENRE (MEDIAS_media_id, GENRES_genre_id)
+VALUES (
+    (SELECT media_id FROM MEDIAS WHERE title = 'Star Wars Episode I'),
+    (SELECT genre_id FROM GENRES WHERE category = 'SCI-FI')
+);
+-- 1.2 Star Wars Episode I -> SCI-FI
+INSERT INTO MEDIA_GENRE (MEDIAS_media_id, GENRES_genre_id)
+VALUES (
+    (SELECT media_id FROM MEDIAS WHERE title = 'Star Wars Episode I'),
+    (SELECT genre_id FROM GENRES WHERE category = 'Fantasy')
+);
+
+-- 2. 1984 -> Dystopie
+INSERT INTO MEDIA_GENRE (MEDIAS_media_id, GENRES_genre_id)
+VALUES (
+    (SELECT media_id FROM MEDIAS WHERE title = '1984'),
+    (SELECT genre_id FROM GENRES WHERE category = 'Dystopie')
+);
+
+-- 3. The Hobbit -> Fantasy
+INSERT INTO MEDIA_GENRE (MEDIAS_media_id, GENRES_genre_id)
+VALUES (
+    (SELECT media_id FROM MEDIAS WHERE title = 'The Hobbit'),
+    (SELECT genre_id FROM GENRES WHERE category = 'Fantasy')
+);
+
+-- 4. Interstellar -> SCI-FI
+INSERT INTO MEDIA_GENRE (MEDIAS_media_id, GENRES_genre_id)
+VALUES (
+    (SELECT media_id FROM MEDIAS WHERE title = 'Interstellar'),
+    (SELECT genre_id FROM GENRES WHERE category = 'SCI-FI')
+);
+
+-- 5. Interstellar -> Dystopie (Ein Medium kann mehrere Genres haben!)
+INSERT INTO MEDIA_GENRE (MEDIAS_media_id, GENRES_genre_id)
+VALUES (
+    (SELECT media_id FROM MEDIAS WHERE title = 'Interstellar'),
+    (SELECT genre_id FROM GENRES WHERE category = 'Dystopie')
+);
 
 -- New Location
 INSERT INTO LOCATIONS (name, street) VALUES ('Zweigstelle West', 'Hauptplatz 10');
@@ -136,16 +206,42 @@ VALUES ('BC-INT-001',
        (SELECT comp_id FROM COMPARTMENTS WHERE position = 'Top Shelf' AND SHELVES_LOCATIONS_loc_id = 2), 
        'S1', 2);
 
--- A rental for Max Mustermann
 INSERT INTO LEDGER (start_date, end_date, CUSTOMERS_customer_id, COPIES_barcode_id, COPIES_media_id, total_cost)
-VALUES (
-    TRUNC(SYSDATE) - 2, -- 00:00:00 Uhr vor zwei Tagen
-    TRUNC(SYSDATE) + 5, 
-    (SELECT customer_id FROM CUSTOMERS WHERE customer_last_name = 'Mustermann'),
-    'BC-INT-001',
-    (SELECT media_id FROM MEDIAS WHERE title = 'Interstellar'),
-    4.50
-);
+SELECT 
+    TRUNC(SYSDATE) - 2,
+    TRUNC(SYSDATE) + 5,
+    (SELECT customer_id 
+     FROM CUSTOMERS 
+     WHERE customer_last_name = 'Lux'
+     FETCH FIRST 1 ROW ONLY),
+    'BC-HOBBIT-01',
+    (SELECT m.media_id FROM MEDIAS m WHERE m.title = 'The Hobbit'),
+    (
+        SELECT MAX(p.cost)
+        FROM PRICES p
+        JOIN MEDIA_GENRE mg 
+            ON p.GENRES_genre_id = mg.GENRES_genre_id
+        WHERE mg.MEDIAS_media_id = m.media_id
+        AND p.MEDIA_TYPES_type_id = m.MEDIA_TYPES_type_id
+        AND p.valid = 'Y'
+    );
+
+SELECT * FROM ledger;
+
+UPDATE LEDGER l
+SET l.total_cost = (
+    SELECT MAX(p.cost)
+    FROM PRICES p
+    JOIN MEDIA_GENRE mg ON p.GENRES_genre_id = mg.GENRES_genre_id
+    WHERE mg.MEDIAS_media_id = l.COPIES_media_id
+    AND p.MEDIA_TYPES_type_id = (
+        SELECT m.MEDIA_TYPES_type_id 
+        FROM MEDIAS m 
+        WHERE m.media_id = l.COPIES_media_id
+    )
+    AND p.valid = 'Y'
+)
+WHERE l.total_cost IS NULL;
 
 -- A reservation for Alexander Lux
 INSERT INTO RESERVATIONS (reservation_id, time_reservation, CUSTOMERS_customer_id, MEDIAS_media_id, status, 
@@ -161,6 +257,71 @@ VALUES (
     (SELECT media_id FROM MEDIAS WHERE title = 'Interstellar'),
     TRUNC(SYSDATE) - 2 -- Muss EXAKT mit dem Datum im Ledger übereinstimmen
 );
+
+-- Statistik für Interstellar (BC-INT-001)
+INSERT INTO STATISTICS (
+    number_time_borrowed, 
+    sum_time_borrowed, 
+    COPIES_barcode_id, 
+    COPIES_medias_media_id
+) VALUES (
+    12, -- Wurde 12 Mal ausgeliehen
+    84, -- Insgesamt 84 Tage (durchschnittlich 7 Tage pro Leihe)
+    'BC-INT-001',
+    (SELECT media_id FROM MEDIAS WHERE title = 'Interstellar')
+);
+
+-- Statistik für The Hobbit (BC-HOBBIT-01)
+INSERT INTO STATISTICS (
+    number_time_borrowed, 
+    sum_time_borrowed, 
+    COPIES_barcode_id, 
+    COPIES_medias_media_id
+) VALUES (
+    5,  -- Wurde 5 Mal ausgeliehen
+    35, -- Insgesamt 35 Tage
+    'BC-HOBBIT-01',
+    (SELECT media_id FROM MEDIAS WHERE title = 'The Hobbit')
+);
+
+-- Statistik für 1984 (BC001 oder ähnlicher Barcode aus deinen vorherigen Inserts)
+INSERT INTO STATISTICS (
+    number_time_borrowed, 
+    sum_time_borrowed, 
+    COPIES_barcode_id, 
+    COPIES_medias_media_id
+) VALUES (
+    25, -- Ein Klassiker, oft ausgeliehen
+    150,
+    'BC001',
+    (SELECT media_id FROM MEDIAS WHERE title = '1984')
+);
+
+COMMIT;
+--Stats
+DELETE FROM STATISTICS;
+SELECT 
+    m.title,
+    l.COPIES_barcode_id,
+    COUNT(l.COPIES_barcode_id) AS ANZAHL_LEIHEN,
+    SUM(TRUNC(NVL(l.return_dtime, SYSDATE)) - TRUNC(l.start_date)) AS TAGE_TOTAL
+FROM LEDGER l
+JOIN MEDIAS m ON l.COPIES_media_id = m.media_id
+GROUP BY m.title, l.COPIES_barcode_id;
+
+INSERT INTO STATISTICS (
+    number_time_borrowed, 
+    sum_time_borrowed, 
+    COPIES_barcode_id, 
+    COPIES_medias_media_id
+)
+SELECT 
+    COUNT(*) as number_time_borrowed,
+    SUM(TRUNC(NVL(return_dtime, SYSDATE)) - TRUNC(start_date)) as sum_time_borrowed,
+    COPIES_barcode_id,
+    COPIES_media_id
+FROM LEDGER
+GROUP BY COPIES_barcode_id, COPIES_media_id;
 
 --SELECT
 
@@ -224,3 +385,9 @@ JOIN MEDIAS m ON c.MEDIAS_media_id = m.MEDIA_ID
 LEFT JOIN STATISTICS s ON c.BARCODE_ID = s.COPIES_BARCODE_ID 
     AND c.MEDIAS_media_id = s.COPIES_MEDIAS_media_id
 ORDER BY ANZAHL_LEIHEN DESC;
+
+SELECT m.title, g.category
+FROM MEDIAS m
+JOIN MEDIA_GENRE mg ON m.media_id = mg.MEDIAS_media_id
+JOIN GENRES g ON mg.GENRES_genre_id = g.genre_id
+ORDER BY m.title;
