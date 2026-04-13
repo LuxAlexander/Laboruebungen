@@ -1,5 +1,5 @@
 <?xml version = '1.0' encoding = 'UTF-8'?>
-<Entity class="oracle.dbtools.crest.model.design.logical.Entity" directorySegmentName="seg_0" id="A5D0453E-C346-346B-9A41-6A1C62AE793E" name="AUDIO">
+<Entity class="oracle.dbtools.crest.model.design.logical.Entity" directorySegmentName="seg_0" id="A5D0453E-C346-346B-9A41-6A1C62AE793E" name="AUDIOS">
 <createdBy>User</createdBy>
 <createdTime>2026-03-10 14:38:53 UTC</createdTime>
 <ownerDesignName>Library</ownerDesignName>

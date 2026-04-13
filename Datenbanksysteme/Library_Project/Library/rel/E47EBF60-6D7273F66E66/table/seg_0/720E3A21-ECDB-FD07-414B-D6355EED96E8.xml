@@ -1,0 +1,95 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Table class="oracle.dbtools.crest.model.design.relational.Table" directorySegmentName="seg_0" id="720E3A21-ECDB-FD07-414B-D6355EED96E8" name="COMPARTMENTS">
+<createdBy>susan</createdBy>
+<createdTime>2026-04-13 13:16:09 UTC</createdTime>
+<generatorID>1B26950B-4DEA-BE93-171B-14859B0CABC7</generatorID>
+<ownerDesignName>Library</ownerDesignName>
+<allowColumnReorder>false</allowColumnReorder>
+<existDependencyGenerateInDDl>true</existDependencyGenerateInDDl>
+<parsed>true</parsed>
+<columns itemClass="oracle.dbtools.crest.model.design.relational.Column">
+<Column name="comp_id" id="1968E3D1-415D-061B-5F57-95FBFD27CA4A">
+<createdBy>susan</createdBy>
+<createdTime>2026-04-13 13:16:09 UTC</createdTime>
+<generatorID>ADD9C9CF-F4BE-88E4-89B8-968A7F507650</generatorID>
+<ownerDesignName>Library</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="SHELVES_shelf_id" id="2F914DCB-D8F5-3BA4-7058-1900388A0E61">
+<createdBy>susan</createdBy>
+<createdTime>2026-04-13 13:16:09 UTC</createdTime>
+<generatorID>B75FCB6C-9B9C-7C5D-740B-C0DBE2797E72</generatorID>
+<ownerDesignName>Library</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>10</dataTypeSize>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<previousColumn>false</previousColumn>
+<autoIncrementCycle>false</autoIncrementCycle>
+<associations>
+<colAssociation fkAssociation="E52A4944-4198-0C02-F4C6-369CA2D31422" referredColumn="AA8A9A52-AF0C-4AC2-F114-57AE190C6359"/>
+</associations>
+</Column>
+<Column name="SHELVES_LOCATIONS_loc_id" id="9D852793-DE50-9DC3-F3A1-187ED5F38BC5">
+<createdBy>susan</createdBy>
+<createdTime>2026-04-13 13:16:09 UTC</createdTime>
+<generatorID>94A6F9AA-3FD3-FB59-350A-765DFBD408C0</generatorID>
+<ownerDesignName>Library</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<previousColumn>false</previousColumn>
+<autoIncrementCycle>false</autoIncrementCycle>
+<associations>
+<colAssociation fkAssociation="E52A4944-4198-0C02-F4C6-369CA2D31422" referredColumn="3E803C84-634A-CFFF-5742-5859B588AE16"/>
+</associations>
+</Column>
+<Column name="position" id="1A64EA5D-59AB-45E8-D03B-46E884057F15">
+<createdBy>susan</createdBy>
+<createdTime>2026-04-13 13:16:09 UTC</createdTime>
+<generatorID>38B411C5-E859-7DAA-430E-95CD590CDCD9</generatorID>
+<ownerDesignName>Library</ownerDesignName>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>20</dataTypeSize>
+<ownDataTypeParameters>20,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+</columns>
+<indexes itemClass="oracle.dbtools.crest.model.design.relational.Index">
+<ind_PK_UK id="80AA1921-9726-9B5D-70E4-8AF3A313C4A1" name="COMPARTMENTS_PK">
+<createdBy>susan</createdBy>
+<createdTime>2026-04-13 13:16:09 UTC</createdTime>
+<generatorID>12EA7A6F-71BB-DF8D-C9CC-2EC784D8936E</generatorID>
+<ownerDesignName>Library</ownerDesignName>
+<pk>true</pk>
+<indexState>Primary Constraint</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="1968E3D1-415D-061B-5F57-95FBFD27CA4A"/>
+<colUsage columnID="2F914DCB-D8F5-3BA4-7058-1900388A0E61"/>
+<colUsage columnID="9D852793-DE50-9DC3-F3A1-187ED5F38BC5"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="3F541BA1-555A-643A-1B88-6F9B28D58388" name="COMPARTMENTS_SHELVES_FK">
+<createdBy>susan</createdBy>
+<createdTime>2026-04-13 13:16:09 UTC</createdTime>
+<generatorID>B1448279-5D72-1C3D-ED03-00DB3BF03F87</generatorID>
+<ownerDesignName>Library</ownerDesignName>
+<indexState>Foreign Key</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="2F914DCB-D8F5-3BA4-7058-1900388A0E61"/>
+<colUsage columnID="9D852793-DE50-9DC3-F3A1-187ED5F38BC5"/>
+</indexColumnUsage>
+</ind_PK_UK>
+</indexes>
+</Table>

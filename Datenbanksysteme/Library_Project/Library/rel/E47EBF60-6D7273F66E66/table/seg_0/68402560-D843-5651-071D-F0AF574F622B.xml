@@ -1,0 +1,75 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Table class="oracle.dbtools.crest.model.design.relational.Table" directorySegmentName="seg_0" id="68402560-D843-5651-071D-F0AF574F622B" name="MEDIA_GENRE">
+<createdBy>susan</createdBy>
+<createdTime>2026-04-13 13:16:09 UTC</createdTime>
+<ownerDesignName>Library</ownerDesignName>
+<allowColumnReorder>false</allowColumnReorder>
+<existDependencyGenerateInDDl>true</existDependencyGenerateInDDl>
+<parsed>true</parsed>
+<columns itemClass="oracle.dbtools.crest.model.design.relational.Column">
+<Column name="GENRES_genre_id" id="56603686-F4AA-CDB4-7D2E-356D7D49161C">
+<createdBy>susan</createdBy>
+<createdTime>2026-04-13 13:16:09 UTC</createdTime>
+<ownerDesignName>Library</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<previousColumn>false</previousColumn>
+<autoIncrementCycle>false</autoIncrementCycle>
+<associations>
+<colAssociation fkAssociation="755C172A-14C9-CAED-32DF-433041305216" referredColumn="E853472C-0787-30BB-7E4D-7EB3DD04E1F6"/>
+</associations>
+</Column>
+<Column name="MEDIAS_media_id" id="08788057-9BA9-C898-A7C3-9F95BC1DE3C7">
+<createdBy>susan</createdBy>
+<createdTime>2026-04-13 13:16:09 UTC</createdTime>
+<ownerDesignName>Library</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<previousColumn>false</previousColumn>
+<autoIncrementCycle>false</autoIncrementCycle>
+<associations>
+<colAssociation fkAssociation="F4020A08-37A7-C8E9-6073-8EB31B8522E3" referredColumn="9C0AA99B-CD50-5A06-F3F3-541B974AB74C"/>
+</associations>
+</Column>
+</columns>
+<indexes itemClass="oracle.dbtools.crest.model.design.relational.Index">
+<ind_PK_UK id="B6757305-166F-0A11-115C-3867292C2B1F" name="MEDIA_GENRE_PK">
+<createdBy>susan</createdBy>
+<createdTime>2026-04-13 13:16:09 UTC</createdTime>
+<ownerDesignName>Library</ownerDesignName>
+<pk>true</pk>
+<indexState>Primary Constraint</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="56603686-F4AA-CDB4-7D2E-356D7D49161C"/>
+<colUsage columnID="08788057-9BA9-C898-A7C3-9F95BC1DE3C7"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="7B8B88E6-F9AC-5B45-240A-AEA5CB9B12A0" name="MEDIA_GENRE_GENRES_FK">
+<createdBy>susan</createdBy>
+<createdTime>2026-04-13 13:16:09 UTC</createdTime>
+<generatorID>9D4F7ADF-7380-21AB-1AE5-5ED0956D91D2</generatorID>
+<ownerDesignName>Library</ownerDesignName>
+<indexState>Foreign Key</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="56603686-F4AA-CDB4-7D2E-356D7D49161C"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="103EA68D-6755-DB20-3BC7-30DF72132959" name="MEDIA_GENRE_MEDIAS_FK">
+<createdBy>susan</createdBy>
+<createdTime>2026-04-13 13:16:09 UTC</createdTime>
+<generatorID>9D4F7ADF-7380-21AB-1AE5-5ED0956D91D2</generatorID>
+<ownerDesignName>Library</ownerDesignName>
+<indexState>Foreign Key</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="08788057-9BA9-C898-A7C3-9F95BC1DE3C7"/>
+</indexColumnUsage>
+</ind_PK_UK>
+</indexes>
+</Table>

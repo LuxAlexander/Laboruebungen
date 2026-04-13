@@ -1,0 +1,118 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Table class="oracle.dbtools.crest.model.design.relational.Table" directorySegmentName="seg_0" id="5C2C4F98-089C-1872-C859-F1FBC71BCC0E" name="STATISTICS">
+<createdBy>susan</createdBy>
+<createdTime>2026-04-13 13:16:09 UTC</createdTime>
+<generatorID>98885A34-5FEC-5ED6-BF84-8F1814650F87</generatorID>
+<ownerDesignName>Library</ownerDesignName>
+<allowColumnReorder>false</allowColumnReorder>
+<existDependencyGenerateInDDl>true</existDependencyGenerateInDDl>
+<parsed>true</parsed>
+<columns itemClass="oracle.dbtools.crest.model.design.relational.Column">
+<Column name="statistic_id" id="497E06FB-D339-8332-AB49-79CBFAF09324">
+<createdBy>susan</createdBy>
+<createdTime>2026-04-13 13:16:09 UTC</createdTime>
+<generatorID>A352D196-4BE7-9C44-A79E-E02FFA3D32B3</generatorID>
+<ownerDesignName>Library</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="number_time_borrowed" id="FB9FCEBA-EFFD-8D73-11CC-85AEA3339C27">
+<createdBy>susan</createdBy>
+<createdTime>2026-04-13 13:16:09 UTC</createdTime>
+<generatorID>8A9C8188-D040-0786-809B-01B74D91603A</generatorID>
+<ownerDesignName>Library</ownerDesignName>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="sum_time_borrowed" id="0096C51B-5A0C-0FE6-753E-9F62EFE11CD0">
+<createdBy>susan</createdBy>
+<createdTime>2026-04-13 13:16:09 UTC</createdTime>
+<generatorID>234E4ED9-6D34-EF66-7C68-9237EC4247EA</generatorID>
+<ownerDesignName>Library</ownerDesignName>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="COPIES_barcode_id" id="6F873629-8A9C-20E4-5486-151008DD9A6C">
+<createdBy>susan</createdBy>
+<createdTime>2026-04-13 13:16:09 UTC</createdTime>
+<generatorID>84E06D87-EFE4-27DE-78D2-D50A23AB9DAB</generatorID>
+<ownerDesignName>Library</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>15</dataTypeSize>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<previousColumn>false</previousColumn>
+<autoIncrementCycle>false</autoIncrementCycle>
+<associations>
+<colAssociation fkAssociation="CB525D31-0307-A6E8-566B-4050C5F01B36" referredColumn="8C35E5F3-1E7C-E333-5F89-31055B5C64C1"/>
+</associations>
+</Column>
+<Column name="COPIES_MEDIAS_media_id" id="7030C28D-B118-6DA4-EE91-7EBEF3251239">
+<createdBy>susan</createdBy>
+<createdTime>2026-04-13 13:16:09 UTC</createdTime>
+<generatorID>05D65ECA-2D61-7EC4-521C-ACB695C2D607</generatorID>
+<ownerDesignName>Library</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<previousColumn>false</previousColumn>
+<autoIncrementCycle>false</autoIncrementCycle>
+<associations>
+<colAssociation fkAssociation="CB525D31-0307-A6E8-566B-4050C5F01B36" referredColumn="6B5B5528-5E95-3BFD-BEF6-8EE98D5A3FFD"/>
+</associations>
+</Column>
+</columns>
+<indexes itemClass="oracle.dbtools.crest.model.design.relational.Index">
+<ind_PK_UK id="1091542B-F30B-E4A3-1119-2DA8E10554F2" name="STATISTICS_PK">
+<createdBy>susan</createdBy>
+<createdTime>2026-04-13 13:16:09 UTC</createdTime>
+<generatorID>8356DABE-7932-5A74-73FA-21D24D5E8A8A</generatorID>
+<ownerDesignName>Library</ownerDesignName>
+<pk>true</pk>
+<indexState>Primary Constraint</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="497E06FB-D339-8332-AB49-79CBFAF09324"/>
+<colUsage columnID="6F873629-8A9C-20E4-5486-151008DD9A6C"/>
+<colUsage columnID="7030C28D-B118-6DA4-EE91-7EBEF3251239"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="73E50A7E-1547-4F1D-41A4-A72983F1B092" name="STATISTICS__IDX">
+<createdBy>susan</createdBy>
+<createdTime>2026-04-13 13:16:09 UTC</createdTime>
+<ownerDesignName>Library</ownerDesignName>
+<indexState>Unique Plain Index</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<relationGeneratorID>BACED767-D281-2FE3-3A3C-614BEAC0461E</relationGeneratorID>
+<indexColumnUsage>
+<colUsage columnID="6F873629-8A9C-20E4-5486-151008DD9A6C"/>
+<colUsage columnID="7030C28D-B118-6DA4-EE91-7EBEF3251239"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="84FE6EE1-850A-B67C-2163-9663EDA3EBDC" name="STATISTICS_COPIES_FK">
+<createdBy>susan</createdBy>
+<createdTime>2026-04-13 13:16:09 UTC</createdTime>
+<generatorID>BACED767-D281-2FE3-3A3C-614BEAC0461E</generatorID>
+<ownerDesignName>Library</ownerDesignName>
+<indexState>Foreign Key</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="6F873629-8A9C-20E4-5486-151008DD9A6C"/>
+<colUsage columnID="7030C28D-B118-6DA4-EE91-7EBEF3251239"/>
+</indexColumnUsage>
+</ind_PK_UK>
+</indexes>
+</Table>

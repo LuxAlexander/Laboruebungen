@@ -1,0 +1,118 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Table class="oracle.dbtools.crest.model.design.relational.Table" directorySegmentName="seg_0" id="4881FC94-AD55-4634-BD8E-A3D8A1D2FBCC" name="PRICES">
+<createdBy>susan</createdBy>
+<createdTime>2026-04-13 13:16:09 UTC</createdTime>
+<generatorID>EABB263E-675E-68FA-17EE-2041EF9E8AEA</generatorID>
+<ownerDesignName>Library</ownerDesignName>
+<allowColumnReorder>false</allowColumnReorder>
+<existDependencyGenerateInDDl>true</existDependencyGenerateInDDl>
+<parsed>true</parsed>
+<columns itemClass="oracle.dbtools.crest.model.design.relational.Column">
+<Column name="MEDIA_TYPES_type_id" id="5041BCEF-9F40-68F4-A2DC-474F26585559">
+<createdBy>susan</createdBy>
+<createdTime>2026-04-13 13:16:09 UTC</createdTime>
+<generatorID>61B4F44F-B504-503E-BB4C-FC28C9FC0D5B</generatorID>
+<ownerDesignName>Library</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<previousColumn>false</previousColumn>
+<autoIncrementCycle>false</autoIncrementCycle>
+<associations>
+<colAssociation fkAssociation="DDD62AC0-61EF-22C4-9788-0A512969DC43" referredColumn="B771CC28-EEDE-B626-104E-6E877F452DAD"/>
+</associations>
+</Column>
+<Column name="GENRES_genre_id" id="64B35484-FCE3-00AF-FAC5-0F55AEB7D4F7">
+<createdBy>susan</createdBy>
+<createdTime>2026-04-13 13:16:09 UTC</createdTime>
+<generatorID>4C57939C-A73E-8F79-576F-48B4246DD07E</generatorID>
+<ownerDesignName>Library</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<previousColumn>false</previousColumn>
+<autoIncrementCycle>false</autoIncrementCycle>
+<associations>
+<colAssociation fkAssociation="F45848C1-C65E-B0DD-FE0E-99CA38FF186B" referredColumn="E853472C-0787-30BB-7E4D-7EB3DD04E1F6"/>
+</associations>
+</Column>
+<Column name="creation_date" id="380A5688-E7BD-410F-4135-2ECBD61EFAEB">
+<createdBy>susan</createdBy>
+<createdTime>2026-04-13 13:16:09 UTC</createdTime>
+<generatorID>961E2FBE-3E07-7ADF-0A89-D5AC081D114F</generatorID>
+<ownerDesignName>Library</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT008</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="cost" id="EC948D58-EFE4-5EB9-3478-709A68CA3D32">
+<createdBy>susan</createdBy>
+<createdTime>2026-04-13 13:16:09 UTC</createdTime>
+<generatorID>DD61659A-F66B-1CF3-45E9-A1A97C57F34F</generatorID>
+<ownerDesignName>Library</ownerDesignName>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT043</logicalDatatype>
+<dataTypePrecision>9</dataTypePrecision>
+<dataTypeScale>2</dataTypeScale>
+<ownDataTypeParameters>,9,2</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="valid" id="7404C648-0175-D83E-9A1D-75845228767F">
+<createdBy>susan</createdBy>
+<createdTime>2026-04-13 13:16:09 UTC</createdTime>
+<generatorID>8A77E038-24C3-E74E-0A7F-836DB8069781</generatorID>
+<ownerDesignName>Library</ownerDesignName>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT006</logicalDatatype>
+<dataTypeSize>1</dataTypeSize>
+<ownDataTypeParameters>1,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+</columns>
+<indexes itemClass="oracle.dbtools.crest.model.design.relational.Index">
+<ind_PK_UK id="0DA0DD89-9CBD-EE4F-2589-A5483E8ACEC7" name="PRICES_PK">
+<createdBy>susan</createdBy>
+<createdTime>2026-04-13 13:16:09 UTC</createdTime>
+<generatorID>1B382577-2204-9BBE-1EE7-33082B31A2A7</generatorID>
+<ownerDesignName>Library</ownerDesignName>
+<pk>true</pk>
+<indexState>Primary Constraint</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="5041BCEF-9F40-68F4-A2DC-474F26585559"/>
+<colUsage columnID="64B35484-FCE3-00AF-FAC5-0F55AEB7D4F7"/>
+<colUsage columnID="380A5688-E7BD-410F-4135-2ECBD61EFAEB"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="FB7455C6-1436-0E7A-AB22-F50D2E4964EA" name="PRICES_GENRES_FK">
+<createdBy>susan</createdBy>
+<createdTime>2026-04-13 13:16:09 UTC</createdTime>
+<generatorID>1C652E50-40A7-974E-3CB1-0BC458903D61</generatorID>
+<ownerDesignName>Library</ownerDesignName>
+<indexState>Foreign Key</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="64B35484-FCE3-00AF-FAC5-0F55AEB7D4F7"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="DD0B484E-7594-04C8-98B4-C30949E888A4" name="PRICES_MEDIA_TYPES_FK">
+<createdBy>susan</createdBy>
+<createdTime>2026-04-13 13:16:09 UTC</createdTime>
+<generatorID>4076222E-12A9-ECFA-C35F-A5FCE0400688</generatorID>
+<ownerDesignName>Library</ownerDesignName>
+<indexState>Foreign Key</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="5041BCEF-9F40-68F4-A2DC-474F26585559"/>
+</indexColumnUsage>
+</ind_PK_UK>
+</indexes>
+</Table>
