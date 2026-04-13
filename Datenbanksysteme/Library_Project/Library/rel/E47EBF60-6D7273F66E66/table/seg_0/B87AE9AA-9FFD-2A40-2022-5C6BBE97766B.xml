@@ -1,0 +1,63 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Table class="oracle.dbtools.crest.model.design.relational.Table" directorySegmentName="seg_0" id="B87AE9AA-9FFD-2A40-2022-5C6BBE97766B" name="BOOKS">
+<createdBy>Alex</createdBy>
+<createdTime>2026-04-13 15:32:23 UTC</createdTime>
+<generatorID>C96E1DBE-36F8-7D4E-9746-23CC8BD0D070</generatorID>
+<ownerDesignName>Library</ownerDesignName>
+<allowColumnReorder>false</allowColumnReorder>
+<existDependencyGenerateInDDl>true</existDependencyGenerateInDDl>
+<parsed>true</parsed>
+<columns itemClass="oracle.dbtools.crest.model.design.relational.Column">
+<Column name="media_id" id="C74CCC3F-29B4-BCBD-4EBE-961747C80732">
+<createdBy>Alex</createdBy>
+<createdTime>2026-04-13 15:32:23 UTC</createdTime>
+<generatorID>ADD935F8-AE7F-3468-551B-F426B389C450</generatorID>
+<ownerDesignName>Library</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+<associations>
+<colAssociation fkAssociation="9CD0EBD8-EEC4-AA4C-4104-6057C994CD31" referredColumn="38C78277-81B0-A373-5F00-E05A8AE989CD"/>
+</associations>
+</Column>
+<Column name="isbn_id" id="BE649E01-BCE6-B3C1-F968-B2F05A8D4959">
+<createdBy>Alex</createdBy>
+<createdTime>2026-04-13 15:32:23 UTC</createdTime>
+<generatorID>8AF876ED-6C0C-02E4-DB14-B7C53D8752BE</generatorID>
+<ownerDesignName>Library</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>50</dataTypeSize>
+<ownDataTypeParameters>50,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+</columns>
+<indexes itemClass="oracle.dbtools.crest.model.design.relational.Index">
+<ind_PK_UK id="086EFE24-1E55-54A6-34B3-0967AB8A3101" name="BOOKS_PK">
+<createdBy>Alex</createdBy>
+<createdTime>2026-04-13 15:32:23 UTC</createdTime>
+<generatorID>B971710D-350C-8821-27FC-612E2E52E04B</generatorID>
+<ownerDesignName>Library</ownerDesignName>
+<pk>true</pk>
+<indexState>Primary Constraint</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="C74CCC3F-29B4-BCBD-4EBE-961747C80732"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="88BA1F84-1369-3F21-D252-00DDB3C604C4" name="BOOKS_MEDIAS_FK">
+<createdBy>Alex</createdBy>
+<createdTime>2026-04-13 15:32:23 UTC</createdTime>
+<generatorID>79188594-07AE-4D76-DD9C-058187BE1150</generatorID>
+<ownerDesignName>Library</ownerDesignName>
+<indexState>Foreign Key</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="C74CCC3F-29B4-BCBD-4EBE-961747C80732"/>
+</indexColumnUsage>
+</ind_PK_UK>
+</indexes>
+</Table>

@@ -1,0 +1,19 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<FKIndexAssociation class="oracle.dbtools.crest.model.design.relational.FKIndexAssociation" directorySegmentName="seg_0" id="AE864B77-7BCD-F5F5-0B4B-88C022D34863" containerWithKeyObject="F68F0A0C-7B1E-5ACC-1174-5701029E0BA6" localFKIndex="262B4F15-D905-922F-B791-35F178301DD5" name="MAGAZINES_MEDIAS_FK">
+<createdBy>Alex</createdBy>
+<createdTime>2026-04-13 15:32:23 UTC</createdTime>
+<generatorID>2D024895-835C-73F3-006A-9A577EF405B3</generatorID>
+<ownerDesignName>Library</ownerDesignName>
+<referredTableLongName>MEDIAS</referredTableLongName>
+<arc>08E5DDE1-1A03-7739-B58F-EB2F12D7A3D4</arc>
+<deleteRule>NO ACTION</deleteRule>
+<referredTableID>2A5FD6B8-FC8B-C7D2-A8E7-055F619678DA</referredTableID>
+<keyObject>198FDB85-F1BB-0EF6-3334-BC0D68687E3B</keyObject>
+<referredKeyID>198FDB85-F1BB-0EF6-3334-BC0D68687E3B</referredKeyID>
+<mandatory>true</mandatory>
+<refColNames>media_id</refColNames>
+<transferable>true</transferable>
+<rely>false</rely>
+<discriminatorValue>MAGAZINES</discriminatorValue>
+<columnDependencyConstraintGenerateInDDL>true</columnDependencyConstraintGenerateInDDL>
+</FKIndexAssociation>

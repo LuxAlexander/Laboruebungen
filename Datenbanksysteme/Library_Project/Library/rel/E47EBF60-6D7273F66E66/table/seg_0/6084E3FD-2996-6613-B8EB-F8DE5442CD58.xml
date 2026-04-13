@@ -1,0 +1,118 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Table class="oracle.dbtools.crest.model.design.relational.Table" directorySegmentName="seg_0" id="6084E3FD-2996-6613-B8EB-F8DE5442CD58" name="STATISTICS">
+<createdBy>Alex</createdBy>
+<createdTime>2026-04-13 15:32:23 UTC</createdTime>
+<generatorID>98885A34-5FEC-5ED6-BF84-8F1814650F87</generatorID>
+<ownerDesignName>Library</ownerDesignName>
+<allowColumnReorder>false</allowColumnReorder>
+<existDependencyGenerateInDDl>true</existDependencyGenerateInDDl>
+<parsed>true</parsed>
+<columns itemClass="oracle.dbtools.crest.model.design.relational.Column">
+<Column name="statistic_id" id="D474B77C-1117-182D-1552-BE796FA38040">
+<createdBy>Alex</createdBy>
+<createdTime>2026-04-13 15:32:23 UTC</createdTime>
+<generatorID>A352D196-4BE7-9C44-A79E-E02FFA3D32B3</generatorID>
+<ownerDesignName>Library</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="number_time_borrowed" id="12A31183-C196-C1F1-231C-71B34526C66F">
+<createdBy>Alex</createdBy>
+<createdTime>2026-04-13 15:32:23 UTC</createdTime>
+<generatorID>8A9C8188-D040-0786-809B-01B74D91603A</generatorID>
+<ownerDesignName>Library</ownerDesignName>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="sum_time_borrowed" id="0CA05FD0-5883-C1E0-2ADE-C03E197D00D4">
+<createdBy>Alex</createdBy>
+<createdTime>2026-04-13 15:32:23 UTC</createdTime>
+<generatorID>234E4ED9-6D34-EF66-7C68-9237EC4247EA</generatorID>
+<ownerDesignName>Library</ownerDesignName>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="COPIES_barcode_id" id="7FD2B7F0-B1D6-8C44-13F2-4C70247A4F36">
+<createdBy>Alex</createdBy>
+<createdTime>2026-04-13 15:32:23 UTC</createdTime>
+<generatorID>84E06D87-EFE4-27DE-78D2-D50A23AB9DAB</generatorID>
+<ownerDesignName>Library</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>15</dataTypeSize>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<previousColumn>false</previousColumn>
+<autoIncrementCycle>false</autoIncrementCycle>
+<associations>
+<colAssociation fkAssociation="AF52FBF4-4B0F-38B1-8CFB-335B3ADC73ED" referredColumn="81E1CB85-E343-A45B-A3C3-E8A829795DAD"/>
+</associations>
+</Column>
+<Column name="COPIES_MEDIAS_media_id" id="C3727AE4-B71F-1287-1BED-5BF3BDAFBBF5">
+<createdBy>Alex</createdBy>
+<createdTime>2026-04-13 15:32:23 UTC</createdTime>
+<generatorID>05D65ECA-2D61-7EC4-521C-ACB695C2D607</generatorID>
+<ownerDesignName>Library</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<previousColumn>false</previousColumn>
+<autoIncrementCycle>false</autoIncrementCycle>
+<associations>
+<colAssociation fkAssociation="AF52FBF4-4B0F-38B1-8CFB-335B3ADC73ED" referredColumn="33FC56F9-43E1-AB00-291F-087F1C13DD9E"/>
+</associations>
+</Column>
+</columns>
+<indexes itemClass="oracle.dbtools.crest.model.design.relational.Index">
+<ind_PK_UK id="F8CEA13D-6398-269D-0C8B-CD37CFE00675" name="STATISTICS_PK">
+<createdBy>Alex</createdBy>
+<createdTime>2026-04-13 15:32:23 UTC</createdTime>
+<generatorID>8356DABE-7932-5A74-73FA-21D24D5E8A8A</generatorID>
+<ownerDesignName>Library</ownerDesignName>
+<pk>true</pk>
+<indexState>Primary Constraint</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="D474B77C-1117-182D-1552-BE796FA38040"/>
+<colUsage columnID="7FD2B7F0-B1D6-8C44-13F2-4C70247A4F36"/>
+<colUsage columnID="C3727AE4-B71F-1287-1BED-5BF3BDAFBBF5"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="675F7D39-2A5E-4BEA-7716-617444F66BEB" name="STATISTICS__IDX">
+<createdBy>Alex</createdBy>
+<createdTime>2026-04-13 15:32:23 UTC</createdTime>
+<ownerDesignName>Library</ownerDesignName>
+<indexState>Unique Plain Index</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<relationGeneratorID>BACED767-D281-2FE3-3A3C-614BEAC0461E</relationGeneratorID>
+<indexColumnUsage>
+<colUsage columnID="7FD2B7F0-B1D6-8C44-13F2-4C70247A4F36"/>
+<colUsage columnID="C3727AE4-B71F-1287-1BED-5BF3BDAFBBF5"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="FAE10B65-2348-74B2-C4C0-C00144EF341C" name="STATISTICS_COPIES_FK">
+<createdBy>Alex</createdBy>
+<createdTime>2026-04-13 15:32:23 UTC</createdTime>
+<generatorID>BACED767-D281-2FE3-3A3C-614BEAC0461E</generatorID>
+<ownerDesignName>Library</ownerDesignName>
+<indexState>Foreign Key</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="7FD2B7F0-B1D6-8C44-13F2-4C70247A4F36"/>
+<colUsage columnID="C3727AE4-B71F-1287-1BED-5BF3BDAFBBF5"/>
+</indexColumnUsage>
+</ind_PK_UK>
+</indexes>
+</Table>

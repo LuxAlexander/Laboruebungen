@@ -1,0 +1,64 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Table class="oracle.dbtools.crest.model.design.relational.Table" directorySegmentName="seg_0" id="F68F0A0C-7B1E-5ACC-1174-5701029E0BA6" name="MAGAZINES">
+<createdBy>Alex</createdBy>
+<createdTime>2026-04-13 15:32:23 UTC</createdTime>
+<generatorID>0A56A21E-75AF-8B79-A2A1-9B1C3B3E0A25</generatorID>
+<ownerDesignName>Library</ownerDesignName>
+<allowColumnReorder>false</allowColumnReorder>
+<existDependencyGenerateInDDl>true</existDependencyGenerateInDDl>
+<parsed>true</parsed>
+<columns itemClass="oracle.dbtools.crest.model.design.relational.Column">
+<Column name="media_id" id="357B0E12-48D1-272F-60A0-C32225B1F50E">
+<createdBy>Alex</createdBy>
+<createdTime>2026-04-13 15:32:23 UTC</createdTime>
+<generatorID>ADD935F8-AE7F-3468-551B-F426B389C450</generatorID>
+<ownerDesignName>Library</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+<associations>
+<colAssociation fkAssociation="AE864B77-7BCD-F5F5-0B4B-88C022D34863" referredColumn="38C78277-81B0-A373-5F00-E05A8AE989CD"/>
+</associations>
+</Column>
+<Column name="edition" id="E1937779-49C4-B940-6CE7-20742307D678">
+<createdBy>Alex</createdBy>
+<createdTime>2026-04-13 15:32:23 UTC</createdTime>
+<generatorID>096A5643-93A3-6D12-9DFC-C63C5BED25EF</generatorID>
+<ownerDesignName>Library</ownerDesignName>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>30</dataTypeSize>
+<ownDataTypeParameters>30,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+</columns>
+<indexes itemClass="oracle.dbtools.crest.model.design.relational.Index">
+<ind_PK_UK id="1833F092-9430-5EE5-04A6-090909FD3F68" name="MAGAZINES_PK">
+<createdBy>Alex</createdBy>
+<createdTime>2026-04-13 15:32:23 UTC</createdTime>
+<generatorID>B971710D-350C-8821-27FC-612E2E52E04B</generatorID>
+<ownerDesignName>Library</ownerDesignName>
+<pk>true</pk>
+<indexState>Primary Constraint</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="357B0E12-48D1-272F-60A0-C32225B1F50E"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="262B4F15-D905-922F-B791-35F178301DD5" name="MAGAZINES_MEDIAS_FK">
+<createdBy>Alex</createdBy>
+<createdTime>2026-04-13 15:32:23 UTC</createdTime>
+<generatorID>2D024895-835C-73F3-006A-9A577EF405B3</generatorID>
+<ownerDesignName>Library</ownerDesignName>
+<indexState>Foreign Key</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="357B0E12-48D1-272F-60A0-C32225B1F50E"/>
+</indexColumnUsage>
+</ind_PK_UK>
+</indexes>
+</Table>

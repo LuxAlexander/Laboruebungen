@@ -124,14 +124,29 @@
 <logicalDatatype>LOGDT011</logicalDatatype>
 <ownDataTypeParameters>,,</ownDataTypeParameters>
 </Attribute>
+<Attribute name="start_date" id="70476FAC-0FFD-578E-55AA-643160985C08">
+<createdBy>Alex</createdBy>
+<createdTime>2026-04-13 15:17:08 UTC</createdTime>
+<generatorID>53FF10BF-BED9-B5C0-8C7A-24DFEFD596B5</generatorID>
+<ownerDesignName>Library</ownerDesignName>
+<engineerTo>
+<item key="E47EBF60-E032-408D-574B-6D7273F66E66" value="true"/>
+</engineerTo>
+<referedAttribute>1BCC03C5-D44A-6420-4A2B-265CC3DB429B</referedAttribute>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT008</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
 </attributes>
 <identifiers itemClass="oracle.dbtools.crest.model.design.logical.CandidateKey">
 <identifier id="E518E904-34EC-B632-7FBA-8B76A0F932DF" name="RESERVATIONS PK">
 <createdBy>susan</createdBy>
 <createdTime>2026-03-17 13:53:49 UTC</createdTime>
 <ownerDesignName>Library</ownerDesignName>
+<shouldEngineer>false</shouldEngineer>
 <engineerTo>
-<item key="E47EBF60-E032-408D-574B-6D7273F66E66" value="true"/>
+<item key="E47EBF60-E032-408D-574B-6D7273F66E66" value="false"/>
 </engineerTo>
 <pk>true</pk>
 <usedAttributes>

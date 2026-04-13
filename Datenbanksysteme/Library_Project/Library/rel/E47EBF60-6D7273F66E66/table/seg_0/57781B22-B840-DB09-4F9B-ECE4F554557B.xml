@@ -1,0 +1,204 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Table class="oracle.dbtools.crest.model.design.relational.Table" directorySegmentName="seg_0" id="57781B22-B840-DB09-4F9B-ECE4F554557B" name="RESERVATIONS">
+<createdBy>Alex</createdBy>
+<createdTime>2026-04-13 15:32:23 UTC</createdTime>
+<generatorID>C83441B5-908E-8311-4F72-3AE4E1284D54</generatorID>
+<ownerDesignName>Library</ownerDesignName>
+<allowColumnReorder>false</allowColumnReorder>
+<existDependencyGenerateInDDl>true</existDependencyGenerateInDDl>
+<parsed>true</parsed>
+<columns itemClass="oracle.dbtools.crest.model.design.relational.Column">
+<Column name="reservation_id" id="FB992BA6-E904-77E4-1E2C-8D94AA0B0420">
+<createdBy>Alex</createdBy>
+<createdTime>2026-04-13 15:32:23 UTC</createdTime>
+<generatorID>9312F4BB-4B84-A0CE-01B2-3561F5D9B003</generatorID>
+<ownerDesignName>Library</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="time_reservation" id="BF801C02-8EE5-B221-BF2E-C300EA56E165">
+<createdBy>Alex</createdBy>
+<createdTime>2026-04-13 15:32:23 UTC</createdTime>
+<generatorID>6911DC63-1731-E3FE-8C76-A13E0DA7F990</generatorID>
+<ownerDesignName>Library</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT008</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="CUSTOMERS_customer_id" id="1A536CFC-BB58-02FF-B92A-C24890CEB818">
+<createdBy>Alex</createdBy>
+<createdTime>2026-04-13 15:32:23 UTC</createdTime>
+<generatorID>A55E6BC8-56B9-6A86-CBAA-73010D8EF5E6</generatorID>
+<ownerDesignName>Library</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<previousColumn>false</previousColumn>
+<autoIncrementCycle>false</autoIncrementCycle>
+<associations>
+<colAssociation fkAssociation="0D69FC0F-6BB4-2D00-0A19-520F3E7C0471" referredColumn="7B1FC3D7-A4B4-9B30-B860-26B2E6EDDA72"/>
+</associations>
+</Column>
+<Column name="LEDGER_CUSTOMERS_customer_id" id="2DA16A22-7211-A3D5-7FAE-F5AA1DA1EABD">
+<createdBy>Alex</createdBy>
+<createdTime>2026-04-13 15:32:23 UTC</createdTime>
+<generatorID>7731B92B-A729-FB48-F385-D5C9778A8128</generatorID>
+<ownerDesignName>Library</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<previousColumn>false</previousColumn>
+<autoIncrementCycle>false</autoIncrementCycle>
+<associations>
+<colAssociation fkAssociation="19EFA31F-091E-174B-BFF1-B33701594DD2" referredColumn="2E464C41-8E79-F4D3-59B7-2A5E87CA6435"/>
+</associations>
+</Column>
+<Column name="LEDGER_COPIES_barcode_id" id="F1E72CDA-84E8-91C9-F523-91E89EE36ED4">
+<createdBy>Alex</createdBy>
+<createdTime>2026-04-13 15:32:23 UTC</createdTime>
+<generatorID>46450E29-2A12-D7E8-44C5-0FAF298148E3</generatorID>
+<ownerDesignName>Library</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>15</dataTypeSize>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<previousColumn>false</previousColumn>
+<autoIncrementCycle>false</autoIncrementCycle>
+<associations>
+<colAssociation fkAssociation="19EFA31F-091E-174B-BFF1-B33701594DD2" referredColumn="289BE110-C2BF-8342-7FE1-257FDAEDE257"/>
+</associations>
+</Column>
+<Column name="LEDGER_COPIES_media_id" id="94619C11-AC79-9FED-2877-7821A1FEDE6A">
+<createdBy>Alex</createdBy>
+<createdTime>2026-04-13 15:32:23 UTC</createdTime>
+<generatorID>4DDA97BF-6865-8B0B-ED87-C301532CBCEE</generatorID>
+<ownerDesignName>Library</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<previousColumn>false</previousColumn>
+<autoIncrementCycle>false</autoIncrementCycle>
+<associations>
+<colAssociation fkAssociation="19EFA31F-091E-174B-BFF1-B33701594DD2" referredColumn="0B1F1F99-EE71-D89E-4641-AF3B96AC7498"/>
+</associations>
+</Column>
+<Column name="status" id="36941F75-1C19-9FE2-34A6-072CFCCC8CB6">
+<createdBy>Alex</createdBy>
+<createdTime>2026-04-13 15:32:23 UTC</createdTime>
+<generatorID>1A5D8B36-18F4-246C-DB69-14DCA8E025BF</generatorID>
+<ownerDesignName>Library</ownerDesignName>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>20</dataTypeSize>
+<ownDataTypeParameters>20,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="MEDIAS_media_id" id="1329FFBE-B9F7-8AC7-FD89-3E6E17BA8D08">
+<createdBy>Alex</createdBy>
+<createdTime>2026-04-13 15:32:23 UTC</createdTime>
+<generatorID>06861430-8C8D-9169-F1DF-5BD1A8637D68</generatorID>
+<ownerDesignName>Library</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<previousColumn>false</previousColumn>
+<autoIncrementCycle>false</autoIncrementCycle>
+<associations>
+<colAssociation fkAssociation="AD50EE02-564F-2CEB-9E5E-DF815E4FF3C9" referredColumn="38C78277-81B0-A373-5F00-E05A8AE989CD"/>
+</associations>
+</Column>
+<Column name="LEDGER_start_date" id="44F64877-D2D3-E3C6-C23B-7967D9419EAA">
+<createdBy>Alex</createdBy>
+<createdTime>2026-04-13 15:32:23 UTC</createdTime>
+<generatorID>70476FAC-0FFD-578E-55AA-643160985C08</generatorID>
+<ownerDesignName>Library</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT008</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<previousColumn>false</previousColumn>
+<autoIncrementCycle>false</autoIncrementCycle>
+<associations>
+<colAssociation fkAssociation="19EFA31F-091E-174B-BFF1-B33701594DD2" referredColumn="EAC6BC8E-639A-3C5F-2301-E20C8B17F227"/>
+</associations>
+</Column>
+</columns>
+<indexes itemClass="oracle.dbtools.crest.model.design.relational.Index">
+<ind_PK_UK id="B85C90E4-0540-0D94-D6AF-73D3A1306BCB" name="RESERVATIONS_PK">
+<createdBy>Alex</createdBy>
+<createdTime>2026-04-13 15:32:23 UTC</createdTime>
+<generatorID>E518E904-34EC-B632-7FBA-8B76A0F932DF</generatorID>
+<ownerDesignName>Library</ownerDesignName>
+<pk>true</pk>
+<indexState>Primary Constraint</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="FB992BA6-E904-77E4-1E2C-8D94AA0B0420"/>
+<colUsage columnID="1329FFBE-B9F7-8AC7-FD89-3E6E17BA8D08"/>
+<colUsage columnID="1A536CFC-BB58-02FF-B92A-C24890CEB818"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="09816C39-BCAF-B18E-A247-D0A8673246F3" name="RESERVATIONS__IDX">
+<createdBy>Alex</createdBy>
+<createdTime>2026-04-13 15:32:23 UTC</createdTime>
+<ownerDesignName>Library</ownerDesignName>
+<indexState>Unique Plain Index</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<relationGeneratorID>53FF10BF-BED9-B5C0-8C7A-24DFEFD596B5</relationGeneratorID>
+<indexColumnUsage>
+<colUsage columnID="2DA16A22-7211-A3D5-7FAE-F5AA1DA1EABD"/>
+<colUsage columnID="F1E72CDA-84E8-91C9-F523-91E89EE36ED4"/>
+<colUsage columnID="94619C11-AC79-9FED-2877-7821A1FEDE6A"/>
+<colUsage columnID="44F64877-D2D3-E3C6-C23B-7967D9419EAA"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="A79E5CCE-0E76-7F74-FEAB-A7E4065EC4AB" name="RESERVATIONS_MEDIAS_FK">
+<createdBy>Alex</createdBy>
+<createdTime>2026-04-13 15:32:23 UTC</createdTime>
+<generatorID>DD8BA6C3-631B-430E-8E15-9B6E8465088E</generatorID>
+<ownerDesignName>Library</ownerDesignName>
+<indexState>Foreign Key</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="1329FFBE-B9F7-8AC7-FD89-3E6E17BA8D08"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="E1748611-F488-C5FE-1F7F-06FDDF40DA5C" name="RESERVATIONS_LEDGER_FK">
+<createdBy>Alex</createdBy>
+<createdTime>2026-04-13 15:32:23 UTC</createdTime>
+<generatorID>53FF10BF-BED9-B5C0-8C7A-24DFEFD596B5</generatorID>
+<ownerDesignName>Library</ownerDesignName>
+<indexState>Foreign Key</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="2DA16A22-7211-A3D5-7FAE-F5AA1DA1EABD"/>
+<colUsage columnID="F1E72CDA-84E8-91C9-F523-91E89EE36ED4"/>
+<colUsage columnID="94619C11-AC79-9FED-2877-7821A1FEDE6A"/>
+<colUsage columnID="44F64877-D2D3-E3C6-C23B-7967D9419EAA"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="543BA62E-E607-29CC-CBB9-348DFDCA3209" name="RESERVATIONS_CUSTOMERS_FK">
+<createdBy>Alex</createdBy>
+<createdTime>2026-04-13 15:32:23 UTC</createdTime>
+<generatorID>F3B5430F-F376-47DA-FE7F-869A1B3FEC31</generatorID>
+<ownerDesignName>Library</ownerDesignName>
+<indexState>Foreign Key</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="1A536CFC-BB58-02FF-B92A-C24890CEB818"/>
+</indexColumnUsage>
+</ind_PK_UK>
+</indexes>
+</Table>
