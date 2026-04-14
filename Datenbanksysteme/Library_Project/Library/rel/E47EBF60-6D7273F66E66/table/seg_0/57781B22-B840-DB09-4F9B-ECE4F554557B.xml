@@ -43,11 +43,12 @@
 <autoIncrementCycle>false</autoIncrementCycle>
 <associations>
 <colAssociation fkAssociation="0D69FC0F-6BB4-2D00-0A19-520F3E7C0471" referredColumn="7B1FC3D7-A4B4-9B30-B860-26B2E6EDDA72"/>
+<colAssociation fkAssociation="19EFA31F-091E-174B-BFF1-B33701594DD2" referredColumn="2E464C41-8E79-F4D3-59B7-2A5E87CA6435"/>
 </associations>
 </Column>
 <Column name="LEDGER_CUSTOMERS_customer_id" id="2DA16A22-7211-A3D5-7FAE-F5AA1DA1EABD">
-<createdBy>Alex</createdBy>
-<createdTime>2026-04-13 15:32:23 UTC</createdTime>
+<createdBy>susan</createdBy>
+<createdTime>2026-04-14 11:12:59 UTC</createdTime>
 <generatorID>7731B92B-A729-FB48-F385-D5C9778A8128</generatorID>
 <ownerDesignName>Library</ownerDesignName>
 <useDomainConstraints>false</useDomainConstraints>
@@ -56,9 +57,6 @@
 <ownDataTypeParameters>,,</ownDataTypeParameters>
 <previousColumn>false</previousColumn>
 <autoIncrementCycle>false</autoIncrementCycle>
-<associations>
-<colAssociation fkAssociation="19EFA31F-091E-174B-BFF1-B33701594DD2" referredColumn="2E464C41-8E79-F4D3-59B7-2A5E87CA6435"/>
-</associations>
 </Column>
 <Column name="LEDGER_COPIES_barcode_id" id="F1E72CDA-84E8-91C9-F523-91E89EE36ED4">
 <createdBy>Alex</createdBy>
@@ -74,21 +72,6 @@
 <autoIncrementCycle>false</autoIncrementCycle>
 <associations>
 <colAssociation fkAssociation="19EFA31F-091E-174B-BFF1-B33701594DD2" referredColumn="289BE110-C2BF-8342-7FE1-257FDAEDE257"/>
-</associations>
-</Column>
-<Column name="LEDGER_COPIES_media_id" id="94619C11-AC79-9FED-2877-7821A1FEDE6A">
-<createdBy>Alex</createdBy>
-<createdTime>2026-04-13 15:32:23 UTC</createdTime>
-<generatorID>4DDA97BF-6865-8B0B-ED87-C301532CBCEE</generatorID>
-<ownerDesignName>Library</ownerDesignName>
-<useDomainConstraints>false</useDomainConstraints>
-<use>1</use>
-<logicalDatatype>LOGDT011</logicalDatatype>
-<ownDataTypeParameters>,,</ownDataTypeParameters>
-<previousColumn>false</previousColumn>
-<autoIncrementCycle>false</autoIncrementCycle>
-<associations>
-<colAssociation fkAssociation="19EFA31F-091E-174B-BFF1-B33701594DD2" referredColumn="0B1F1F99-EE71-D89E-4641-AF3B96AC7498"/>
 </associations>
 </Column>
 <Column name="status" id="36941F75-1C19-9FE2-34A6-072CFCCC8CB6">
@@ -116,6 +99,7 @@
 <previousColumn>false</previousColumn>
 <autoIncrementCycle>false</autoIncrementCycle>
 <associations>
+<colAssociation fkAssociation="19EFA31F-091E-174B-BFF1-B33701594DD2" referredColumn="0B1F1F99-EE71-D89E-4641-AF3B96AC7498"/>
 <colAssociation fkAssociation="AD50EE02-564F-2CEB-9E5E-DF815E4FF3C9" referredColumn="38C78277-81B0-A373-5F00-E05A8AE989CD"/>
 </associations>
 </Column>
@@ -160,7 +144,6 @@
 <indexColumnUsage>
 <colUsage columnID="2DA16A22-7211-A3D5-7FAE-F5AA1DA1EABD"/>
 <colUsage columnID="F1E72CDA-84E8-91C9-F523-91E89EE36ED4"/>
-<colUsage columnID="94619C11-AC79-9FED-2877-7821A1FEDE6A"/>
 <colUsage columnID="44F64877-D2D3-E3C6-C23B-7967D9419EAA"/>
 </indexColumnUsage>
 </ind_PK_UK>
@@ -183,9 +166,9 @@
 <indexState>Foreign Key</indexState>
 <isSurrogateKey>false</isSurrogateKey>
 <indexColumnUsage>
-<colUsage columnID="2DA16A22-7211-A3D5-7FAE-F5AA1DA1EABD"/>
+<colUsage columnID="1A536CFC-BB58-02FF-B92A-C24890CEB818"/>
 <colUsage columnID="F1E72CDA-84E8-91C9-F523-91E89EE36ED4"/>
-<colUsage columnID="94619C11-AC79-9FED-2877-7821A1FEDE6A"/>
+<colUsage columnID="1329FFBE-B9F7-8AC7-FD89-3E6E17BA8D08"/>
 <colUsage columnID="44F64877-D2D3-E3C6-C23B-7967D9419EAA"/>
 </indexColumnUsage>
 </ind_PK_UK>
