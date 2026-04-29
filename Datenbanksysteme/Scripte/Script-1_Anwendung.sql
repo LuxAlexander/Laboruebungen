@@ -1,0 +1,82 @@
+--Rückgabe
+SELECT * FROM COPIES c 
+WHERE  c.BARCODE_ID = :barcode;
+
+SELECT * FROM LEDGER l
+WHERE  l.Copies_BARCODE_ID = :barcode
+AND l.END_DATE < :return_time;
+--update
+INSERT INTO FHS52423.LEDGER
+(RETURN_DTIME, COST_PAID)
+VALUES(:return_time, :paid)
+WHERE EXISTS (SELECT * FROM LEDGER l
+WHERE  l.Copies_BARCODE_ID = :barcode
+AND l.END_DATE < :return_time);
+
+---TRIGGER on ledger update, update statistics
+
+--Ausleihen
+SELECT * FROM CUSTOMERS c
+WHERE c.CUSTOMER_LAST_NAME = :last_name;
+
+INSERT INTO FHS52423.CUSTOMERS
+(CUSTOMER_FIRST_NAME, CUSTOMER_LAST_NAME, BIRTH_DATE)
+VALUES(:first_n, :last_n, :birth_d);
+
+SELECT * FROM MEDIAS m 
+WHERE m.TITLE = :title;
+
+SELECT * FROM MEDIAS m 
+INNER JOIN MEDIA_GENRE mg ON m.MEDIA_ID = mg.MEDIAS_MEDIA_ID 
+INNER JOIN GENRES g ON g.GENRE_ID = mg.GENRES_GENRE_ID 
+WHERE g.CATEGORY = :genre;
+
+SELECT * FROM MEDIAS m 
+INNER JOIN MEDIA_TYPES mt ON m.MEDIA_TYPES_TYPE_ID = mt.TYPE_ID  
+WHERE mt.TYPE  = :type;
+
+SELECT * FROM COPIES c
+INNER JOIN MEDIAS m ON c.Medias_MEDIA_ID = m.MEDIA_ID
+INNER JOIN LEDGER l ON c.BARCODE_ID = l.COPIES_BARCODE_ID
+WHERE l.RETURN_DTIME IS NOT NULL;
+
+SELECT * FROM COPIES c
+INNER JOIN MEDIAS m ON c.Medias_MEDIA_ID = m.MEDIA_ID
+INNER JOIN LEDGER l ON c.BARCODE_ID = l.COPIES_BARCODE_ID
+WHERE l.RETURN_DTIME IS NULL;
+
+--Medium reserviert oder ausgeliehen
+SELECT * FROM LEDGER l 
+INNER JOIN RESERVATIONS r ON r.START_DATE = l.START_DATE
+AND r.CUSTOMER_ID = l.CUSTOMERS_CUSTOMER_ID
+AND l.COPIES_MEDIA_ID  = r.MEDIA_ID
+AND l.COPIES_BARCODE_ID = r.BARCODE_ID 
+WHERE l.START_DATE IS NULL;
+
+--FSK
+SELECT * FROM MEDIAS m 
+WHERE m.AGE_RESTRICTION <= SYSDATE() - (SELECT c.birth_date FROM CUSTOMERS c WHERE c.CUSTOMER_ID = :id);
+
+--Verleihen
+INSERT INTO LEDGER
+(START_DATE, END_DATE, RETURN_DTIME, TOTAL_COST, COST_PAID, CUSTOMERS_CUSTOMER_ID, COPIES_BARCODE_ID, COPIES_MEDIA_ID)
+VALUES(SYSDATE(), SYSDATE()+7, '', 0, 0, :id, :copy_id, :media_id);
+
+--Reservierung
+--Trigger ist medium frei
+--nächste reservierung
+SELECT * FROM RESERVATIONS r 
+WHERE r.MEDIA_ID IS NULL 
+ORDER BY r.TIME_RESERVATION ASC
+FETCH FIRST 1 ROW ONLY;
+--customer_id vergleichen mit nächster reservierung
+
+--trigger ob reservierung nach 3 tagen (wenn medium frei ist und customer_id nächster in queue ist) abgeholt, wenn nein reservierung verfällt, nächster in reservierungsqueue darf das medium haben
+
+UPDATE FHS52423.RESERVATIONS
+SET  STATUS='DONE', BARCODE_ID=:barcode_id, START_DATE= SYSDATE()
+WHERE RESERVATION_ID=0 AND MEDIA_ID=0 AND CUSTOMER_ID=0;
+
+
+
+
