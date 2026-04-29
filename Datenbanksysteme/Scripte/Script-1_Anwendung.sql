@@ -73,7 +73,7 @@ FETCH FIRST 1 ROW ONLY;
 
 --trigger ob reservierung nach 3 tagen (wenn medium frei ist und customer_id nächster in queue ist) abgeholt, wenn nein reservierung verfällt, nächster in reservierungsqueue darf das medium haben
 
-UPDATE FHS52423.RESERVATIONS
+UPDATE RESERVATIONS
 SET  STATUS='DONE', BARCODE_ID=:barcode_id, START_DATE= SYSDATE()
 WHERE RESERVATION_ID=0 AND MEDIA_ID=0 AND CUSTOMER_ID=0;
 
