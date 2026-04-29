@@ -67,7 +67,7 @@ SELECT * FROM CUSTOMERS WHERE CUSTOMER_LAST_NAME = :last_name AND BIRTH_DATE = :
 
 -- Neuen Kunden anlegen (Anlegen neues Kunden)
 INSERT INTO CUSTOMERS (CUSTOMER_FIRST_NAME, CUSTOMER_LAST_NAME, BIRTH_DATE)
-VALUES (:first_n, :last_n, :birth_d);
+VALUES (:first_n, :last_n, :birth_d); --Muss vom Kunden angegeben werden
 
 -- Suche Medien (Titel, Genre oder Typ)
 SELECT m.*, g.CATEGORY, mt.TYPE 
