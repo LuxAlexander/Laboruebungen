@@ -1,5 +1,5 @@
 -- ==========================================
--- RÜCKGABE (Prozess links im Flowchart)
+-- RÜCKGABE
 -- ==========================================
 
 -- 1. Medium/Kopie identifizieren (Schritt: "Strichcode")
@@ -7,7 +7,8 @@
 SELECT c.*, m.TITLE 
 FROM COPIES c
 JOIN MEDIAS m ON c.Medias_MEDIA_ID = m.MEDIA_ID
-WHERE c.BARCODE_ID = :barcode;
+WHERE c.BARCODE_ID = :barcode
+FOR UPDATE WAIT 5;
 
 -- 2. Kosten berechnen & im Ledger speichern (Schritt: "Überzogen?" & "Cost")
 -- Dieser Befehl berechnet die Gebühr und schreibt sie in TOTAL_COST.
@@ -39,7 +40,8 @@ SELECT TOTAL_COST,
        CASE WHEN TOTAL_COST > 0 THEN 'ZAHLUNG ERFORDERLICH' ELSE 'KEINE GEBÜHR' END AS payment_status
 FROM LEDGER
 WHERE COPIES_BARCODE_ID = :barcode 
-AND RETURN_DTIME IS NULL;
+AND RETURN_DTIME IS NULL
+FOR UPDATE;
 
 -- 4. Rückgabe registrieren (Update des bestehenden Ledger-Eintrags)
 UPDATE LEDGER
@@ -57,7 +59,7 @@ WHERE statistic_id = (SELECT m.MEDIA_ID FROM MEDIAS m JOIN COPIES c ON m.MEDIA_I
 
 
 -- ==========================================
--- KUNDENVERWALTUNG & SUCHE (Prozess mitte)
+-- KUNDENVERWALTUNG & SUCHE
 -- ==========================================
 
 -- Prüfen, ob Kunde existiert (ist Kunde?)
@@ -76,7 +78,7 @@ WHERE m.TITLE LIKE %:search% OR g.CATEGORY = :genre OR mt.TYPE = :type;
 
 
 -- ==========================================
--- VERFÜGBARKEIT & LEIHE (Entscheidungsrauten)
+-- VERFÜGBARKEIT & VERLEIHE
 -- ==========================================
 
 -- FSK Prüfung (FSK berechtigt?)
@@ -89,7 +91,8 @@ AND m.age_restriction <= FLOOR(MONTHS_BETWEEN(SYSDATE, (SELECT birth_date FROM C
 -- Ein Medium ist frei, wenn es eine Kopie gibt, die nicht in einem offenen Ledger-Eintrag steht
 SELECT * FROM COPIES c
 WHERE c.Medias_MEDIA_ID = :media_id
-AND c.BARCODE_ID NOT IN (SELECT COPIES_BARCODE_ID FROM LEDGER WHERE RETURN_DTIME IS NULL);
+AND c.BARCODE_ID NOT IN (SELECT COPIES_BARCODE_ID FROM LEDGER WHERE RETURN_DTIME IS NULL)
+FOR UPDATE WAIT 5;
 
 -- Verleihen: Neuen Eintrag im Ledger anlegen
 INSERT INTO LEDGER (START_DATE, END_DATE, TOTAL_COST, COST_PAID, CUSTOMERS_CUSTOMER_ID, COPIES_BARCODE_ID)
@@ -97,7 +100,7 @@ VALUES (SYSDATE, SYSDATE + 21, (SELECT cost FROM PRICES WHERE creation_date = (S
 
 
 -- ==========================================
--- RESERVIERUNG (Prozess rechts)
+-- RESERVIERUNG
 -- ==========================================
 
 -- Neue Reservierung anlegen (Warteschlange)
@@ -108,6 +111,7 @@ VALUES (SYSDATE, 'PENDING', :c_id, :media_id);
 SELECT * FROM RESERVATIONS 
 WHERE MEDIA_ID = :media_id AND STATUS = 'PENDING'
 ORDER BY TIME_RESERVATION ASC
+FOR UPDATE SKIP LOCKED -- Überspringt Datensätze, die bereits von anderen in Bearbeitung sind
 FETCH FIRST 1 ROW ONLY;
 
 -- Reservierung abschließen (Wenn abgeholt wird)
