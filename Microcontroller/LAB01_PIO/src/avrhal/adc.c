@@ -47,6 +47,8 @@ void adcSetup()
     // ADMUX: MUX3=0, MUX2=0, MUX1=0, MUX0=0 -> ADC0 (PA0)
 }
 
+
+
 uint16_t adcRead()
 {
     // Start single conversion on channel
@@ -69,12 +71,10 @@ uint16_t adcRead()
 
 void adcSetChannel(uint8_t channel)
 {
-    // Set the ADC channel (MUX bits in ADMUX register)
-    // Clear the MUX bits (MUX3:0) and set the desired channel
-    if (channel < 8)
-    {
-        ADMUX = (ADMUX & 0xF0) | (channel & 0x0F);
-    }
+    /* Clear 5 lower bits for channel selection */
+    ADMUX &= 0xE0;
+    /* Set single ended channel */
+    ADMUX |= channel & 0b111;
 }
 
 void adcSetupFreeRunning()

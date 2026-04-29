@@ -12,7 +12,7 @@
 #define buffer 255
 
 
-int main(void)
+int adc_com(void)
 {
     usartSetup(USART_B9600, USART_CONFIG_8N1);
     adcSetup();

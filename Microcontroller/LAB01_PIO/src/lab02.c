@@ -1,4 +1,4 @@
-#include "avrhal/ugly-usart.h"
+/*#include "avrhal/ugly-usart.h"
 #include <util/delay.h>
 #include <avr/interrupt.h>
 
@@ -17,3 +17,4 @@ int serialconnection(void)
     cli();
     return 0;
 }
+*/
