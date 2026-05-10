@@ -541,8 +541,9 @@ def copy_available(data: str, media_id, customer_id) -> None:
         copy = cursor.fetchone()
 
         if copy:
-            print("Access granted! You are old enough.")
-            # Proceed to borrow logic
+            barcode = copy[0]
+            print(f"Copy {barcode} is available and locked for you.")
+            borrow(data, customer_id, barcode)
         else:
             print("Access denied: You do not meet the age requirement for this media.")
 
@@ -554,6 +555,27 @@ def copy_available(data: str, media_id, customer_id) -> None:
     finally:
         cursor.close()  # always close the cursor when done
 
+def borrow(data: str, customer_id, barcode) -> None:
+    try:
+        db.conn.begin()  # start transaction (usually not needed, but still best practice)
+
+        # we need a cursor to execute queries
+        cursor = db.conn.cursor()
+
+        # execute the login query
+        cursor.execute(data['new_ledger_entry'], {"c_id": customer_id,"barcode": barcode })
+        # Commit transaction
+        db.conn.commit()
+
+        print(f"Successfully borrowed the Media!\nPlease return it in 21 Days.")
+
+    except oracledb.DatabaseError as e:
+        print("An error occurred executing the query:", e)
+        print_exc()  # print stack trace
+        db.conn.rollback()  # rollback any changes in case of an error
+        raise e
+    finally:
+        cursor.close()  # always close the cursor when done
 # Press the green button in the gutter to run the script.
 if __name__ == '__main__':
     # get credentials using the credentials_helper
