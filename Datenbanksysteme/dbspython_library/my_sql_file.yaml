@@ -6,6 +6,10 @@
     JOIN MEDIAS m ON c.Medias_MEDIA_ID = m.MEDIA_ID
     JOIN LEDGER l ON c.BARCODE_ID = l.COPIES_BARCODE_ID
     WHERE l.RETURN_DTIME IS NULL AND l.CUSTOMERS_CUSTOMER_ID = :c_id"
+
+  get_price_to_pay: "SELECT TOTAL_COST FROM LEDGER
+    WHERE COPIES_BARCODE_ID = :barcode 
+    AND RETURN_DTIME IS NULL"
 # Rückgabe
   find_copy_get_data: "SELECT c.*, m.TITLE 
     FROM COPIES c
@@ -18,24 +22,35 @@
     AND CUSTOMERS_CUSTOMER_ID = :c_id
     AND RETURN_DTIME IS NULL"
 
-  calculate_cost_save_in_ledger: "UPDATE LEDGER l
-    SET l.TOTAL_COST = GREATEST(0, 
+  calculate_cost_save_in_ledger: "
+    UPDATE LEDGER l
+    SET l.TOTAL_COST = GREATEST(
+        0,
         ROUND(
             (SYSDATE - l.END_DATE) * (
-                SELECT p.cost 
-                FROM PRICES p
-                -- Verknüpfung über MEDIAS, um den passenden Preis für die Kopie zu finden
-                JOIN MEDIAS m ON (m.MEDIA_TYPES_TYPE_ID = p.type_id AND m.genre_id = p.genre_id)
-                JOIN COPIES c ON (c.Medias_MEDIA_ID = m.MEDIA_ID)
-                WHERE c.BARCODE_ID = l.COPIES_BARCODE_ID
-                AND p.valid <= SYSDATE -- Preis muss bereits gültig sein
-                ORDER BY p.valid DESC    -- Das aktuellste Datum zuerst
-                FETCH FIRST 1 ROW ONLY
-            ), 2
-          )
+                SELECT cost
+                FROM (
+                    SELECT p.cost
+                    FROM PRICES p
+                    JOIN MEDIA_GENRE g
+                        ON g.GENRES_GENRE_ID = p.GENRES_GENRE_ID
+                    JOIN MEDIAS m
+                        ON m.MEDIA_TYPES_TYPE_ID = p.MEDIA_TYPES_TYPE_ID
+                      AND g.GENRES_GENRE_ID = p.GENRES_GENRE_ID
+                    JOIN COPIES c
+                        ON c.MEDIAS_MEDIA_ID = m.MEDIA_ID
+                    WHERE c.BARCODE_ID = l.COPIES_BARCODE_ID
+                      AND p.VALID <= SYSDATE
+                    ORDER BY p.VALID DESC
+                )
+                WHERE ROWNUM = 1
+            ),
+            2
         )
-    WHERE l.COPIES_BARCODE_ID = :barcode 
-    AND l.RETURN_DTIME IS NULL"
+    )
+    WHERE l.COPIES_BARCODE_ID = :barcode
+      AND l.RETURN_DTIME IS NULL
+    "
 
   has_to_pay: "SELECT TOTAL_COST, 
       CASE WHEN TOTAL_COST > 0 THEN 'ZAHLUNG ERFORDERLICH' ELSE 'KEINE GEBÜHR' END AS payment_status

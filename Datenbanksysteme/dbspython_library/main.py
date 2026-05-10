@@ -627,18 +627,22 @@ def returnCopy(data: str, customer_id: int, barcode: str) -> None:
         #Calculate the cost and save it in the ledger
         cursor.execute(data['calculate_cost_save_in_ledger'], {"barcode": barcode })
 
+        cursor.execute(data['get_price_to_pay'], {"barcode": barcode })
+
         priceToPay = cursor.fetchone()[0]
-        if priceToPay > 0:
+        #Python checks from left to right
+        if priceToPay is not None and priceToPay > 0:
             print(f"You have to pay {priceToPay}€ for returning this media late.")
             #payment process
             input("Press Enter to confirm payment...") # Simulate payment confirmation
-
-        # execute the login query
-        cursor.execute(data['returnCopy'], {"barcode": barcode })
+            cursor.execute(data['returnCopy'], {"barcode": barcode, "paid": priceToPay })
+        else:
+            cursor.execute(data['returnCopy'], {"barcode": barcode, "paid": 0 })
+        
         # Commit transaction
         db.conn.commit()
 
-        print(f"Successfully returned the Media!\nThank you!")
+        print(f"Successfully returned the Copy!\nThank you!")
 
     except oracledb.DatabaseError as e:
         print("An error occurred executing the query:", e)

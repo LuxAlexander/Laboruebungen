@@ -15,4 +15,3 @@
 
 
 
-#notes: use prettyprint since it's already defined, let ai check for mehrbenutzer betrieb, refactor names maybe (medias_media_id is too much no?)
