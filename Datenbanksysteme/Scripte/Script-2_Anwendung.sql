@@ -63,7 +63,7 @@ WHERE statistic_id = (SELECT m.MEDIA_ID FROM MEDIAS m JOIN COPIES c ON m.MEDIA_I
 -- ==========================================
 
 -- Prüfen, ob Kunde existiert (ist Kunde?)
-SELECT * FROM CUSTOMERS WHERE CUSTOMER_LAST_NAME = :last_name AND BIRTH_DATE = :birth_d;
+SELECT * FROM CUSTOMERS WHERE CUSTOMER_LAST_NAME = :last_name AND BIRTH_DATE = TO_DATE(:birth_d, 'YYYY-MM-DD');
 
 -- Neuen Kunden anlegen (Anlegen neues Kunden)
 INSERT INTO CUSTOMERS (CUSTOMER_FIRST_NAME, CUSTOMER_LAST_NAME, BIRTH_DATE)

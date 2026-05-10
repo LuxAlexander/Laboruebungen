@@ -353,6 +353,104 @@ def date_handling():
 
     db.conn.commit()  # commit any changes (close transaction)
 
+# Login Attempt
+
+def login(file: str, lname: str, bdate: str) -> None:
+    data = None
+    # with automatically closes the file (no need to call close)
+    with open(file) as f:  # load the yaml file
+        data = yaml.load(f, Loader=SafeLoader)
+    try:
+        db.conn.begin()  # start transaction (usually not needed, but still best practice)
+
+        # we need a cursor to execute queries
+        cursor = db.conn.cursor()
+
+        # Parameters
+        params = {
+            "last_name": lname,
+            "birth_d": bdate
+        }
+        # execute the login query
+        cursor.execute(data['customer_exists'], params)
+        customer = cursor.fetchone()
+
+        if customer:
+            print(f"Success! Welcome {lname}.")
+            return customer
+        else:
+            # 4. Handle "Not Found" case
+            print(f"\n[!] Customer {lname} ({bdate}) not found.")
+            print("1. Try again")
+            print("2. Register new account")
+            print("3. Back to menu")
+            
+            choice = input("Selection: ")
+            if choice == '1':
+                # Ask for new info and call itself again (recursion)
+                new_ln = input("Enter Last Name: ")
+                new_bd = input("Enter Birth Date: ")
+                return login(file, new_ln, new_bd)
+            elif choice == '2':
+                # Call your registration function here
+                # return register(file, lname, bdate)
+                print("Redirecting to registration...")
+                return registration(file)
+            else:
+                return None
+
+    except oracledb.DatabaseError as e:
+        print("An error occurred executing the query:", e)
+        print_exc()  # print stack trace
+        db.conn.rollback()  # rollback any changes in case of an error
+        raise e
+    finally:
+        cursor.close()  # always close the cursor when done
+
+def registration(file: str) -> None:
+    data = None
+    # with automatically closes the file (no need to call close)
+    with open(file) as f:  # load the yaml file
+        data = yaml.load(f, Loader=SafeLoader)
+    try:
+        db.conn.begin()  # start transaction (usually not needed, but still best practice)
+
+        # we need a cursor to execute queries
+        cursor = db.conn.cursor()
+
+        # Get firstname, lastname and birthdate
+        fname = input("Firstname: ")
+        lname = input("Lastname: ")
+        bdate = input("Date of Birth (DD.MM.YYYY): ")
+        # Parameters
+        params = {
+            "first_n": fname,
+            "last_n": lname,
+            "birth_d": bdate
+        }
+        # execute the login query
+        cursor.execute(data['new_customer'], params)
+        # Commit transaction
+        db.conn.commit()
+
+        print(f"Successfully registered {lname}!")
+
+        # 3. After registering, we usually want to fetch the new user 
+        # so they are "logged in" automatically.
+        params = {
+            "last_name": lname,
+            "birth_d": bdate
+        }
+        cursor.execute(data['customer_exists'], params)
+        return cursor.fetchone()
+
+    except oracledb.DatabaseError as e:
+        print("An error occurred executing the query:", e)
+        print_exc()  # print stack trace
+        db.conn.rollback()  # rollback any changes in case of an error
+        raise e
+    finally:
+        cursor.close()  # always close the cursor when done
 
 # Press the green button in the gutter to run the script.
 if __name__ == '__main__':
@@ -370,15 +468,31 @@ if __name__ == '__main__':
     # turn auto commit off, we want to control the transactions ourselves
     db.auto_commit(False)
 
+    file = "my_sql_file.yaml"
     # Read user input in a loop
     while True:
         # Print options for the user
-        print("Choose an option:")
+        print("Welcome to the Library!\n")
+        choice = input("\n1. Login\n2. Create Account\n3. Quit\nSelection: ")
+
+        if choice == '1':
+            print("***LOGIN***")
+            lname = input("Lastname: ")
+            bdate = input("Date of Birth (DD.MM.YYYY): ")
+            customer = login(file, lname, bdate)
+        elif choice == '2':
+            customer = registration(file)
+        elif choice == '3':
+            print("Exiting the application...")
+            break
+        else:
+            print("Invalid choice")
+
+
         print("1. Simple query with bind variables using fetch all")
         print("2. Go through the result row by row")
         print("3. Go through the result row by row with column names assigned to index")
-        print(
-            "4. Access columns by name using rowfactory leveraging cursor.description to convert result to dictionary")
+        print("4. Access columns by name using rowfactory leveraging cursor.description to convert result to dictionary")
         print("5. Load SQL statement from file and execute it")
         print("6. Executing DDLs with insert showcasing transaction handling")
         print("7. Nested Transactions using savepoints")
