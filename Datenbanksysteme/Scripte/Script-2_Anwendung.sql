@@ -63,7 +63,7 @@ WHERE statistic_id = (SELECT m.MEDIA_ID FROM MEDIAS m JOIN COPIES c ON m.MEDIA_I
 -- ==========================================
 
 -- Prüfen, ob Kunde existiert (ist Kunde?)
-SELECT * FROM CUSTOMERS WHERE CUSTOMER_LAST_NAME = :last_name AND BIRTH_DATE = TO_DATE(:birth_d, 'YYYY-MM-DD');
+SELECT * FROM CUSTOMERS WHERE CUSTOMER_LAST_NAME = :last_name AND BIRTH_DATE = TO_DATE(:birth_d, 'DD-MM-YYYY');
 
 -- Neuen Kunden anlegen (Anlegen neues Kunden)
 INSERT INTO CUSTOMERS (CUSTOMER_FIRST_NAME, CUSTOMER_LAST_NAME, BIRTH_DATE)
@@ -73,8 +73,9 @@ VALUES (:first_n, :last_n, :birth_d); --Muss vom Kunden angegeben werden
 SELECT m.*, g.CATEGORY, mt.TYPE 
 FROM MEDIAS m
 JOIN MEDIA_TYPES mt ON m.MEDIA_TYPES_TYPE_ID = mt.TYPE_ID
-JOIN GENRES g ON m.MEDIA_ID = g.GENRE_ID
-WHERE m.TITLE LIKE %:search% OR g.CATEGORY = :genre OR mt.TYPE = :type;
+JOIN MEDIA_GENRE mg ON m.MEDIA_ID = mg.MEDIAS_MEDIA_ID
+JOIN GENRES g ON mg.GENRES_GENRE_ID = g.GENRE_ID
+WHERE m.TITLE LIKE :title OR g.CATEGORY = :genre OR mt.TYPE = :type;
 
 
 -- ==========================================

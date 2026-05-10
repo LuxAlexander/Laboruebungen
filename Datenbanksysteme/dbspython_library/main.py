@@ -355,11 +355,7 @@ def date_handling():
 
 # Login Attempt
 
-def login(file: str, lname: str, bdate: str) -> None:
-    data = None
-    # with automatically closes the file (no need to call close)
-    with open(file) as f:  # load the yaml file
-        data = yaml.load(f, Loader=SafeLoader)
+def login(data: str, lname: str, bdate: str) -> None:
     try:
         db.conn.begin()  # start transaction (usually not needed, but still best practice)
 
@@ -390,12 +386,12 @@ def login(file: str, lname: str, bdate: str) -> None:
                 # Ask for new info and call itself again (recursion)
                 new_ln = input("Enter Last Name: ")
                 new_bd = input("Enter Birth Date: ")
-                return login(file, new_ln, new_bd)
+                return login(data, new_ln, new_bd)
             elif choice == '2':
                 # Call your registration function here
                 # return register(file, lname, bdate)
                 print("Redirecting to registration...")
-                return registration(file)
+                return registration(data)
             else:
                 return None
 
@@ -407,11 +403,7 @@ def login(file: str, lname: str, bdate: str) -> None:
     finally:
         cursor.close()  # always close the cursor when done
 
-def registration(file: str) -> None:
-    data = None
-    # with automatically closes the file (no need to call close)
-    with open(file) as f:  # load the yaml file
-        data = yaml.load(f, Loader=SafeLoader)
+def registration(data: str) -> None:
     try:
         db.conn.begin()  # start transaction (usually not needed, but still best practice)
 
@@ -452,6 +444,51 @@ def registration(file: str) -> None:
     finally:
         cursor.close()  # always close the cursor when done
 
+# Find a Media
+def mediaSearch(data: str) -> None:
+    print("\n*** MEDIA SEARCH ***")
+    print("Leave a field blank if you don't want to filter by it.")
+        
+    # Get user input
+    t_input = input("Search Title: ").strip()
+    g_input = input("Search Genre: ").strip()
+    m_type  = input("Search Media-Type: ").strip()
+
+    try:
+        db.conn.begin()  # start transaction (usually not needed, but still best practice)
+
+        # we need a cursor to execute queries
+        cursor = db.conn.cursor()
+
+        # Parameters
+        params = {
+            "title": f"%{t_input}%" if t_input else "___NONE___",
+            "genre": g_input if g_input else "___NONE___",
+            "type": m_type if m_type else "___NONE___"
+        }
+        # execute the login query
+        cursor.execute(data['search_media_genre_type_title'], params)
+        columns = [col[0] for col in cursor.description]
+        results = cursor.fetchall()
+
+        if results:
+            print(f"\nFound {len(results)} matches:")
+            print("-" * 30)
+            for row in results:
+                # Print as a dictionary or formatted string
+                print(dict(zip(columns, row)))
+        else:
+            print("No media found matching those criteria.")
+
+
+    except oracledb.DatabaseError as e:
+        print("An error occurred executing the query:", e)
+        print_exc()  # print stack trace
+        db.conn.rollback()  # rollback any changes in case of an error
+        raise e
+    finally:
+        cursor.close()  # always close the cursor when done
+
 # Press the green button in the gutter to run the script.
 if __name__ == '__main__':
     # get credentials using the credentials_helper
@@ -469,67 +506,45 @@ if __name__ == '__main__':
     db.auto_commit(False)
 
     file = "my_sql_file.yaml"
+
+    data = None
+    customer = None
+    # with automatically closes the file (no need to call close)
+    with open(file) as f:  # load the yaml file
+        data = yaml.load(f, Loader=SafeLoader)
     # Read user input in a loop
     while True:
-        # Print options for the user
-        print("Welcome to the Library!\n")
-        choice = input("\n1. Login\n2. Create Account\n3. Quit\nSelection: ")
+        # If no one is logged in, show the Auth Menu
+        if not customer:
+            print("\nWelcome to the Library!")
+            choice = input("1. Login\n2. Create Account\nq. Quit\nSelection: ")
 
-        if choice == '1':
-            print("***LOGIN***")
-            lname = input("Lastname: ")
-            bdate = input("Date of Birth (DD.MM.YYYY): ")
-            customer = login(file, lname, bdate)
-        elif choice == '2':
-            customer = registration(file)
-        elif choice == '3':
-            print("Exiting the application...")
-            break
+            if choice == '1':
+                lname = input("Lastname: ")
+                bdate = input("Date of Birth (DD.MM.YYYY): ")
+                customer = login(data, lname, bdate)
+            elif choice == '2':
+                customer = registration(data)
+            elif choice == 'q':
+                break
+        
+        # If someone IS logged in, show the Library Menu
         else:
-            print("Invalid choice")
+            print(f"\n--- Logged in as {customer[1]} ---") # Assuming index 1 is name
+            print("1. Search for Media")
+            print("2. Return Media")
+            print("q. Logout")
+            
+            subchoice = input("Selection: ")
+            if subchoice == '1':
+                mediaSearch(data)
+            elif subchoice == '2':
+                # returnMedia(data) # Create this function later!
+                pass 
+            elif subchoice == 'q':
+                print("Logging out...")
+                customer = None  # This sends them back to the Login menu
 
-
-        print("1. Simple query with bind variables using fetch all")
-        print("2. Go through the result row by row")
-        print("3. Go through the result row by row with column names assigned to index")
-        print("4. Access columns by name using rowfactory leveraging cursor.description to convert result to dictionary")
-        print("5. Load SQL statement from file and execute it")
-        print("6. Executing DDLs with insert showcasing transaction handling")
-        print("7. Nested Transactions using savepoints")
-        print("8. Changing isolation level")
-        print("9. Lock a table")
-        print("10. Date handling")
-        print("q. Quit")
-
-        # Read user input
-        choice = input()
-
-        # Call the corresponding method based on user input
-        if choice == '1':
-            simple_query()
-        elif choice == '2':
-            row_by_row()
-        elif choice == '3':
-            row_by_row_column_names()
-        elif choice == '4':
-            query_with_rowfactory_for_column_names()
-        elif choice == '5':
-            load_sql_from_file("my_sql_file.yaml")
-        elif choice == '6':
-            ddl_with_insert_showcasing_transactions()
-        elif choice == '7':
-            nested_transactions()
-        elif choice == '8':
-            change_isolation_level()
-        elif choice == '9':
-            lock_table()
-        elif choice == '10':
-            date_handling()
-        elif choice == 'q':
-            print("Exiting the application...")
-            break
-        else:
-            print("Invalid choice. Please try again.")
 
     # when the program exits, the destructor of the OracleDatabase class will be called
     # and the database connection will be closed

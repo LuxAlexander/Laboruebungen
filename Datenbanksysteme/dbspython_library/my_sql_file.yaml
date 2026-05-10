@@ -52,8 +52,9 @@
   search_media_genre_type_title: "SELECT m.*, g.CATEGORY, mt.TYPE 
     FROM MEDIAS m
     JOIN MEDIA_TYPES mt ON m.MEDIA_TYPES_TYPE_ID = mt.TYPE_ID
-    JOIN GENRES g ON m.MEDIA_ID = g.GENRE_ID
-    WHERE m.TITLE LIKE %:search% OR g.CATEGORY = :genre OR mt.TYPE = :type"
+    JOIN MEDIA_GENRE mg ON m.MEDIA_ID = mg.MEDIAS_MEDIA_ID
+    JOIN GENRES g ON mg.GENRES_GENRE_ID = g.GENRE_ID
+    WHERE m.TITLE LIKE :title OR g.CATEGORY = :genre OR mt.TYPE = :type"
 
   # Verleihe & verfügbarkeit
   fsk_check: "SELECT * FROM MEDIAS m

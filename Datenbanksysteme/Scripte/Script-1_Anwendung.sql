@@ -3,7 +3,7 @@ SELECT * FROM COPIES c
 WHERE  c.BARCODE_ID = :barcode;
 
 SELECT * FROM LEDGER l
-WHERE  l.Copies_BARCODE_ID = :barcode
+WHERE  l.COPIES_BARCODE_ID = :barcode
 AND l.END_DATE < :return_time;
 --update
 INSERT INTO FHS52423.LEDGER
