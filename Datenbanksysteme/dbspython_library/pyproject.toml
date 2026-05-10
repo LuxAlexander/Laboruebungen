@@ -1,0 +1,16 @@
+[tool.poetry]
+name = "dbspythondemo"
+version = "0.1.0"
+description = ""
+authors = ["Bernhard Danninger <bernhard.danninger@fh-salzburg.ac.at>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.9"
+oracledb = "^1.2.2"
+pyyaml = "^6.0.1"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

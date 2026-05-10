@@ -1,0 +1,10 @@
+# YAML documents start with a document separator (---) and end with a document terminator (...)
+---
+  my_first_sql_statement: "SELECT SYSDATE FROM DUAL"
+
+  my_second_sql_statement: "SELECT d.department_name, e.last_name, e.first_name
+    FROM hr.employees e INNER JOIN hr.departments d ON e.department_id = d.department_id
+    WHERE d.department_name LIKE :department_name
+      AND e.last_name LIKE :last_name
+    ORDER BY d.department_name, e.last_name"
+...
