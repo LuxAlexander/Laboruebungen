@@ -652,6 +652,7 @@ def returnCopy(data: str, customer_id: int, barcode: str) -> None:
     finally:
         cursor.close()  # always close the cursor when done
 
+    
 
 # Press the green button in the gutter to run the script.
 if __name__ == '__main__':

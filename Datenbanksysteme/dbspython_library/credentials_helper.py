@@ -3,7 +3,7 @@ import os
 from enum import Enum
 from getpass import getpass
 import oracledb
-
+from dotenv import load_dotenv
 
 # enum for credential types
 class CredentialType(Enum):
@@ -76,6 +76,7 @@ class CredentialsHelper:
 
     # load credentials from environment variables
     def _get_from_environment(self):
+        load_dotenv()
         self.username = os.environ.get('USERNAME')
         self.password = os.environ.get('PASSWORD')
         self.dsn = os.environ.get('DSN')
