@@ -462,10 +462,11 @@ def mediaSearch(data: str, customer_id) -> None:
 
         # Parameters
         params = {
-            "title": f"%{t_input}%" if t_input else "___NONE___",
-            "genre": g_input if g_input else "___NONE___",
-            "type": m_type if m_type else "___NONE___"
-        }
+        # Convert input to lowercase and wrap in % for a LIKE search
+        "title": f"%{t_input.lower()}%" if t_input else "___NONE___",
+        "genre": g_input.lower() if g_input else "___NONE___",
+        "type": m_type.lower() if m_type else "___NONE___"
+        }   
         # execute the login query
         cursor.execute(data['search_media_genre_type_title'], params)
         columns = [col[0] for col in cursor.description]
@@ -517,7 +518,7 @@ def fsk_check(data: str, media_id, customer_id) -> None:
 
         if allowed_media:
             print("Access granted! You are old enough.")
-            # Proceed to borrow logic
+            copy_available(data, media_id, customer_id)
         else:
             print("Access denied: You do not meet the age requirement for this media.")
 
@@ -545,7 +546,14 @@ def copy_available(data: str, media_id, customer_id) -> None:
             print(f"Copy {barcode} is available and locked for you.")
             borrow(data, customer_id, barcode)
         else:
-            print("Access denied: You do not meet the age requirement for this media.")
+            print("There is no available copy of this media currently. Want to reserve it? (y/n)")
+            choice = input("Selection: ")
+            if choice.lower() == 'y':
+                # call reservation function here
+                pass
+            else:
+                print("Returning to media search results...")
+            
 
     except oracledb.DatabaseError as e:
         print("An error occurred executing the query:", e)
@@ -576,6 +584,71 @@ def borrow(data: str, customer_id, barcode) -> None:
         raise e
     finally:
         cursor.close()  # always close the cursor when done
+
+def currently_borrowed(data: str, customer_id) -> None:
+    try:
+        db.conn.begin()  # start transaction (usually not needed, but still best practice)
+
+        # we need a cursor to execute queries
+        cursor = db.conn.cursor()
+
+        # execute the login query
+        cursor.execute(data['get_all_borrowed'], {"c_id": customer_id })
+        columns = [col[0] for col in cursor.description]
+        results = cursor.fetchall()
+
+        if results:
+            prettyprint.print_results(results, cursor)
+        else:
+            print("You currently have no borrowed media.")
+
+    except oracledb.DatabaseError as e:
+        print("An error occurred executing the query:", e)
+        print_exc()  # print stack trace
+        db.conn.rollback()  # rollback any changes in case of an error
+        raise e
+    finally:
+        cursor.close()  # always close the cursor when done
+
+
+def returnCopy(data: str, customer_id: int, barcode: str) -> None:
+    try:
+        db.conn.begin()  # start transaction (usually not needed, but still best practice)
+
+        # we need a cursor to execute queries
+        cursor = db.conn.cursor()
+        #check if the copy is currently borrowed by the customer
+        cursor.execute(data['check_borrowed_by_customer'], {"c_id": customer_id,"barcode": barcode })
+        borrowed = cursor.fetchone()
+        if not borrowed:
+            print("This copy is not currently borrowed by you.")
+            return
+        
+        #Calculate the cost and save it in the ledger
+        cursor.execute(data['calculate_cost_save_in_ledger'], {"barcode": barcode })
+
+        priceToPay = cursor.fetchone()[0]
+        if priceToPay > 0:
+            print(f"You have to pay {priceToPay}€ for returning this media late.")
+            #payment process
+            input("Press Enter to confirm payment...") # Simulate payment confirmation
+
+        # execute the login query
+        cursor.execute(data['returnCopy'], {"barcode": barcode })
+        # Commit transaction
+        db.conn.commit()
+
+        print(f"Successfully returned the Media!\nThank you!")
+
+    except oracledb.DatabaseError as e:
+        print("An error occurred executing the query:", e)
+        print_exc()  # print stack trace
+        db.conn.rollback()  # rollback any changes in case of an error
+        raise e
+    finally:
+        cursor.close()  # always close the cursor when done
+
+
 # Press the green button in the gutter to run the script.
 if __name__ == '__main__':
     # get credentials using the credentials_helper
@@ -626,8 +699,11 @@ if __name__ == '__main__':
             if subchoice == '1':
                 mediaSearch(data, customer[0])
             elif subchoice == '2':
-                # returnMedia(data) # Create this function later!
-                pass 
+                #print all currently borrowed media by the customer
+                print("\nYour currently borrowed media:")
+                currently_borrowed(data, customer[0])
+                barcode = input("Enter the barcode of the media you want to return: ")
+                returnCopy(data, customer[0], barcode)
             elif subchoice == 'q':
                 print("Logging out...")
                 customer = None  # This sends them back to the Login menu

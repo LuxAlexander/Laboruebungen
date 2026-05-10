@@ -1,11 +1,22 @@
 # YAML documents start with a document separator (---) and end with a document terminator (...)
 ---
+#General Purpose Queries
+  get_all_borrowed: "SELECT c.BARCODE_ID, m.TITLE, l.START_DATE, l.END_DATE 
+    FROM COPIES c
+    JOIN MEDIAS m ON c.Medias_MEDIA_ID = m.MEDIA_ID
+    JOIN LEDGER l ON c.BARCODE_ID = l.COPIES_BARCODE_ID
+    WHERE l.RETURN_DTIME IS NULL AND l.CUSTOMERS_CUSTOMER_ID = :c_id"
 # Rückgabe
   find_copy_get_data: "SELECT c.*, m.TITLE 
     FROM COPIES c
     JOIN MEDIAS m ON c.Medias_MEDIA_ID = m.MEDIA_ID
     WHERE c.BARCODE_ID = :barcode
     FOR UPDATE WAIT 5"
+
+  check_borrowed_by_customer: "SELECT * FROM LEDGER
+    WHERE COPIES_BARCODE_ID = :barcode 
+    AND CUSTOMERS_CUSTOMER_ID = :c_id
+    AND RETURN_DTIME IS NULL"
 
   calculate_cost_save_in_ledger: "UPDATE LEDGER l
     SET l.TOTAL_COST = GREATEST(0, 
@@ -20,7 +31,8 @@
                 AND p.valid <= SYSDATE -- Preis muss bereits gültig sein
                 ORDER BY p.valid DESC    -- Das aktuellste Datum zuerst
                 FETCH FIRST 1 ROW ONLY
-            ), 2)
+            ), 2
+          )
         )
     WHERE l.COPIES_BARCODE_ID = :barcode 
     AND l.RETURN_DTIME IS NULL"
@@ -32,10 +44,10 @@
     AND RETURN_DTIME IS NULL
     FOR UPDATE"
 
-  ledger_update_return_time_and_pay: "UPDATE LEDGER
+  returnCopy: "UPDATE LEDGER
     SET RETURN_DTIME = SYSDATE, 
         COST_PAID = :paid
-    WHERE COPIES_BARCODE_ID = :barcode 
+    WHERE COPIES_BARCODE_ID = :barcode
     AND RETURN_DTIME IS NULL"
 
   statistic_update_on_return: "UPDATE STATISTICS s
@@ -54,7 +66,7 @@
     JOIN MEDIA_TYPES mt ON m.MEDIA_TYPES_TYPE_ID = mt.TYPE_ID
     JOIN MEDIA_GENRE mg ON m.MEDIA_ID = mg.MEDIAS_MEDIA_ID
     JOIN GENRES g ON mg.GENRES_GENRE_ID = g.GENRE_ID
-    WHERE m.TITLE LIKE :title OR g.CATEGORY = :genre OR mt.TYPE = :type"
+    WHERE LOWER(m.TITLE) LIKE :title OR LOWER(g.CATEGORY) = :genre OR LOWER(mt.TYPE) = :type"
 
   # Verleihe & Verfügbarkeit
   fsk_check: "SELECT * FROM MEDIAS m
@@ -66,8 +78,28 @@
     AND c.BARCODE_ID NOT IN (SELECT COPIES_BARCODE_ID FROM LEDGER WHERE RETURN_DTIME IS NULL)
     FOR UPDATE WAIT 5"
 
-  new_ledger_entry: "INSERT INTO LEDGER (START_DATE, END_DATE, TOTAL_COST, COST_PAID, CUSTOMERS_CUSTOMER_ID, COPIES_BARCODE_ID)
-   FROM PRICES WHERE creation_date = (SELECT MAX(creation_date) FROM PRICES)), 0, :c_id, :barcode)"
+  new_ledger_entry: "INSERT INTO LEDGER (
+    START_DATE,
+    END_DATE,
+    TOTAL_COST,
+    COST_PAID,
+    CUSTOMERS_CUSTOMER_ID,
+    COPIES_BARCODE_ID,
+    COPIES_MEDIA_ID)
+    SELECT
+        TRUNC(SYSDATE),
+        TRUNC(SYSDATE) + 21,
+        (SELECT MAX(COST) FROM PRICES WHERE CREATION_DATE = (
+                SELECT MAX(CREATION_DATE)
+                FROM PRICES)
+        ),
+        0,
+        :c_id,
+        :barcode,
+        c.MEDIAS_MEDIA_ID
+    FROM COPIES c
+    WHERE c.BARCODE_ID = :barcode
+    "
 
   # Reservierung
   create_reservation: "INSERT INTO RESERVATIONS (TIME_RESERVATION, STATUS, CUSTOMER_ID, MEDIA_ID)
