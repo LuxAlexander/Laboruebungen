@@ -445,7 +445,7 @@ def registration(data: str) -> None:
         cursor.close()  # always close the cursor when done
 
 # Find a Media
-def mediaSearch(data: str) -> None:
+def mediaSearch(data: str, customer_id) -> None:
     print("\n*** MEDIA SEARCH ***")
     print("Leave a field blank if you don't want to filter by it.")
         
@@ -474,12 +474,77 @@ def mediaSearch(data: str) -> None:
         if results:
             print(f"\nFound {len(results)} matches:")
             print("-" * 30)
-            for row in results:
-                # Print as a dictionary or formatted string
-                print(dict(zip(columns, row)))
+            for i, row in enumerate(results, start=1):
+                d = dict(zip(columns, row))
+                print(f"{i:2}. {d['TITLE']:<20} | {d['CATEGORY']:<10} | {d['TYPE']}")
+
+            print("-" * 30)
+            choice = input("Enter the number to borrow/reserve (or 'b' to go back): ")
+
+            if choice.isdigit():
+                index = int(choice) - 1  # Convert back to 0-based index
+                if 0 <= index < len(results):
+                    selected_media = results[index]
+                    print(f"You selected: {selected_media[1]}") # Assuming index 1 is Title
+                    fsk_check(data, selected_media[0], customer_id)
+                else:
+                    print("Invalid number.")
+            elif choice.lower() == 'b':
+                return
         else:
             print("No media found matching those criteria.")
 
+
+    except oracledb.DatabaseError as e:
+        print("An error occurred executing the query:", e)
+        print_exc()  # print stack trace
+        db.conn.rollback()  # rollback any changes in case of an error
+        raise e
+    finally:
+        cursor.close()  # always close the cursor when done
+
+
+def fsk_check(data: str, media_id, customer_id) -> None:
+    try:
+        db.conn.begin()  # start transaction (usually not needed, but still best practice)
+
+        # we need a cursor to execute queries
+        cursor = db.conn.cursor()
+    
+        # execute the login query
+        cursor.execute(data['fsk_check'], {"media_id": media_id, "c_id": customer_id})
+        allowed_media = cursor.fetchone()
+
+        if allowed_media:
+            print("Access granted! You are old enough.")
+            # Proceed to borrow logic
+        else:
+            print("Access denied: You do not meet the age requirement for this media.")
+
+    except oracledb.DatabaseError as e:
+        print("An error occurred executing the query:", e)
+        print_exc()  # print stack trace
+        db.conn.rollback()  # rollback any changes in case of an error
+        raise e
+    finally:
+        cursor.close()  # always close the cursor when done
+
+def copy_available(data: str, media_id, customer_id) -> None:
+    try:
+        db.conn.begin()  # start transaction (usually not needed, but still best practice)
+
+        # we need a cursor to execute queries
+        cursor = db.conn.cursor()
+    
+        # execute the login query
+        cursor.execute(data['is_copy_available'], {"media_id": media_id})
+        copy = cursor.fetchone()
+
+        if copy:
+            print("Access granted! You are old enough.")
+            # Proceed to borrow logic
+        else:
+            print("Access denied: You do not meet the age requirement for this media.")
 
     except oracledb.DatabaseError as e:
         print("An error occurred executing the query:", e)
@@ -530,14 +595,14 @@ if __name__ == '__main__':
         
         # If someone IS logged in, show the Library Menu
         else:
-            print(f"\n--- Logged in as {customer[1]} ---") # Assuming index 1 is name
+            print(f"\n--- Logged in as {customer[1]} ---") 
             print("1. Search for Media")
             print("2. Return Media")
             print("q. Logout")
             
             subchoice = input("Selection: ")
             if subchoice == '1':
-                mediaSearch(data)
+                mediaSearch(data, customer[0])
             elif subchoice == '2':
                 # returnMedia(data) # Create this function later!
                 pass 

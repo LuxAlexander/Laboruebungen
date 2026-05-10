@@ -56,7 +56,7 @@
     JOIN GENRES g ON mg.GENRES_GENRE_ID = g.GENRE_ID
     WHERE m.TITLE LIKE :title OR g.CATEGORY = :genre OR mt.TYPE = :type"
 
-  # Verleihe & verfügbarkeit
+  # Verleihe & Verfügbarkeit
   fsk_check: "SELECT * FROM MEDIAS m
     WHERE m.MEDIA_ID = :media_id
     AND m.age_restriction <= FLOOR(MONTHS_BETWEEN(SYSDATE, (SELECT birth_date FROM CUSTOMERS WHERE customer_id = :c_id)) / 12)"
