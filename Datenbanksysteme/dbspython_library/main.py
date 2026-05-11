@@ -212,7 +212,6 @@ def copy_available(data: str, media_id, customer_id) -> None:
             else:
                 print("Returning to media search results...")
             
-
     except oracledb.DatabaseError as e:
         print("An error occurred executing the query:", e)
         print_exc()  # print stack trace
