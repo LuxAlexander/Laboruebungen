@@ -384,7 +384,7 @@ def check_reservations(data: str, customer_id) -> None:
     finally:
         cursor.close()  # always close the cursor when done
 
-def statistic_update_on_return(data: str, barcode) -> None:
+def statistic_update_on_return(data: dict, barcode) -> None:
     try:
         db.conn.begin()  # start transaction (usually not needed, but still best practice)
 
@@ -393,6 +393,7 @@ def statistic_update_on_return(data: str, barcode) -> None:
 
         # execute the login query
         cursor.execute(data['statistic_update_on_return'], {"barcode": barcode })
+        print("Rows updated:", cursor.rowcount)
         print(f"Statistics updated for returned media with barcode: {barcode}")
         # Commit transaction
         db.conn.commit()
