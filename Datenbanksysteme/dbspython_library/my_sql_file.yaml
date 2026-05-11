@@ -69,8 +69,17 @@
 
   statistic_update_on_return: "UPDATE STATISTICS s
     SET number_time_borrowed = number_time_borrowed + 1,
-        sum_time_borrowed = sum_time_borrowed + (SELECT SYSDATE - START_DATE FROM LEDGER WHERE COPIES_BARCODE_ID = :barcode AND RETURN_DTIME = SYSDATE)
-    WHERE statistic_id = (SELECT m.MEDIA_ID FROM MEDIAS m JOIN COPIES c ON m.MEDIA_ID = c.Medias_MEDIA_ID WHERE c.BARCODE_ID = :barcode)"
+        sum_time_borrowed = sum_time_borrowed + (
+            SELECT (SYSDATE - START_DATE) 
+            FROM LEDGER 
+            WHERE COPIES_BARCODE_ID = :barcode 
+            -- Instead of checking equal to SYSDATE, 
+            -- just find the most recent record that was just closed.
+            AND RETURN_DTIME IS NOT NULL
+            ORDER BY RETURN_DTIME DESC
+            FETCH FIRST 1 ROW ONLY
+        )
+    WHERE COPIES_BARCODE_ID = :barcode"
 
   # Kunderverwaltung und Suche
   customer_exists: "SELECT * FROM CUSTOMERS WHERE CUSTOMER_LAST_NAME = :last_name AND BIRTH_DATE = TO_DATE(:birth_d, 'DD.MM.YYYY')"
@@ -134,9 +143,9 @@
     FOR UPDATE SKIP LOCKED"
 
   media_picked_up: "UPDATE RESERVATIONS
-    SET STATUS = 'DONE'
-    SET START_DATE = TRUNC(SYSDATE)
-    SET BARCODE_ID =:barcode
+    SET STATUS = 'DONE',
+    START_DATE = TRUNC(SYSDATE),
+    BARCODE_ID =:barcode
     WHERE RESERVATION_ID = :res_id and STATUS = 'READY' and CUSTOMER_ID = :c_id and MEDIA_ID= (SELECT MEDIA_ID FROM COPIES WHERE BARCODE_ID = :barcode)"
 
   check_reservations: "SELECT * FROM RESERVATIONS 
@@ -149,11 +158,27 @@
         SELECT rid FROM (
             SELECT r.ROWID as rid
             FROM RESERVATIONS r
-            JOIN COPIES c ON r.MEDIA_ID = c.MEDIAS_MEDIA_ID
-            WHERE c.BARCODE_ID = :barcode 
-              AND r.STATUS = 'PENDING'
+            WHERE r.STATUS = 'PENDING'
+              AND r.MEDIA_ID = :media_id
             ORDER BY r.TIME_RESERVATION ASC
         )
         WHERE ROWNUM = 1
     )"
-...
+    #failed pickup: check if reservation is older than 3 days, if yes, set to failed and update next reservation to ready
+  check_failed_pickup: "UPDATE RESERVATIONS
+    SET STATUS = 'FAILED'
+    WHERE STATUS = 'READY' AND TIME_RESERVATION < SYSDATE - 3"
+
+  select_failed_pickup: "SELECT * FROM RESERVATIONS
+    WHERE STATUS = 'READY' AND TIME_RESERVATION < SYSDATE - 3"
+  #give the customer more time to pick up the media, 2 days
+  increase_reservation_time: "UPDATE RESERVATIONS
+    SET TIME_RESERVATION = TIME_RESERVATION + 2
+    WHERE CUSTOMER_ID = :c_id AND STATUS = 'READY'"
+
+  #statistics
+  get_media_statistics: "SELECT number_time_borrowed, sum_time_borrowed FROM STATISTICS
+    WHERE statistic_id = (SELECT MEDIA_ID FROM MEDIAS m JOIN COPIES c ON m.MEDIA_ID = c.MEDIAS_MEDIA_ID WHERE c.BARCODE_ID = :barcode)"
+
+  
+

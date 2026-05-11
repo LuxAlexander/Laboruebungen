@@ -640,7 +640,8 @@ def returnCopy(data: str, customer_id: int, barcode: str) -> None:
         else:
             cursor.execute(data['returnCopy'], {"barcode": barcode, "paid": 0 })
 
-        update_reservation_onreturn(data, barcode)
+        
+        update_reservation_onreturn(data, media_id=borrowed[7])
         statistic_update_on_return(data, barcode)
 
         # Commit transaction
@@ -656,7 +657,7 @@ def returnCopy(data: str, customer_id: int, barcode: str) -> None:
     finally:
         cursor.close()  # always close the cursor when done
 
-def update_reservation_onreturn(data: str, barcode: str) -> None:
+def update_reservation_onreturn(data: str, media_id: str) -> None:
     try:
         db.conn.begin()  # start transaction (usually not needed, but still best practice)
 
@@ -664,7 +665,7 @@ def update_reservation_onreturn(data: str, barcode: str) -> None:
         cursor = db.conn.cursor()
 
         # execute the login query
-        cursor.execute(data['update_reservation_on_return'], {"barcode": barcode })
+        cursor.execute(data['update_reservation_on_return'], {"media_id": media_id })
         # Commit transaction
         db.conn.commit()
 
@@ -725,9 +726,6 @@ def check_reservations(data: str, customer_id) -> None:
     finally:
         cursor.close()  # always close the cursor when done
 
-
-#%TODO add a function to update the statistics of the library, this is usually done after returning a media, statistic_update_on_return
-
 def statistic_update_on_return(data: str, barcode) -> None:
     try:
         db.conn.begin()  # start transaction (usually not needed, but still best practice)
@@ -736,12 +734,16 @@ def statistic_update_on_return(data: str, barcode) -> None:
         cursor = db.conn.cursor()
 
         # execute the login query
-        #cursor.execute(data['statistic_update_on_return'], {"barcode": barcode })
+        cursor.execute(data['statistic_update_on_return'], {"barcode": barcode })
         print(f"Statistics updated for returned media with barcode: {barcode}")
         # Commit transaction
         db.conn.commit()
-
         print(f"Statistics updated successfully.")
+         #print stats
+        cursor.execute(data['get_media_statistics'], {"barcode": barcode })
+        print("Current statistics for this media:")
+        prettyprint.print_results(cursor.fetchall(), cursor)
+
 
     except oracledb.DatabaseError as e:
         print("An error occurred executing the query:", e)
@@ -771,7 +773,7 @@ def check_reservations_queue(data: str,media_id, barcode, customer_id) -> None:
         if next_customer and next_customer[2] == customer_id:
             print("You are next in the reservation queue for this media. You can borrow it.")
             borrow(data, customer_id, barcode)
-            media_picked_up(data, media_id, customer_id, barcode, next_customer[0])
+            media_picked_up(data, customer_id, barcode, next_customer[0])
             print(f"Media borrowed successfully.")
         elif next_customer:
             print(f"There are customers ahead of you in the reservation queue for this media. Wanna reserve it anyway? (y/n)")
@@ -796,7 +798,7 @@ def check_reservations_queue(data: str,media_id, barcode, customer_id) -> None:
     finally:
         cursor.close()  # always close the cursor when done
 
-def media_picked_up(data: str, media_id, customer_id, barcode, res_id) -> None:
+def media_picked_up(data: str, customer_id, barcode, res_id) -> None:
     try:
         db.conn.begin()  # start transaction (usually not needed, but still best practice)
 
@@ -804,11 +806,69 @@ def media_picked_up(data: str, media_id, customer_id, barcode, res_id) -> None:
         cursor = db.conn.cursor()
 
         # execute the login query
-        cursor.execute(data['media_picked_up'], {"res_id": res_id, "media_id": media_id, "c_id": customer_id, "barcode": barcode })
+        cursor.execute(data['media_picked_up'], {"res_id": res_id,"c_id": customer_id, "barcode": barcode })
+        statistic_update_on_return(data, barcode)
         # Commit transaction
         db.conn.commit()
 
         print(f"Media pickup confirmed successfully.")
+
+    except oracledb.DatabaseError as e:
+        print("An error occurred executing the query:", e)
+        print_exc()  # print stack trace
+        db.conn.rollback()  # rollback any changes in case of an error
+        raise e
+    finally:
+        cursor.close()  # always close the cursor when done
+
+def check_failed_pickup(data: str) -> None:
+    try:
+        cursor = db.conn.cursor()
+        
+        # 1. Identify which ones are about to fail
+        cursor.execute(data['select_failed_pickup'])
+        failed_pickups = cursor.fetchall()
+
+        if failed_pickups:
+            # 2. Update them to 'FAILED'
+            cursor.execute(data['check_failed_pickup'])
+            db.conn.commit()
+            
+            print("People failed their reservations, maybe now you can profit from it:")
+            # Note: access the correct index for barcode/ID from failed_pickups
+            print(f"Next customer in reservation queue: {failed_pickups}")
+
+            for row in failed_pickups:
+                media_id = row[3] # Based on your previous output, index 3 is Media_ID
+                print(f"Promoting next customer for Media ID: {media_id}")
+                
+                # This calls your SQL once for every failed media type
+                cursor.execute(data['update_reservation_on_return'], {"media_id": media_id})
+                db.conn.commit()  # Commit after processing
+            
+        else:
+            print("No failed pickups.")
+
+    except oracledb.DatabaseError as e:
+        print("An error occurred executing the query:", e)
+        print_exc()  # print stack trace
+        db.conn.rollback()  # rollback any changes in case of an error
+        raise e
+    finally:
+        cursor.close()  # always close the cursor when done
+
+def increase_reservation_time(data: str, customer_id) -> None:
+    try:
+        db.conn.begin()  # start transaction (usually not needed, but still best practice)
+
+        # we need a cursor to execute queries
+        cursor = db.conn.cursor()
+
+        # execute the login query
+        cursor.execute(data['increase_reservation_time'], {"c_id": customer_id })
+        db.conn.commit()
+
+        print(f"Successfully increased reservation time for all your reservations by 2 days!")
 
     except oracledb.DatabaseError as e:
         print("An error occurred executing the query:", e)
@@ -844,6 +904,7 @@ if __name__ == '__main__':
     # Read user input in a loop
     while True:
         # If no one is logged in, show the Auth Menu
+        check_failed_pickup(data) #check if there are failed pickups before showing the menu, so customers can profit from it
         if not customer:
             print("\nWelcome to the Library!")
             choice = input("1. Login\n2. Create Account\nq. Quit\nSelection: ")
@@ -866,6 +927,7 @@ if __name__ == '__main__':
             print("1. Search for Media")
             print("2. Return Media")
             print("3. Check Reservations")
+            print("4. More Reservation Time")
             print("q. Logout")
             
             subchoice = input("Selection: ")
@@ -878,6 +940,8 @@ if __name__ == '__main__':
             elif subchoice == '3':
                 print("\nYour current reservations:")
                 check_reservations(data, customer[0])
+            elif subchoice == '4':
+                increase_reservation_time(data, customer[0])
             elif subchoice == 'q':
                 print("Logging out...")
                 customer = None  # This sends them back to the Login menu
