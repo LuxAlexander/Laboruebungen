@@ -543,14 +543,13 @@ def copy_available(data: str, media_id, customer_id) -> None:
 
         if copy:
             barcode = copy[0]
-            print(f"Copy {barcode} is available and locked for you.")
-            borrow(data, customer_id, barcode)
+            check_reservations_queue(data, media_id, barcode,customer_id)
         else:
             print("There is no available copy of this media currently. Want to reserve it? (y/n)")
             choice = input("Selection: ")
             if choice.lower() == 'y':
                 # call reservation function here
-                pass
+                reservation(data, media_id, customer_id)
             else:
                 print("Returning to media search results...")
             
@@ -599,6 +598,8 @@ def currently_borrowed(data: str, customer_id) -> None:
 
         if results:
             prettyprint.print_results(results, cursor)
+            barcode = input("Enter the barcode of the media you want to return: ")
+            returnCopy(data, customer[0], barcode)
         else:
             print("You currently have no borrowed media.")
 
@@ -638,7 +639,10 @@ def returnCopy(data: str, customer_id: int, barcode: str) -> None:
             cursor.execute(data['returnCopy'], {"barcode": barcode, "paid": priceToPay })
         else:
             cursor.execute(data['returnCopy'], {"barcode": barcode, "paid": 0 })
-        
+
+        update_reservation_onreturn(data, barcode)
+        statistic_update_on_return(data, barcode)
+
         # Commit transaction
         db.conn.commit()
 
@@ -652,7 +656,167 @@ def returnCopy(data: str, customer_id: int, barcode: str) -> None:
     finally:
         cursor.close()  # always close the cursor when done
 
-    
+def update_reservation_onreturn(data: str, barcode: str) -> None:
+    try:
+        db.conn.begin()  # start transaction (usually not needed, but still best practice)
+
+        # we need a cursor to execute queries
+        cursor = db.conn.cursor()
+
+        # execute the login query
+        cursor.execute(data['update_reservation_on_return'], {"barcode": barcode })
+        # Commit transaction
+        db.conn.commit()
+
+        print(f"Reservation updated successfully.")
+
+    except oracledb.DatabaseError as e:
+        print("An error occurred executing the query:", e)
+        print_exc()  # print stack trace
+        db.conn.rollback()  # rollback any changes in case of an error
+        raise e
+    finally:
+        cursor.close()  # always close the cursor when done
+
+def reservation(data: str, media_id, customer_id) -> None:
+    try:
+        db.conn.begin()  # start transaction (usually not needed, but still best practice)
+
+        # we need a cursor to execute queries
+        cursor = db.conn.cursor()
+
+        # execute the login query
+        cursor.execute(data['create_reservation'], {"c_id": customer_id,"media_id": media_id })
+        # Commit transaction
+        db.conn.commit()
+
+        print(f"Successfully reserved the Media!\nYou will be notified when it is available.")
+
+    except oracledb.DatabaseError as e:
+        print("An error occurred executing the query:", e)
+        print_exc()  # print stack trace
+        db.conn.rollback()  # rollback any changes in case of an error
+        raise e
+    finally:
+        cursor.close()  # always close the cursor when done
+
+def check_reservations(data: str, customer_id) -> None:
+    try:
+        db.conn.begin()  # start transaction (usually not needed, but still best practice)
+
+        # we need a cursor to execute queries
+        cursor = db.conn.cursor()
+
+        # execute the login query
+        cursor.execute(data['check_reservations'], {"c_id": customer_id })
+        reservations = cursor.fetchall()
+
+        if reservations:
+            print("Open Reservations:")
+            prettyprint.print_results(reservations, cursor)
+        else:
+            print("No open reservations.")
+
+    except oracledb.DatabaseError as e:
+        print("An error occurred executing the query:", e)
+        print_exc()  # print stack trace
+        db.conn.rollback()  # rollback any changes in case of an error
+        raise e
+    finally:
+        cursor.close()  # always close the cursor when done
+
+
+#%TODO add a function to update the statistics of the library, this is usually done after returning a media, statistic_update_on_return
+
+def statistic_update_on_return(data: str, barcode) -> None:
+    try:
+        db.conn.begin()  # start transaction (usually not needed, but still best practice)
+
+        # we need a cursor to execute queries
+        cursor = db.conn.cursor()
+
+        # execute the login query
+        #cursor.execute(data['statistic_update_on_return'], {"barcode": barcode })
+        print(f"Statistics updated for returned media with barcode: {barcode}")
+        # Commit transaction
+        db.conn.commit()
+
+        print(f"Statistics updated successfully.")
+
+    except oracledb.DatabaseError as e:
+        print("An error occurred executing the query:", e)
+        print_exc()  # print stack trace
+        db.conn.rollback()  # rollback any changes in case of an error
+        raise e
+    finally:
+        cursor.close()  # always close the cursor when done
+
+
+#Check if the reservation queue is empty or you are the next customer for a media, so it can be borrowed, using next_in_reservation_queue
+def check_reservations_queue(data: str,media_id, barcode, customer_id) -> None:
+    try:
+        db.conn.begin()  # start transaction (usually not needed, but still best practice)
+
+        # we need a cursor to execute queries
+        cursor = db.conn.cursor()
+
+        # execute the login query
+        cursor.execute(data['next_in_reservation_queue'], {"media_id": media_id })
+        next_customer = cursor.fetchone()
+
+        #test print return
+        #print(f"Next customer in reservation queue: {next_customer} and customer: {next_customer[2]} and {customer_id}")
+
+        #0=Index,1=datetime,2=customer_id,3=media_id,4=status,5=barcode,6=start_date (ausgeliehen)
+        if next_customer and next_customer[2] == customer_id:
+            print("You are next in the reservation queue for this media. You can borrow it.")
+            borrow(data, customer_id, barcode)
+            media_picked_up(data, media_id, customer_id, barcode, next_customer[0])
+            print(f"Media borrowed successfully.")
+        elif next_customer:
+            print(f"There are customers ahead of you in the reservation queue for this media. Wanna reserve it anyway? (y/n)")
+            choice = input("Selection: ")
+
+            if choice.lower() == 'y':
+                # call reservation function here
+                reservation(data, media_id, customer_id)
+            else:
+                print("Returning to media search results...")
+
+        else:
+            print("The reservation queue for this media is empty.")
+            borrow(data, customer_id, barcode)
+            print(f"Media borrowed successfully.")
+
+    except oracledb.DatabaseError as e:
+        print("An error occurred executing the query:", e)
+        print_exc()  # print stack trace
+        db.conn.rollback()  # rollback any changes in case of an error
+        raise e
+    finally:
+        cursor.close()  # always close the cursor when done
+
+def media_picked_up(data: str, media_id, customer_id, barcode, res_id) -> None:
+    try:
+        db.conn.begin()  # start transaction (usually not needed, but still best practice)
+
+        # we need a cursor to execute queries
+        cursor = db.conn.cursor()
+
+        # execute the login query
+        cursor.execute(data['media_picked_up'], {"res_id": res_id, "media_id": media_id, "c_id": customer_id, "barcode": barcode })
+        # Commit transaction
+        db.conn.commit()
+
+        print(f"Media pickup confirmed successfully.")
+
+    except oracledb.DatabaseError as e:
+        print("An error occurred executing the query:", e)
+        print_exc()  # print stack trace
+        db.conn.rollback()  # rollback any changes in case of an error
+        raise e
+    finally:
+        cursor.close()  # always close the cursor when done
 
 # Press the green button in the gutter to run the script.
 if __name__ == '__main__':
@@ -695,9 +859,13 @@ if __name__ == '__main__':
         
         # If someone IS logged in, show the Library Menu
         else:
-            print(f"\n--- Logged in as {customer[1]} ---") 
+            
+
+            print(f"\n--- Logged in as {customer[1]} ---")
+            check_reservations(data, customer[0])
             print("1. Search for Media")
             print("2. Return Media")
+            print("3. Check Reservations")
             print("q. Logout")
             
             subchoice = input("Selection: ")
@@ -707,8 +875,9 @@ if __name__ == '__main__':
                 #print all currently borrowed media by the customer
                 print("\nYour currently borrowed media:")
                 currently_borrowed(data, customer[0])
-                barcode = input("Enter the barcode of the media you want to return: ")
-                returnCopy(data, customer[0], barcode)
+            elif subchoice == '3':
+                print("\nYour current reservations:")
+                check_reservations(data, customer[0])
             elif subchoice == 'q':
                 print("Logging out...")
                 customer = None  # This sends them back to the Login menu

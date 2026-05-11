@@ -1,11 +1,6 @@
 # YAML documents start with a document separator (---) and end with a document terminator (...)
 ---
 #General Purpose Queries
-  get_all_borrowed: "SELECT c.BARCODE_ID, m.TITLE, l.START_DATE, l.END_DATE 
-    FROM COPIES c
-    JOIN MEDIAS m ON c.Medias_MEDIA_ID = m.MEDIA_ID
-    JOIN LEDGER l ON c.BARCODE_ID = l.COPIES_BARCODE_ID
-    WHERE l.RETURN_DTIME IS NULL AND l.CUSTOMERS_CUSTOMER_ID = :c_id"
 
   get_price_to_pay: "SELECT TOTAL_COST FROM LEDGER
     WHERE COPIES_BARCODE_ID = :barcode 
@@ -15,6 +10,13 @@
     FROM COPIES c
     JOIN MEDIAS m ON c.Medias_MEDIA_ID = m.MEDIA_ID
     WHERE c.BARCODE_ID = :barcode
+    FOR UPDATE WAIT 5"
+
+  get_all_borrowed: "SELECT c.BARCODE_ID, m.TITLE, l.START_DATE, l.END_DATE 
+    FROM COPIES c
+    JOIN MEDIAS m ON c.Medias_MEDIA_ID = m.MEDIA_ID
+    JOIN LEDGER l ON c.BARCODE_ID = l.COPIES_BARCODE_ID
+    WHERE l.RETURN_DTIME IS NULL AND l.CUSTOMERS_CUSTOMER_ID = :c_id
     FOR UPDATE WAIT 5"
 
   check_borrowed_by_customer: "SELECT * FROM LEDGER
@@ -120,13 +122,38 @@
   create_reservation: "INSERT INTO RESERVATIONS (TIME_RESERVATION, STATUS, CUSTOMER_ID, MEDIA_ID)
     VALUES (SYSDATE, 'PENDING', :c_id, :media_id)"
 
-  next_in_reservation_queue: "SELECT * FROM RESERVATIONS 
-    WHERE MEDIA_ID = :media_id AND STATUS = 'PENDING'
-    ORDER BY TIME_RESERVATION ASC
-    FOR UPDATE SKIP LOCKED 
-    FETCH FIRST 1 ROW ONLY"
+  next_in_reservation_queue: "SELECT * FROM RESERVATIONS
+    WHERE RESERVATION_ID = (
+        SELECT RESERVATION_ID FROM (
+            SELECT RESERVATION_ID FROM RESERVATIONS
+            WHERE MEDIA_ID = :media_id AND STATUS = 'READY'
+            ORDER BY TIME_RESERVATION ASC
+        )
+        WHERE ROWNUM = 1
+    )
+    FOR UPDATE SKIP LOCKED"
 
   media_picked_up: "UPDATE RESERVATIONS
     SET STATUS = 'DONE'
-    WHERE RESERVATION_ID = :res_id"
+    SET START_DATE = TRUNC(SYSDATE)
+    SET BARCODE_ID =:barcode
+    WHERE RESERVATION_ID = :res_id and STATUS = 'READY' and CUSTOMER_ID = :c_id and MEDIA_ID= (SELECT MEDIA_ID FROM COPIES WHERE BARCODE_ID = :barcode)"
+
+  check_reservations: "SELECT * FROM RESERVATIONS 
+    WHERE STATUS IN ('PENDING', 'READY') AND CUSTOMER_ID = :c_id"
+
+  #update: next reservation from PENDING TO READY when media is returned, so that the next customer in line (oldest date) can borrow it
+  update_reservation_on_return: "UPDATE RESERVATIONS
+    SET STATUS = 'READY'
+    WHERE ROWID = (
+        SELECT rid FROM (
+            SELECT r.ROWID as rid
+            FROM RESERVATIONS r
+            JOIN COPIES c ON r.MEDIA_ID = c.MEDIAS_MEDIA_ID
+            WHERE c.BARCODE_ID = :barcode 
+              AND r.STATUS = 'PENDING'
+            ORDER BY r.TIME_RESERVATION ASC
+        )
+        WHERE ROWNUM = 1
+    )"
 ...
