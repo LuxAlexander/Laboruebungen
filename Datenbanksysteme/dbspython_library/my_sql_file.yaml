@@ -67,19 +67,29 @@
     WHERE COPIES_BARCODE_ID = :barcode
     AND RETURN_DTIME IS NULL"
 
-  statistic_update_on_return: "UPDATE STATISTICS s
-    SET number_time_borrowed = number_time_borrowed + 1,
-        sum_time_borrowed = sum_time_borrowed + (
-            SELECT (SYSDATE - START_DATE) 
-            FROM LEDGER 
-            WHERE COPIES_BARCODE_ID = :barcode 
-            -- Instead of checking equal to SYSDATE, 
-            -- just find the most recent record that was just closed.
-            AND RETURN_DTIME IS NOT NULL
-            ORDER BY RETURN_DTIME DESC
-            FETCH FIRST 1 ROW ONLY
-        )
-    WHERE COPIES_BARCODE_ID = :barcode"
+  statistic_update_on_return: |
+    MERGE INTO STATISTICS s
+    USING (
+        SELECT 
+            :barcode as barcode,
+            (SYSDATE - l.START_DATE) as session_duration,
+            l.COPIES_MEDIA_ID as media_id
+        FROM LEDGER l
+        WHERE l.COPIES_BARCODE_ID = :barcode
+          AND l.RETURN_DTIME = (
+              SELECT MAX(l2.RETURN_DTIME) 
+              FROM LEDGER l2 
+              WHERE l2.COPIES_BARCODE_ID = :barcode
+          )
+    ) src
+    ON (s.COPIES_BARCODE_ID = src.barcode)
+    WHEN MATCHED THEN
+        UPDATE SET 
+            s.NUMBER_TIME_BORROWED = s.NUMBER_TIME_BORROWED + 1,
+            s.SUM_TIME_BORROWED = s.SUM_TIME_BORROWED + src.session_duration
+    WHEN NOT MATCHED THEN
+        INSERT (NUMBER_TIME_BORROWED, SUM_TIME_BORROWED, COPIES_BARCODE_ID, COPIES_MEDIAS_MEDIA_ID)
+        VALUES (1, src.session_duration, src.barcode, src.media_id)
 
   # Kunderverwaltung und Suche
   customer_exists: "SELECT * FROM CUSTOMERS WHERE CUSTOMER_LAST_NAME = :last_name AND BIRTH_DATE = TO_DATE(:birth_d, 'DD.MM.YYYY')"
