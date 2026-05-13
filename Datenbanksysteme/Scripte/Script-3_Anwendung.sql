@@ -1,0 +1,186 @@
+# YAML documents start with a document separator (---) and end with a document terminator (...)
+---
+#General Purpose Queries
+
+  get_price_to_pay: "SELECT TOTAL_COST FROM LEDGER
+    WHERE COPIES_BARCODE_ID = :barcode 
+    AND RETURN_DTIME IS NULL"
+# Rückgabe
+  find_copy_get_data: "SELECT c.*, m.TITLE 
+    FROM COPIES c
+    JOIN MEDIAS m ON c.Medias_MEDIA_ID = m.MEDIA_ID
+    WHERE c.BARCODE_ID = :barcode
+    FOR UPDATE WAIT 5"
+
+  get_all_borrowed: "SELECT c.BARCODE_ID, m.TITLE, l.START_DATE, l.END_DATE 
+    FROM COPIES c
+    JOIN MEDIAS m ON c.Medias_MEDIA_ID = m.MEDIA_ID
+    JOIN LEDGER l ON c.BARCODE_ID = l.COPIES_BARCODE_ID
+    WHERE l.RETURN_DTIME IS NULL AND l.CUSTOMERS_CUSTOMER_ID = :c_id
+    FOR UPDATE WAIT 5"
+
+  check_borrowed_by_customer: "SELECT * FROM LEDGER
+    WHERE COPIES_BARCODE_ID = :barcode 
+    AND CUSTOMERS_CUSTOMER_ID = :c_id
+    AND RETURN_DTIME IS NULL"
+
+  --Kosten derzeit 9, verbesserungswürdig
+  calculate_cost_save_in_ledger: "
+    UPDATE LEDGER l
+    SET l.TOTAL_COST = GREATEST(
+        0,
+        ROUND(
+            (SYSDATE - l.END_DATE) * (
+                SELECT cost
+                FROM (
+                    SELECT p.cost
+                    FROM PRICES p
+                    JOIN MEDIA_GENRE g
+                        ON g.GENRES_GENRE_ID = p.GENRES_GENRE_ID
+                    JOIN MEDIAS m
+                        ON m.MEDIA_TYPES_TYPE_ID = p.MEDIA_TYPES_TYPE_ID
+                      AND g.GENRES_GENRE_ID = p.GENRES_GENRE_ID
+                    JOIN COPIES c
+                        ON c.MEDIAS_MEDIA_ID = m.MEDIA_ID
+                    WHERE c.BARCODE_ID = l.COPIES_BARCODE_ID
+                      AND p.VALID <= SYSDATE
+                    ORDER BY p.VALID DESC
+                )
+                WHERE ROWNUM = 1
+            ),
+            2
+        )
+    )
+    WHERE l.COPIES_BARCODE_ID = :barcode
+      AND l.RETURN_DTIME IS NULL
+    "
+
+  has_to_pay: "SELECT TOTAL_COST, 
+      CASE WHEN TOTAL_COST > 0 THEN 'ZAHLUNG ERFORDERLICH' ELSE 'KEINE GEBÜHR' END AS payment_status
+    FROM LEDGER
+    WHERE COPIES_BARCODE_ID = :barcode 
+    AND RETURN_DTIME IS NULL
+    FOR UPDATE"
+
+  returnCopy: "UPDATE LEDGER
+    SET RETURN_DTIME = SYSDATE, 
+        COST_PAID = :paid
+    WHERE COPIES_BARCODE_ID = :barcode
+    AND RETURN_DTIME IS NULL"
+
+  statistic_update_on_return: "UPDATE STATISTICS s
+    SET number_time_borrowed = number_time_borrowed + 1,
+        sum_time_borrowed = sum_time_borrowed + (
+            SELECT (SYSDATE - START_DATE) 
+            FROM LEDGER 
+            WHERE COPIES_BARCODE_ID = :barcode 
+            -- Instead of checking equal to SYSDATE, 
+            -- just find the most recent record that was just closed.
+            AND RETURN_DTIME IS NOT NULL
+            ORDER BY RETURN_DTIME DESC
+            FETCH FIRST 1 ROW ONLY
+        )
+    WHERE COPIES_BARCODE_ID = :barcode"
+
+  # Kunderverwaltung und Suche
+  customer_exists: "SELECT * FROM CUSTOMERS WHERE CUSTOMER_LAST_NAME = :last_name AND BIRTH_DATE = TO_DATE(:birth_d, 'DD.MM.YYYY')"
+
+  new_customer: "INSERT INTO CUSTOMERS (CUSTOMER_FIRST_NAME, CUSTOMER_LAST_NAME, BIRTH_DATE)
+    VALUES (:first_n, :last_n, TO_DATE(:birth_d, 'DD.MM.YYYY'))"
+
+  --Full table access, aber wird gebraucht, weil alle medien durchsucht werden müssen (maybe)
+  search_media_genre_type_title: "SELECT m.*, g.CATEGORY, mt.TYPE 
+    FROM MEDIAS m
+    JOIN MEDIA_TYPES mt ON m.MEDIA_TYPES_TYPE_ID = mt.TYPE_ID
+    JOIN MEDIA_GENRE mg ON m.MEDIA_ID = mg.MEDIAS_MEDIA_ID
+    JOIN GENRES g ON mg.GENRES_GENRE_ID = g.GENRE_ID
+    WHERE LOWER(m.TITLE) LIKE :title OR LOWER(g.CATEGORY) = :genre OR LOWER(mt.TYPE) = :type"
+
+  # Verleihe & Verfügbarkeit
+  fsk_check: "SELECT * FROM MEDIAS m
+    WHERE m.MEDIA_ID = :media_id
+    AND m.age_restriction <= FLOOR(MONTHS_BETWEEN(SYSDATE, (SELECT birth_date FROM CUSTOMERS WHERE customer_id = :c_id)) / 12)"
+
+  is_copy_available: "SELECT * FROM COPIES c
+    WHERE c.Medias_MEDIA_ID = :media_id
+    AND c.BARCODE_ID NOT IN (SELECT COPIES_BARCODE_ID FROM LEDGER WHERE RETURN_DTIME IS NULL)
+    FOR UPDATE WAIT 5"
+
+  new_ledger_entry: "INSERT INTO LEDGER (
+    START_DATE,
+    END_DATE,
+    TOTAL_COST,
+    COST_PAID,
+    CUSTOMERS_CUSTOMER_ID,
+    COPIES_BARCODE_ID,
+    COPIES_MEDIA_ID)
+    SELECT
+        TRUNC(SYSDATE),
+        TRUNC(SYSDATE) + 21,
+        (SELECT MAX(COST) FROM PRICES WHERE CREATION_DATE = (
+                SELECT MAX(CREATION_DATE)
+                FROM PRICES)
+        ),
+        0,
+        :c_id,
+        :barcode,
+        c.MEDIAS_MEDIA_ID
+    FROM COPIES c
+    WHERE c.BARCODE_ID = :barcode
+    "
+
+  # Reservierung
+  create_reservation: "INSERT INTO RESERVATIONS (TIME_RESERVATION, STATUS, CUSTOMER_ID, MEDIA_ID)
+    VALUES (SYSDATE, 'PENDING', :c_id, :media_id)"
+
+  next_in_reservation_queue: "SELECT * FROM RESERVATIONS
+    WHERE RESERVATION_ID = (
+        SELECT RESERVATION_ID FROM (
+            SELECT RESERVATION_ID FROM RESERVATIONS
+            WHERE MEDIA_ID = :media_id AND STATUS = 'READY'
+            ORDER BY TIME_RESERVATION ASC
+        )
+        WHERE ROWNUM = 1
+    )
+    FOR UPDATE SKIP LOCKED"
+
+  media_picked_up: "UPDATE RESERVATIONS
+    SET STATUS = 'DONE',
+    START_DATE = TRUNC(SYSDATE),
+    BARCODE_ID =:barcode
+    WHERE RESERVATION_ID = :res_id and STATUS = 'READY' and CUSTOMER_ID = :c_id and MEDIA_ID= (SELECT MEDIA_ID FROM COPIES WHERE BARCODE_ID = :barcode)"
+
+  check_reservations: "SELECT * FROM RESERVATIONS 
+    WHERE STATUS IN ('PENDING', 'READY') AND CUSTOMER_ID = :c_id"
+
+  #update: next reservation from PENDING TO READY when media is returned, so that the next customer in line (oldest date) can borrow it
+  update_reservation_on_return: "UPDATE RESERVATIONS
+    SET STATUS = 'READY'
+    WHERE ROWID = (
+        SELECT rid FROM (
+            SELECT r.ROWID as rid
+            FROM RESERVATIONS r
+            WHERE r.STATUS = 'PENDING'
+              AND r.MEDIA_ID = :media_id
+            ORDER BY r.TIME_RESERVATION ASC
+        )
+        WHERE ROWNUM = 1
+    )"
+    #failed pickup: check if reservation is older than 3 days, if yes, set to failed and update next reservation to ready
+  check_failed_pickup: "UPDATE RESERVATIONS
+    SET STATUS = 'FAILED'
+    WHERE STATUS = 'READY' AND TIME_RESERVATION < SYSDATE - 3"
+-- Index auf alle Reservations mit status "READY"
+  select_failed_pickup: "SELECT * FROM RESERVATIONS r 
+    WHERE STATUS = 'READY' AND TIME_RESERVATION < SYSDATE - 3"
+  #give the customer more time to pick up the media, 2 days
+  increase_reservation_time: "UPDATE RESERVATIONS
+    SET TIME_RESERVATION = TIME_RESERVATION + 2
+    WHERE CUSTOMER_ID = :c_id AND STATUS = 'READY'"
+
+  #statistics
+SELECT number_time_borrowed, sum_time_borrowed FROM STATISTICS
+    WHERE statistic_id = (SELECT MEDIA_ID FROM MEDIAS m JOIN COPIES c ON m.MEDIA_ID = c.MEDIAS_MEDIA_ID WHERE c.BARCODE_ID = :barcode)
+
+  
+
