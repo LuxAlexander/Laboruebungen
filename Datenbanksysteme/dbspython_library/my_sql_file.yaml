@@ -105,6 +105,11 @@
     WHERE LOWER(m.TITLE) LIKE :title OR LOWER(g.CATEGORY) = :genre OR LOWER(mt.TYPE) = :type"
 
   # Verleihe & Verfügbarkeit
+  check_borrowed_today: "SELECT 1 FROM LEDGER 
+    WHERE CUSTOMERS_CUSTOMER_ID = :c_id 
+    AND COPIES_BARCODE_ID = :barcode 
+    AND TRUNC(START_DATE) = TRUNC(SYSDATE)"
+    
   fsk_check: "SELECT * FROM MEDIAS m
     WHERE m.MEDIA_ID = :media_id
     AND m.age_restriction <= FLOOR(MONTHS_BETWEEN(SYSDATE, (SELECT birth_date FROM CUSTOMERS WHERE customer_id = :c_id)) / 12)"

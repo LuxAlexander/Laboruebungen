@@ -220,27 +220,40 @@ def copy_available(data: str, media_id, customer_id) -> None:
     finally:
         cursor.close()  # always close the cursor when done
 
-def borrow(data: str, customer_id, barcode) -> None:
+def borrow(data: str, customer_id, barcode) -> bool:
     try:
-        db.conn.begin()  # start transaction (usually not needed, but still best practice)
-
-        # we need a cursor to execute queries
+        # Transactions start automatically in oracledb when executing DML/Queries
         cursor = db.conn.cursor()
 
-        # execute the login query
-        cursor.execute(data['new_ledger_entry'], {"c_id": customer_id,"barcode": barcode })
-        # Commit transaction
+        # 1. FAIL-SAFE: Check if this user already borrowed this item TODAY
+        cursor.execute(data['check_borrowed_today'], {"c_id": customer_id, "barcode": barcode})
+        already_borrowed_today = cursor.fetchone()
+        
+        if already_borrowed_today:
+            print("\n[!] Policy Restriction: You cannot borrow the same item twice on the same day.")
+            print("    Please choose a different media or try again tomorrow.")
+            return False
+
+        # 2. Proceed with the insert if the check passes
+        cursor.execute(data['new_ledger_entry'], {"c_id": customer_id, "barcode": barcode})
+        
+        # Commit the transaction safely
         db.conn.commit()
+        print(f"\nSuccessfully borrowed the Media!\nPlease return it in 21 Days.")
+        return True
 
-        print(f"Successfully borrowed the Media!\nPlease return it in 21 Days.")
-
+    except oracledb.IntegrityError as e:
+        # Backup fail-safe in case of concurrent requests hitting the unique key constraint
+        print("\n[!] Database Restriction: This item was already registered to you today.")
+        db.conn.rollback()
+        return False
     except oracledb.DatabaseError as e:
-        print("An error occurred executing the query:", e)
-        print_exc()  # print stack trace
-        db.conn.rollback()  # rollback any changes in case of an error
+        print("\nAn error occurred executing the query:", e)
+        db.conn.rollback()
         raise e
     finally:
-        cursor.close()  # always close the cursor when done
+        cursor.close()
+
 
 def currently_borrowed(data: str, customer_id) -> None:
     try:
@@ -446,8 +459,10 @@ def check_reservations_queue(data: str,media_id, barcode, customer_id) -> None:
 
         else:
             print("The reservation queue for this media is empty.")
-            borrow(data, customer_id, barcode)
-            print(f"Media borrowed successfully.")
+            if borrow(data, customer_id, barcode):
+                print(f"Media borrowed successfully.")
+            else:
+                print(f"Wait a bit before reborrowing this media.")
 
     except oracledb.DatabaseError as e:
         print("An error occurred executing the query:", e)
