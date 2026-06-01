@@ -445,7 +445,7 @@ def check_reservations_queue(data: str,media_id, barcode, customer_id) -> None:
         if next_customer and next_customer[2] == customer_id:
             print("You are next in the reservation queue for this media. You can borrow it.")
             borrow(data, customer_id, barcode)
-            media_picked_up(data, customer_id, barcode, next_customer[0])
+            media_picked_up(data, customer_id, barcode, next_customer[0],media_id)
             print(f"Media borrowed successfully.")
         elif next_customer:
             print(f"There are customers ahead of you in the reservation queue for this media. Wanna reserve it anyway? (y/n)")
@@ -472,7 +472,7 @@ def check_reservations_queue(data: str,media_id, barcode, customer_id) -> None:
     finally:
         cursor.close()  # always close the cursor when done
 
-def media_picked_up(data: str, customer_id, barcode, res_id) -> None:
+def media_picked_up(data: str, customer_id, barcode, res_id, media_id) -> None:
     try:
         db.conn.begin()  # start transaction (usually not needed, but still best practice)
 
@@ -480,7 +480,7 @@ def media_picked_up(data: str, customer_id, barcode, res_id) -> None:
         cursor = db.conn.cursor()
 
         # execute the login query
-        cursor.execute(data['media_picked_up'], {"res_id": res_id,"c_id": customer_id, "barcode": barcode })
+        cursor.execute(data['media_picked_up'], {"res_id": res_id,"c_id": customer_id, "media_id": media_id })
         statistic_update_on_return(data, barcode)
         # Commit transaction
         db.conn.commit()

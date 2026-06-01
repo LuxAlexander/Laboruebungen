@@ -161,7 +161,7 @@
     SET STATUS = 'DONE',
     START_DATE = TRUNC(SYSDATE),
     BARCODE_ID =:barcode
-    WHERE RESERVATION_ID = :res_id and STATUS = 'READY' and CUSTOMER_ID = :c_id and MEDIA_ID= (SELECT MEDIA_ID FROM COPIES WHERE BARCODE_ID = :barcode)"
+    WHERE RESERVATION_ID = :res_id and STATUS = 'READY' and CUSTOMER_ID = :c_id and MEDIA_ID= :media_id"
 
   check_reservations: "SELECT * FROM RESERVATIONS 
     WHERE STATUS IN ('PENDING', 'READY') AND CUSTOMER_ID = :c_id"
