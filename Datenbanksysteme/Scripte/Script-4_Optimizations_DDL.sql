@@ -1,14 +1,14 @@
 -- Verbesserungen:
 
 --Datentypen analysieren und optimieren
--- Wechsel von DATE zu Minuten-Integer
+-- Wechsel von DATE zu Minuten-Integer, Zwischen Puffer für Movie (New Duration=Old, delete Old)
 ALTER TABLE "FHS52423"."MOVIES" MODIFY ("DURATION" NUMBER(4,0));
 ALTER TABLE "FHS52423"."AUDIOS" MODIFY ("DURATION" NUMBER(4,0));
 
 -- Optimierung der ISBN-Spalte von 50 auf 17
 ALTER TABLE "FHS52423"."BOOKS" MODIFY ("ISBN_ID" VARCHAR2(17));
 
--- Erhöhung des Textpuffers für Medienbeschreibungen (Alternativ CLOB)
+-- Erhöhung des Textpuffers für Medienbeschreibungen (Alternativ CLOB), same as movie
 ALTER TABLE "FHS52423"."MEDIAS" MODIFY (
     "DESCRIPTION" CLOB) LOB ("DESCRIPTION") STORE AS MEDIAS_DESC_LOB (
     ENABLE STORAGE IN ROW
@@ -16,19 +16,39 @@ ALTER TABLE "FHS52423"."MEDIAS" MODIFY (
     RETENTION
     CACHE
 );
-
--- Eingrenzung der unendlichen NUMBER(*,0) Primärschlüssel auf performante Längen
+-- Number größe enschränken, wenn Tabellen neu erstellt werden. (Wasn't used)
 ALTER TABLE "FHS52423"."AUTHORS" MODIFY ("AUTHOR_ID" NUMBER(9,0));
 ALTER TABLE "FHS52423"."CUSTOMERS" MODIFY ("CUSTOMER_ID" NUMBER(9,0));
 ALTER TABLE "FHS52423"."GENRES" MODIFY ("GENRE_ID" NUMBER(4,0));
 ALTER TABLE "FHS52423"."LOCATIONS" MODIFY ("LOC_ID" NUMBER(6,0));
 ALTER TABLE "FHS52423"."MEDIA_TYPES" MODIFY ("TYPE_ID" NUMBER(3,0));
 ALTER TABLE "FHS52423"."MEDIAS" MODIFY ("MEDIA_ID" NUMBER(9,0));
+
 -- Theoretisch moeglich Barcode länge zu standardisieren => Char mit konst länge
 
 --Storage-Optionen festlegen, gewählte Tabellen: Copies und Ledger
+-- Für X-Medien bei kleineren Bücjhereien: 5.000 bis 15.000, größere: 35.000-100.000
+-- https://www.bvoe.at/oeffentliche-bibliotheken/statistik-und-leistungsdaten
+-- Physische Exemplare in ganz Salzburg: 923 635 => 100.000 für unsere Beispiel Bibliothek
+-- Verleih in ganz Salzburg: 2 741 283=>274 128 
 
+-- COPIES (100k Bestand, kaum Updates)
+-- Zeilengröße: 12B (Barcode) + 5B (Media) + 4B (Comp) + 6B (Shelf) + 3B (Loc) + 3B (Header) = 33 Bytes
+-- 100.000 Zeilen * 33 Bytes=3.300.000 Bytes =>4M Bytes
+-- Next mit ca 10% neuer Medien 10.000*33B=330KB
+ALTER TABLE "FHS52423"."COPIES" 
+  PCTFREE 5
+  --INITIAL 4M im laufenden betrieb nicht moeglich wenn gewünscht->drop table
+  STORAGE ( NEXT 512K);
 
+-- LEDGER (820k (Init Speicher für 3 Jahre), hohe Update-Frequenz)
+-- Zeilengröße: 21B (3x Date) + 6B (2x Cost) + 22B (IDs & Barcode) + 3B (Header) = 52 Bytes
+-- 822.384 Zeilen * 52 Bytes = 42.763.968 Bytes => 64M Bytes
+-- Next mit ca 274.000 neuen Entlehnungen pro Jahr * 52 Bytes = 14,2MB => 10M Bytes
+ALTER TABLE "FHS52423"."LEDGER" 
+  PCTFREE 25
+  --INITIAL 64M im laufenden betrieb nicht moeglich wenn gewünscht->drop table
+  STORAGE (NEXT 16M);
 
 --Add On (bei den Zwischentabellen, die nur IDS verbinden wird keine vergrößerung erwartet)
 ALTER TABLE "FHS52423"."MEDIA_GENRE" PCTFREE 0;
