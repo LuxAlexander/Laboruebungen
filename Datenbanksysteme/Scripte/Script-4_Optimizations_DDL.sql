@@ -25,6 +25,7 @@ ALTER TABLE "FHS52423"."MEDIA_TYPES" MODIFY ("TYPE_ID" NUMBER(3,0));
 ALTER TABLE "FHS52423"."MEDIAS" MODIFY ("MEDIA_ID" NUMBER(9,0));
 
 -- Theoretisch moeglich Barcode länge zu standardisieren => Char mit konst länge
+ALTER TABLE "FHS52423"."COPIES" MODIFY ("BARCODE_ID" CHAR(13));
 
 --Storage-Optionen festlegen, gewählte Tabellen: Copies und Ledger
 -- Für X-Medien bei kleineren Bücjhereien: 5.000 bis 15.000, größere: 35.000-100.000
@@ -38,16 +39,16 @@ ALTER TABLE "FHS52423"."MEDIAS" MODIFY ("MEDIA_ID" NUMBER(9,0));
 -- Next mit ca 10% neuer Medien 10.000*33B=330KB
 ALTER TABLE "FHS52423"."COPIES" 
   PCTFREE 5
-  --INITIAL 4M im laufenden betrieb nicht moeglich wenn gewünscht->drop table
+  INITIAL 4M
   STORAGE ( NEXT 512K);
 
 -- LEDGER (820k (Init Speicher für 3 Jahre), hohe Update-Frequenz)
 -- Zeilengröße: 21B (3x Date) + 6B (2x Cost) + 22B (IDs & Barcode) + 3B (Header) = 52 Bytes
 -- 822.384 Zeilen * 52 Bytes = 42.763.968 Bytes => 64M Bytes
--- Next mit ca 274.000 neuen Entlehnungen pro Jahr * 52 Bytes = 14,2MB => 10M Bytes
+-- Next mit ca 274.000 neuen Entlehnungen pro Jahr * 52 Bytes = 14,2MB => 16M Bytes
 ALTER TABLE "FHS52423"."LEDGER" 
   PCTFREE 25
-  --INITIAL 64M im laufenden betrieb nicht moeglich wenn gewünscht->drop table
+  INITIAL 64M
   STORAGE (NEXT 16M);
 
 --Add On (bei den Zwischentabellen, die nur IDS verbinden wird keine vergrößerung erwartet)
