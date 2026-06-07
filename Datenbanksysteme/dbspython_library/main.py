@@ -480,7 +480,7 @@ def media_picked_up(data: str, customer_id, barcode, res_id, media_id) -> None:
         cursor = db.conn.cursor()
 
         # execute the login query
-        cursor.execute(data['media_picked_up'], {"res_id": res_id,"c_id": customer_id, "media_id": media_id })
+        cursor.execute(data['media_picked_up'], {"res_id": res_id,"c_id": customer_id, "media_id": media_id, "barcode": barcode })
         statistic_update_on_return(data, barcode)
         # Commit transaction
         db.conn.commit()
