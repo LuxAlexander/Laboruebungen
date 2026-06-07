@@ -1,6 +1,6 @@
 # YAML documents start with a document separator (---) and end with a document terminator (...)
 ---
-#General Purpose Queries
+#General Purpose Queries 
 
   get_price_to_pay: "SELECT TOTAL_COST FROM LEDGER
     WHERE COPIES_BARCODE_ID = :barcode 

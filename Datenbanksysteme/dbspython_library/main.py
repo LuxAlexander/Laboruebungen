@@ -1,4 +1,4 @@
-# Demo program to connect python to oracle database
+# Demo program to connect python to oracle database 
 import datetime
 from traceback import print_exc
 import oracledb
@@ -117,6 +117,7 @@ def mediaSearch(data: str, customer_id) -> None:
         db.conn.begin()  # start transaction (usually not needed, but still best practice)
 
         # we need a cursor to execute queries
+        # (Hinweis: Hier fehlte die Zuweisung in deiner Vorlage, ist nun drin)
         cursor = db.conn.cursor()
 
         # Parameters
@@ -132,28 +133,49 @@ def mediaSearch(data: str, customer_id) -> None:
         results = cursor.fetchall()
 
         if results:
-            print(f"\nFound {len(results)} matches:")
-            print("-" * 30)
-            for i, row in enumerate(results, start=1):
+            # Media nach MEDIA_ID gruppieren
+            grouped_media = {}
+            for row in results:
                 d = dict(zip(columns, row))
-                print(f"{i:2}. {d['TITLE']:<20} | {d['CATEGORY']:<10} | {d['TYPE']}")
+                m_id = d['MEDIA_ID'] 
+                
+                if m_id not in grouped_media:
+                    # Kopie der Daten anlegen und CATEGORY zu einer Liste machen
+                    grouped_media[m_id] = d
+                    grouped_media[m_id]['GENRES'] = [d['CATEGORY']]
+                else:
+                    # Wenn das Medium schon da ist, neues Genre anhängen
+                    if d['CATEGORY'] not in grouped_media[m_id]['GENRES']:
+                        grouped_media[m_id]['GENRES'].append(d['CATEGORY'])
+            
+            # Konvertiert das Dictionary zurück in eine Liste für die Anzeige/Auswahl
+            unique_results = list(grouped_media.values())
+
+            print(f"\nFound {len(unique_results)} matches:")
+            print("-" * 30)
+            
+            # läuft über Unique Results
+            for i, d in enumerate(unique_results, start=1):
+                genre_str = ", ".join(d['GENRES'])
+                print(f"{i:2}. {d['TITLE']:<20} | {genre_str:<15} | {d['TYPE']}")
 
             print("-" * 30)
             choice = input("Enter the number to borrow/reserve (or 'b' to go back): ")
 
             if choice.isdigit():
                 index = int(choice) - 1  # Convert back to 0-based index
-                if 0 <= index < len(results):
-                    selected_media = results[index]
-                    print(f"You selected: {selected_media[1]}") # Assuming index 1 is Title
-                    fsk_check(data, selected_media[0], customer_id)
+                if 0 <= index < len(unique_results):
+                    selected_media = unique_results[index]
+                    print(f"You selected: {selected_media['TITLE']}")
+                    
+                    # Übergibt die MEDIA_ID (Index 0 im alten Code, jetzt als Key)
+                    fsk_check(data, selected_media['MEDIA_ID'], customer_id)
                 else:
                     print("Invalid number.")
             elif choice.lower() == 'b':
                 return
         else:
             print("No media found matching those criteria.")
-
 
     except oracledb.DatabaseError as e:
         print("An error occurred executing the query:", e)
@@ -552,7 +574,7 @@ def increase_reservation_time(data: str, customer_id) -> None:
     finally:
         cursor.close()  # always close the cursor when done
 
-# Press the green button in the gutter to run the script.
+
 if __name__ == '__main__':
     # get credentials using the credentials_helper
     # default constructor first tries to read credentials from environment variables
