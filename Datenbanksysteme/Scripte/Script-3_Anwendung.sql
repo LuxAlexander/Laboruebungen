@@ -12,6 +12,7 @@
     WHERE c.BARCODE_ID = :barcode
     FOR UPDATE WAIT 5"
 
+  --Kosten 5, eventuell mit composite index
   get_all_borrowed: "SELECT c.BARCODE_ID, m.TITLE, l.START_DATE, l.END_DATE 
     FROM COPIES c
     JOIN MEDIAS m ON c.Medias_MEDIA_ID = m.MEDIA_ID
@@ -25,6 +26,11 @@
     AND RETURN_DTIME IS NULL"
 
   --Kosten derzeit 9, verbesserungswürdig
+  --Neue Indexe: 	CREATE INDEX idx_ledger_update_perf 
+  -- 				ON LEDGER (COPIES_BARCODE_ID, RETURN_DTIME);
+  --				CREATE INDEX idx_prices_perf 
+  --				ON PRICES (GENRES_GENRE_ID, MEDIA_TYPES_TYPE_ID, VALID DESC, COST);
+  
   calculate_cost_save_in_ledger: "
     UPDATE LEDGER l
     SET l.TOTAL_COST = GREATEST(
@@ -68,6 +74,9 @@
     WHERE COPIES_BARCODE_ID = :barcode
     AND RETURN_DTIME IS NULL"
 
+  --Kosten 6, senken (auf 3-4) durch composite index: 
+  --	CREATE INDEX idx_ledger_stats_helper 
+  --	ON LEDGER (COPIES_BARCODE_ID, RETURN_DTIME DESC, START_DATE);
   statistic_update_on_return: "UPDATE STATISTICS s
     SET number_time_borrowed = number_time_borrowed + 1,
         sum_time_borrowed = sum_time_borrowed + (
@@ -88,13 +97,15 @@
   new_customer: "INSERT INTO CUSTOMERS (CUSTOMER_FIRST_NAME, CUSTOMER_LAST_NAME, BIRTH_DATE)
     VALUES (:first_n, :last_n, TO_DATE(:birth_d, 'DD.MM.YYYY'))"
 
-  --Full table access, aber wird gebraucht, weil alle medien durchsucht werden müssen (maybe)
+  --Full table access, aber wird gebraucht, weil alle medien durchsucht werden müssen
   search_media_genre_type_title: "SELECT m.*, g.CATEGORY, mt.TYPE 
     FROM MEDIAS m
     JOIN MEDIA_TYPES mt ON m.MEDIA_TYPES_TYPE_ID = mt.TYPE_ID
     JOIN MEDIA_GENRE mg ON m.MEDIA_ID = mg.MEDIAS_MEDIA_ID
     JOIN GENRES g ON mg.GENRES_GENRE_ID = g.GENRE_ID
     WHERE LOWER(m.TITLE) LIKE :title OR LOWER(g.CATEGORY) = :genre OR LOWER(mt.TYPE) = :type"
+  
+
 
   # Verleihe & Verfügbarkeit
   fsk_check: "SELECT * FROM MEDIAS m
@@ -181,6 +192,7 @@
   #statistics
 SELECT number_time_borrowed, sum_time_borrowed FROM STATISTICS
     WHERE statistic_id = (SELECT MEDIA_ID FROM MEDIAS m JOIN COPIES c ON m.MEDIA_ID = c.MEDIAS_MEDIA_ID WHERE c.BARCODE_ID = :barcode)
-
+    
+ALTER TABLE "FHS52423"."COPIES" MODIFY ("BARCODE_ID" CHAR(13));
   
 
