@@ -1,16 +1,19 @@
-#include "avrhal/adc.h"
-#include "avrhal/display.h"
-#include "avrhal/time.h"
-#include "avrhal/usart.h"
+#include "../lib/avrhal/adc/adc.h"
+#include "../lib/avrhal/display/display.h"
+#include "../lib/avrhal/time/time.h"
+#include "../lib/avrhal/usart/usart.h"
 
 #include <avr/interrupt.h>
 #include <avr/io.h>
 #include <util/delay.h>
 #include <util/atomic.h>
 
-#include <sprite.h>
-#include "utils/dungeon.h"
+#include "../lib/utils/audio.h"
+#include <../lib/utils/sprite.h>
+#include "../lib/utils/dungeon.h"
 
+
+#define GAME_TICK_MS 30
 #define buffer 255
 //Drei Individuelle Fragen zum Source Code
 //Fragen wie, BIT Setzen, Interrupts, ADC, USART, SPI, E-Prom, etc.
@@ -34,12 +37,14 @@ int main(void)
     adcSetupFreeRunning();
     displaySetup();
     
+    audio_init();
     // Erste Karte zeichnen
     mapDrawOverview();
 
     uint16_t adc_x = 0;
     uint16_t adc_y = 0;
     uint8_t index = 0;
+    Bitmap character = imageCharacter(0); 
 
 
     while (1) {
@@ -51,13 +56,12 @@ int main(void)
             adc_y = adcLastRead(1);
         }
 
-        
         loop_counter++; 
 
         mapHandleInput(adc_x, adc_y, loop_counter);
         mapUpdateDisplay();
         // Optional: Add a small delay to reduce CPU usage (and debounce joystick)
-        _delay_ms(50);
+        _delay_ms(2 * GAME_TICK_MS);
         //usartPrint("ADC x:%d y:%d\r\n", adc_x, adc_y);
 
         // 2. Scale coordinates (ADC 0-1023 -> Display 128x64)
@@ -72,16 +76,16 @@ int main(void)
         // 4. DRAW BITMAP CORRECTLY
         // Get the struct from your header and pass it by pointer
         //no magic numbers
-        Bitmap puppy = imagePuppy((index / 10) % 4); 
-        displayDrawBitmap(posX, posY, &puppy);
+        character = imageCharacter(index % 4); 
+        displayDrawBitmap(posX, posY, &character);
 
         displayUpdate();
 
         // 5. Manage Animation Speed
         index++;
-        if (index >= 40) index = 0;
+        if (index >= 4) index = 0;
 
-        _delay_ms(30); // Add a small delay so the animation isn't too fast
+        _delay_ms(GAME_TICK_MS); // Add a small delay so the animation isn't too fast
     }
     return 0;       
 }

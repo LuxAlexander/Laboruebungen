@@ -1,13 +1,7 @@
-/**
- * @author MIC Lab Team - Olaf Sassnick
- * @brief OLED Display Driver with framebuffer
- *
- */
-
 #ifndef _AVRHAL_DISPLAY__H__
 #define _AVRHAL_DISPLAY__H__
 
-#include "avrhal/bitmap.h"
+#include "../bitmap/bitmap.h"
 #include <stdint.h>
 
 #define DISPLAY_DEFAULT_CONTRAST 128

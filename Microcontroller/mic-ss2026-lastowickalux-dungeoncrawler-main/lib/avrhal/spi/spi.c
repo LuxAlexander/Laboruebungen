@@ -1,5 +1,5 @@
-#include "avrhal/spi.h"
-#include "utils/bit.h"
+#include "spi.h"
+#include "../utils/bit.h"
 
 #include <avr/io.h>
 

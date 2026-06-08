@@ -1,9 +1,3 @@
-/**
- * @author MIC Lab Team - Olaf Sassnick
- * @brief Small math helper functions
- *
- */
-
 #ifndef _UTILS_MATH__H__
 #define _UTILS_MATH__H__
 

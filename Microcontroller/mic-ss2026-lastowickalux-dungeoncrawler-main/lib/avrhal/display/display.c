@@ -1,16 +1,10 @@
-/**
- * @author MIC Lab Team - Olaf Sassnick
- * @brief OLED Display Driver with framebuffer
- *
- */
+#include "../display/display.h"
+#include "../font/font8x8vertical.h"
+#include "../font/font8x8.h"
+#include "../spi/spi.h"
 
-#include "avrhal/display.h"
-#include "avrhal/font8x8.h"
-#include "avrhal/font8x8vertical.h"
-#include "avrhal/spi.h"
-
-#include "utils/bit.h"
-#include "utils/math.h"
+#include "../utils/bit.h"
+#include "../utils/math.h"
 #include <avr/io.h>
 #include <stdarg.h>
 #include <stdbool.h>
