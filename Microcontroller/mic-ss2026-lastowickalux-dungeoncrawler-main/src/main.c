@@ -7,7 +7,7 @@
 #include <util/delay.h>
 #include <util/atomic.h>
 
-#include "../lib/utils/audio.h"
+//#include "../lib/utils/audio.h"
 #include <../lib/utils/sprite.h>
 #include "../lib/utils/dungeon.h"
 
@@ -31,7 +31,6 @@ int main(void)
     // Generiere echten Zufallswert über den analogen Eingang für den Seed
     mapInitRandomRooms(42);
 
-
     sei();
     adcSetupFreeRunning();
     displaySetup();
@@ -43,8 +42,6 @@ int main(void)
     uint16_t adc_x = 0;
     uint16_t adc_y = 0;
     uint8_t index = 0;
-    Bitmap character = imageCharacter(0); 
-
 
     while (1) {
         displayClearBuffer();
@@ -71,7 +68,7 @@ int main(void)
         // 4. DRAW BITMAP CORRECTLY
         // Get the struct from your header and pass it by pointer
         //no magic numbers
-        character = imageCharacter(index); 
+        Bitmap character = imageCharacter(index); 
         displayDrawBitmap(posX, posY, &character);
 
         displayUpdate();
