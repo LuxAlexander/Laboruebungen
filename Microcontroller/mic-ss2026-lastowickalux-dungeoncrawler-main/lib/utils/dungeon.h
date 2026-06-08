@@ -102,6 +102,7 @@ static uint8_t mapTriggerOledQTE(uint16_t timeout_ms) {
         // ADC Werte atomar auslesen
         ATOMIC_BLOCK(ATOMIC_RESTORESTATE) {
             adc_x = adcLastRead(0);
+            adc_y = adcLastRead(1);
         }
 
         // Joystick-Auswertung
@@ -136,11 +137,11 @@ static uint8_t mapTriggerOledQTE(uint16_t timeout_ms) {
     // Feedback auf dem Display ausgeben
     displayClearBuffer();
     if (erfolg) {
-        displayPrint(28, 20, "Gegner getroffen!");
-        displayPrint(12, 36, "Katze verfehlt");
+        displayPrint(10, 20, "Gegner getroffen!");
+        displayPrint(20, 36, "Katze verfehlt");
     } else {
-        displayPrint(32, 20, "Gegner verfehlt!");
-        displayPrint(16, 36, "Katze trifft dich!");
+        displayPrint(20, 20, "Gegner verfehlt!");
+        displayPrint(10, 36, "Katze trifft dich!");
     }
     displayUpdate();
     _delay_ms(1500);

@@ -82,7 +82,7 @@ static Bitmap imageCharacter(uint8_t index)
         0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00};
 
     static const uint8_t *const bitmap[4] PROGMEM = {bitmap1, bitmap2, bitmap3, bitmap4};
-    return (Bitmap){.data = (const uint8_t *)pgm_read_ptr(&bitmap[index & 0x03]),.width = 32,.height = 32,.dataSize = 128};
+    return (Bitmap){.data = (const uint8_t *)pgm_read_ptr(&bitmap[index & 0x03]),.width = 32,.height = 32,.dataSize = 8};
 }
 
 #endif /* SPRITE_H_ */

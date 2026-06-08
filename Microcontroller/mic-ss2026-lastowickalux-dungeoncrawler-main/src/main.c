@@ -31,10 +31,10 @@ int main(void)
     // Generiere echten Zufallswert über den analogen Eingang für den Seed
     mapInitRandomRooms(42);
 
-
+    displaySetup();
     sei();
     adcSetupFreeRunning();
-    displaySetup();
+    
     
     //audio_init();
     // Erste Karte zeichnen
