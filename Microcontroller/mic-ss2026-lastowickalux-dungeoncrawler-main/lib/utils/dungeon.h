@@ -374,7 +374,7 @@ static void mapHandleInput(uint16_t adc_x, uint16_t adc_y, uint16_t dynamic_seed
             usartWriteString_P(PSTR("   (\")_(\") \r\n"));
             usartWriteString_P(PSTR("\r\nDer Kater schnurrt gluecklich!\r\n"));
             
-            audio_trigger_sfx(1);
+            //audio_trigger_sfx(1);
             _delay_ms(3000);
 
             current_state = STATE_OVERVIEW;
@@ -467,7 +467,7 @@ static void mapHandleInput(uint16_t adc_x, uint16_t adc_y, uint16_t dynamic_seed
                 return;
             } else {
                 usartWriteString_P(PSTR("Kampf gewonnen!\r\n"));
-                audio_trigger_sfx(2);
+                //audio_trigger_sfx(2);
                 _delay_ms(3000);
                 current_state = STATE_OVERVIEW;
                 mapInitRandomRooms(dynamic_seed);
@@ -537,7 +537,7 @@ static void mapUpdateDisplay(void)
             mapDrawSelectedRoom();
             playerDrawHUD();
         } else {
-            audio_trigger_sfx(3);
+            //audio_trigger_sfx(3);
             drawGameOver();
         }
         needsRedraw = 0;

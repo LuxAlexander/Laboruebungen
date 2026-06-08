@@ -1,6 +1,5 @@
 #include "../lib/avrhal/adc/adc.h"
 #include "../lib/avrhal/display/display.h"
-#include "../lib/avrhal/time/time.h"
 #include "../lib/avrhal/usart/usart.h"
 
 #include <avr/interrupt.h>
@@ -37,7 +36,7 @@ int main(void)
     adcSetupFreeRunning();
     displaySetup();
     
-    audio_init();
+    //audio_init();
     // Erste Karte zeichnen
     mapDrawOverview();
 
@@ -69,14 +68,10 @@ int main(void)
         uint8_t posX = adc_x / 10; // Result ~0 to 102
         uint8_t posY = adc_y / 20; // Result ~0 to 51
 
-        // 3. Draw the Cross (using scaled coordinates)
-        displayDrawHorizontalLine(posX, posY, 5);
-        displayDrawVerticalLine(posX + 2, posY - 2, 5);
-
         // 4. DRAW BITMAP CORRECTLY
         // Get the struct from your header and pass it by pointer
         //no magic numbers
-        character = imageCharacter(index % 4); 
+        character = imageCharacter(index); 
         displayDrawBitmap(posX, posY, &character);
 
         displayUpdate();

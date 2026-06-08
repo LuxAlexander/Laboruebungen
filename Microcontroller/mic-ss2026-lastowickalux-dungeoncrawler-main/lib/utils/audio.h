@@ -37,7 +37,6 @@ static SoundEffect currentSFX;
 static int16_t sfxNoteIndex = -1; // -1 bedeutet: Kein SFX läuft
 
 // --- Hardware-Funktionen ---
-
 static void audio_init(void) {
     AUDIO_DDR |= (1 << AUDIO_PIN);   // PD5 als Ausgang für den Buzzer
     TCCR1A |= (1 << COM1A0);         // Toggle OC1A bei Compare Match
