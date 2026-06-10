@@ -1,5 +1,5 @@
-#include "usart.h"
-#include "../utils/bit.h"
+#include "avrhal/usart.h"
+#include "utils/bit.h"
 #include <avr/interrupt.h>
 #include <avr/io.h>
 #include <stdbool.h>

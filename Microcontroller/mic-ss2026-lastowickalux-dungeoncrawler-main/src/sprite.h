@@ -1,13 +1,26 @@
+/**
+ * @author MIC Lab Team
+ * @brief Cute little puppy
+ *
+ */
+
 #ifndef SPRITE_H_
 #define SPRITE_H_
 
 #include <avr/pgmspace.h>
 #include <stdint.h>
-#include "../avrhal/bitmap/bitmap.h"
 
-//made with https://www.piskelapp.com/p/create/sprite/
-static Bitmap imageCharacter(uint8_t index)
+#include "avrhal/bitmap.h"
+
+/** Created by https://jinxedbyte.itch.io/1bit-dog-puppy
+ *  Converted with the LCD-Image-Converter for the Microcontroller Lab at the Salzburg University of Applied Sciences
+ *  Converter Settings: Monochrome, Main Scan Direction: left to right, Line Scan Direction: backwards 
+ */
+static Bitmap Player(uint8_t index)
 {
+    /* To save space, the font is stored in program memory (flash) */
+    /* See https://www.nongnu.org/avr-libc/user-manual/pgmspace.html for further details. */
+
     static const uint8_t bitmap1[128] PROGMEM = {
         0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 
         0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 
@@ -81,7 +94,7 @@ static Bitmap imageCharacter(uint8_t index)
         0x00, 0x03, 0x80, 0x00, 0x00, 0x00, 0x00, 0x00, 
         0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00};
 
-    static const uint8_t *const bitmap[4] PROGMEM = {bitmap1, bitmap2, bitmap3, bitmap4};
+    static const uint8_t* const bitmap[4] PROGMEM = { bitmap1, bitmap2, bitmap3, bitmap4 };
     return (Bitmap){.data = (const uint8_t *)pgm_read_ptr(&bitmap[index & 0x03]),.width = 32,.height = 32,.dataSize = 8};
 }
 

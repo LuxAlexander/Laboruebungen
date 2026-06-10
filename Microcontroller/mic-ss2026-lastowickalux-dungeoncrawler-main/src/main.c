@@ -1,86 +1,74 @@
-#include "../lib/avrhal/adc/adc.h"
-#include "../lib/avrhal/display/display.h"
-#include "../lib/avrhal/usart/usart.h"
+#include "avrhal/adc.h"
+#include "avrhal/display.h"
+#include "avrhal/time.h"
+#include "avrhal/usart.h"
 
 #include <avr/interrupt.h>
 #include <avr/io.h>
 #include <util/delay.h>
 #include <util/atomic.h>
 
-//#include "../lib/utils/audio.h"
-#include <../lib/utils/sprite.h>
-#include "../lib/utils/dungeon.h"
-
+#include <sprite.h>
+#include "utils/dungeon.h"
+#include "utils/audio.h"
 
 #define GAME_TICK_MS 30
-#define buffer 255
-//Drei Individuelle Fragen zum Source Code
-//Fragen wie, BIT Setzen, Interrupts, ADC, USART, SPI, E-Prom, etc.
-//E-Prom, für externen Speicher
-//alle unnötigen Files, usw. löschen
-//Erste Abgebe:16.06
-//Danach Zweite Abgebe über Git, zum Refactoring (Feedback einbringen)
+
 int main(void)
 {
-    // Hardware initializations (usart, adc, timers...)
     uint16_t loop_counter = 0;
 
     usartSetup(USART_B9600, USART_CONFIG_8N1);
     adcSetup();
-    
-    // Generiere echten Zufallswert über den analogen Eingang für den Seed
+    audio_init();
+
     mapInitRandomRooms(42);
-
-
-    displaySetup();
 
     sei();
     adcSetupFreeRunning();
-    
-    
-    //audio_init();
-    // Erste Karte zeichnen
+    displaySetup();
+
     mapDrawOverview();
+
+    // Trigger the startup jingle once
+    audio_trigger_sfx(1);
 
     uint16_t adc_x = 0;
     uint16_t adc_y = 0;
-    uint8_t index = 0;
+    uint8_t  index = 0;
 
     while (1) {
         displayClearBuffer();
 
-        // 1. Read ADC safely
+        // Read ADC safely
         ATOMIC_BLOCK(ATOMIC_RESTORESTATE) {
             adc_x = adcLastRead(0);
             adc_y = adcLastRead(1);
         }
 
-        loop_counter++; 
+        // Advance the audio state machine every loop iteration
+        // audio_trigger_sfx() is called on game EVENTS, not here
+        audio_tick();
+        loop_counter++;
 
         mapHandleInput(adc_x, adc_y, loop_counter);
         mapUpdateDisplay();
-        // Optional: Add a small delay to reduce CPU usage (and debounce joystick)
-        _delay_ms(2 * GAME_TICK_MS);
-        //usartPrint("ADC x:%d y:%d\r\n", adc_x, adc_y);
 
-        // 2. Scale coordinates (ADC 0-1023 -> Display 128x64)
-        // Puppy is 32x32, so we limit the range so it stays on screen
-        uint8_t posX = adc_x / 10; // Result ~0 to 102
-        uint8_t posY = adc_y / 20; // Result ~0 to 51
+        _delay_ms(50); // debounce / CPU relief
 
-        // 4. DRAW BITMAP CORRECTLY
-        // Get the struct from your header and pass it by pointer
-        //no magic numbers
-        Bitmap character = imageCharacter(index); 
-        displayDrawBitmap(posX, posY, &character);
+        // Scale ADC (0–1023) to display coordinates
+        uint8_t posX = adc_x / 10; // ~0–102
+        uint8_t posY = adc_y / 20; // ~0–51
+
+        Bitmap player = Player(index);
+        displayDrawBitmap(posX, posY, &player);
 
         displayUpdate();
 
-        // 5. Manage Animation Speed
         index++;
         if (index >= 4) index = 0;
 
-        _delay_ms(GAME_TICK_MS); // Add a small delay so the animation isn't too fast
+        _delay_ms(GAME_TICK_MS);
     }
-    return 0;       
+    return 0;
 }

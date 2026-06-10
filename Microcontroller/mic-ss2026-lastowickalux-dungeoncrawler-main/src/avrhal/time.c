@@ -1,5 +1,5 @@
-#include "time.h"
-#include "../utils/bit.h"
+#include "avrhal/time.h"
+#include "utils/bit.h"
 
 #include <avr/interrupt.h>
 #include <avr/io.h>

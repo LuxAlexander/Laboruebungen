@@ -1,7 +1,7 @@
 #ifndef PLAYER_H
 #define PLAYER_H
 
-#include "../avrhal/usart/usart.h"
+#include "avrhal/usart.h"
 #include <stdint.h>
 
 #define HEALTH_BAR_WIDTH 10

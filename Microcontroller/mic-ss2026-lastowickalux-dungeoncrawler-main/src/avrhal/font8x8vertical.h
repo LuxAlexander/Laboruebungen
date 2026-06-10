@@ -12,7 +12,7 @@
 #ifndef _FONT_8X8_VERTICAL__H__
 #define _FONT_8X8_VERTICAL__H__
 
-#include "fontspec.h"
+#include "avrhal/fontspec.h"
 
 #include <avr/pgmspace.h>
 

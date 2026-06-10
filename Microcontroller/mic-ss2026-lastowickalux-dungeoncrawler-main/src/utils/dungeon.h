@@ -1,12 +1,12 @@
 #ifndef SERIAL_MAP_VISUAL_H
 #define SERIAL_MAP_VISUAL_H
 
-#include "../avrhal/usart/usart.h"
+#include "avrhal/usart.h"
 #include <stdint.h>
 #include <stdlib.h>
-#include <avr/pgmspace.h>
+#include <avr/pgmspace.h> // Essential for Flash optimizations
 #include <util/delay.h>
-#include "player.h"
+#include "player_bar.h"
 #include <avr/interrupt.h>
 #include <util/atomic.h>
 
@@ -35,7 +35,8 @@ typedef enum {
 typedef enum {
     ROOM_MONSTER = 0,
     ROOM_HEALTH  = 1,
-    ROOM_SHOP = 2
+    ROOM_SHOP = 2,
+    GAME_OVER_ROOM = 3
 } RoomId;
 
 typedef enum {
@@ -67,7 +68,7 @@ static char mapGetRoomIcon(RoomId room)
  * @return 1 bei Erfolg (Abgewehrt), 0 bei Fehlschlag (Treffer)
  */
 static uint8_t mapTriggerOledQTE(uint16_t timeout_ms) {
-    uint8_t eventTyp = rand() % 4; // 0 = Links, 1 = Rechts, 2 = Oben, 3 = Unten
+    uint8_t eventTyp = rand() % 2; // 0 = Links, 1 = Rechts
     uint16_t verbleibendeZeit = timeout_ms;
     uint8_t erfolg = 0;
     const uint8_t tick_ms = 20;
@@ -81,13 +82,9 @@ static uint8_t mapTriggerOledQTE(uint16_t timeout_ms) {
         // Titel und Aufforderung
         displayPrint(20, 0, "!!! QTE !!!");
         if (eventTyp == 0) {
-            displayPrint(4, 16, "<--- LINKS!!");
-        } else if (eventTyp == 1) {
-            displayPrint(4, 16, "RECHTS! --->");
-        } else if (eventTyp == 2) {
-            displayPrint(4, 16, "OBEN! ^");
+            displayPrint(4, 16, "<--- LINKS SCHNELL!");
         } else {
-            displayPrint(4, 16, "UNTEN! v");
+            displayPrint(4, 16, "RECHTS SCHNELL! --->");
         }
 
         // Balken berechnen (Breite max. 100 Pixel auf dem OLED)
@@ -102,7 +99,6 @@ static uint8_t mapTriggerOledQTE(uint16_t timeout_ms) {
         // ADC Werte atomar auslesen
         ATOMIC_BLOCK(ATOMIC_RESTORESTATE) {
             adc_x = adcLastRead(0);
-            adc_y = adcLastRead(1);
         }
 
         // Joystick-Auswertung
@@ -112,19 +108,11 @@ static uint8_t mapTriggerOledQTE(uint16_t timeout_ms) {
         } else if (eventTyp == 1 && adc_x > 700) {
             erfolg = 1;
             break;
-        } else if (eventTyp == 2 && adc_y < 300) {
-            erfolg = 1;
-            break;
-        } else if (eventTyp == 3 && adc_y > 700) {
-            erfolg = 1;
-            break;
         }
 
         // Falsche Richtung erwischt -> Sofort vorbei
         if (eventTyp == 0 && adc_x > 700) break;
         if (eventTyp == 1 && adc_x < 300) break;
-        if (eventTyp == 2 && adc_y > 700) break;
-        if (eventTyp == 3 && adc_y < 300) break;
 
         _delay_ms(tick_ms);
         if (verbleibendeZeit > tick_ms) {
@@ -137,11 +125,11 @@ static uint8_t mapTriggerOledQTE(uint16_t timeout_ms) {
     // Feedback auf dem Display ausgeben
     displayClearBuffer();
     if (erfolg) {
-        displayPrint(10, 20, "Gegner getroffen!");
-        displayPrint(20, 36, "Katze verfehlt");
+        displayPrint(28, 20, "GEBLOCKT!");
+        displayPrint(12, 36, "Katze verfehlt");
     } else {
-        displayPrint(20, 20, "Gegner verfehlt!");
-        displayPrint(10, 36, "Katze trifft dich!");
+        displayPrint(32, 20, "TREFFER!");
+        displayPrint(16, 36, "Du verlierst HP");
     }
     displayUpdate();
     _delay_ms(1500);
@@ -374,8 +362,7 @@ static void mapHandleInput(uint16_t adc_x, uint16_t adc_y, uint16_t dynamic_seed
             usartWriteString_P(PSTR("   ( =^.^= )  *purr*\r\n"));
             usartWriteString_P(PSTR("   (\")_(\") \r\n"));
             usartWriteString_P(PSTR("\r\nDer Kater schnurrt gluecklich!\r\n"));
-            
-            //audio_trigger_sfx(1);
+            audio_trigger_sfx(1);
             _delay_ms(3000);
 
             current_state = STATE_OVERVIEW;
@@ -468,12 +455,11 @@ static void mapHandleInput(uint16_t adc_x, uint16_t adc_y, uint16_t dynamic_seed
                 return;
             } else {
                 usartWriteString_P(PSTR("Kampf gewonnen!\r\n"));
-                //audio_trigger_sfx(2);
+                audio_trigger_sfx(2);
                 _delay_ms(3000);
                 current_state = STATE_OVERVIEW;
                 mapInitRandomRooms(dynamic_seed);
-                enemy.health = enemy.max_health;
-                playerAddKill();
+                enemy.health = enemy.max_health; 
                 playerAddMoney(enemy.money);
                 needsRedraw = 1;
                 lock = 1;
@@ -538,7 +524,7 @@ static void mapUpdateDisplay(void)
             mapDrawSelectedRoom();
             playerDrawHUD();
         } else {
-            //audio_trigger_sfx(3);
+            audio_trigger_sfx(3);
             drawGameOver();
         }
         needsRedraw = 0;

@@ -1,3 +1,9 @@
+/**
+ * @author MIC Lab Team
+ * @brief Bit manipulation macros
+ *
+ */
+
 #ifndef bit_h_tie8AeRuf7unoh7l
 #define bit_h_tie8AeRuf7unoh7l
 

@@ -3,7 +3,7 @@
 #endif
 
 #include "util/atomic.h"
-#include "adc.h"
+#include "avrhal/adc.h"
 #include <avr/io.h>
 
 
