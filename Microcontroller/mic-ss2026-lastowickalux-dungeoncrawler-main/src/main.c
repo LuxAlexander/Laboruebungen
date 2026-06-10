@@ -8,7 +8,7 @@
 #include <util/delay.h>
 #include <util/atomic.h>
 
-#include <sprite.h>
+#include "utils/sprite.h"
 #include "utils/dungeon.h"
 #include "utils/audio.h"
 
