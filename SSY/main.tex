@@ -1,0 +1,371 @@
+%!TEX program = lualatex
+\documentclass[11pt,a4paper]{article}
+%\usepackage[utf8]{inputenc} % Allows Unicode characters
+\usepackage[ngerman]{babel} % Handles German hyphenation and captions correctly
+\usepackage{geometry}
+\usepackage{array}
+\usepackage{fontspec}
+\usepackage{tgheros}
+\setsansfont{texgyreheros}
+\usepackage{setspace}
+\usepackage{enumitem}
+\usepackage{pgf}
+\usepackage{tikz}
+\usepackage{amsmath}
+\usepackage{pgfplots}
+\pgfplotsset{compat=newest} % Nutzt die neuesten Features von pgfplots
+\usetikzlibrary{plotmarks}
+\usepackage{float}
+
+\usepackage{graphicx}%images
+
+\usepackage{listings}
+\usepackage{xcolor} % Für die farbige Gestaltung des Codes
+
+% Hier definierst du das Design für den Code:
+\lstset{
+    language=Matlab,                % Setzt die Programmiersprache
+    backgroundcolor=\color{gray!5}, % Leichter grauer Hintergrund
+    basicstyle=\small\ttfamily,     % Kleine, feste Schriftart
+    breaklines=true,                % Automatische Zeilenumbrüche
+    keywordstyle=\color{blue},      % MATLAB-Keywords werden blau
+    commentstyle=\color{green!50!darkgray}, % Kommentare werden grün
+    stringstyle=\color{purple},     % Strings werden lila
+    numbers=left,                   % Zeilennummern links
+    numberstyle=\tiny\color{gray},  % Kleine graue Zeilennummern
+    stepnumber=1,                   % Jede Zeile nummerieren
+    frame=single,                   % Ein einfacher Rahmen um den Code
+    tabsize=4,                      % Tabulator-Breite
+    showstringspaces=false          % Keine störenden Symbole in Leerzeichen
+}
+
+\geometry{
+    a4paper,
+    left=25mm,
+    right=25mm,
+    top=30mm,
+    bottom=30mm
+}
+
+\renewcommand{\familydefault}{\sfdefault} % Set default font to sans-serif
+
+
+\begin{document}
+
+\setcounter{section}{2}
+\setcounter{page}{20}
+\section{Labor 7: Regler III}
+
+Ziel dieser Übung ist es, Strecken mit einem PID-Regler zu regeln. Hierbei müssen aber zuerst die Parameter P, I und D ermittelt werden. Dabei werden zwei Verfahren zur Parametrierung eines PID-Reglers untersucht und diese miteinander verglichen. Zusätzlich werden die Einflüsse von Stellgrößenbeschränkungen und Störsignalen betrachtet.
+
+\subsection{Theoretische Grundlagen}
+
+\subsubsection{PID-Regler}
+
+Der PID-Regler ist der am häufigsten eingesetzte Regler in der Automatisierungstechnik. Er besteht aus drei Teilen, die ihn universell einsetzbar machen:
+
+\begin{itemize}
+\item \textbf{P-Anteil (Proportionalanteil):} Je größer der Fehler, desto stärker die Korrektur.
+\item \textbf{I-Anteil (Integralanteil):} Integriert die Regelabweichung über die Zeit und beseitigt dadurch bleibende Regelabweichungen.
+\item \textbf{D-Anteil (Differentialanteil):} Berechnet, wie schnell sich die Regeldifferenz verändert, und passt die Stellgröße vorausschauend an, um ein Überschwingen zu verhindern.
+\end{itemize}
+
+Oft genügt ein PI-Regler, um eine Strecke zu regeln. Der D-Anteil kann das Regelverhalten verbessern, macht die Parametrierung jedoch anspruchsvoller. Da er auf die Änderungsrate der Regelabweichung reagiert, verstärkt er Messrauschen. Des Weiteren kann er keine zukünftigen Messwerte vorhersagen, sondern nur deren momentane Entwicklung berücksichtigen.
+
+\subsubsection{Parallele und serielle Form des PID-Reglers}
+
+PID-Regler werden hauptsächlich in zwei Darstellungsformen verwendet.
+
+\paragraph{Serielle Form}
+
+Bei der seriellen Form werden die einzelnen Regleranteile multiplikativ verknüpft:
+
+\begin{equation}
+G_R(s)=K_P \left(1+\frac{1}{T_N s}\right) \left(1+T_V s\right)
+\end{equation}
+
+\paragraph{Parallele Form}
+
+Bei der parallelen Form wirken die drei Anteile additiv zusammen:
+
+\begin{equation}
+G_R(s) = K_P + \frac{K_I}{s} + K_D s
+\end{equation}
+
+Folgende alternativ Schreibweise mit Zeitkonstanten wird in dieser Durcharbeitung verwendet:
+
+\begin{equation}
+G_R(s) = K_P \left(1 + \frac{1}{T_N s} + T_V s\right)
+\end{equation}
+
+mit:
+\begin{itemize}
+\item $K_P$: Proportionalverstärkung,
+\item $T_N$: Nachstellzeit des I-Anteils,
+\item $T_V$: Vorhaltezeit des D-Anteils.
+\end{itemize}
+
+Beide Darstellungsformen beschreiben einen PID-Regler, unterscheiden sich jedoch in ihrer Parametrierung.
+
+\subsubsection{Störeinflüsse}
+
+In realen Regelsystemen treten häufig Störungen auf. Diese können:
+\begin{itemize}
+\item die Stellgröße beeinflussen,
+\item die Strecke verändern,
+\item oder die Messung bzw. Rückführung verfälschen.
+\end{itemize}
+
+Dadurch weicht die Regelgröße (Istwert) vom Sollwert ab. Eine wichtige Aufgabe des Reglers besteht darin, solche Störungen möglichst schnell auszuregeln.
+
+\subsubsection{Stellgrößenbeschränkungen}
+
+Technische Systeme besitzen physikalische Grenzen. Daher kann die Stellgröße nicht beliebig große Werte annehmen. Beispielsweise kann der Eingangsstrom eines Motors oder einer Heizung nur innerhalb eines bestimmten Bereichs liegen. 
+
+Dieses Verhalten wird als \textbf{Sättigung} bezeichnet und verursacht einen nicht-linearen Regelkreis. Wird die Stellgröße begrenzt, kann sich das Regelverhalten verschlechtern, da der Regler nicht mehr die gewünschte Stellgröße ausgeben kann. 
+
+\subsubsection{TLK Energy Schritt für Schritt den Regler einstellen}
+
+https://tlk-energy.de/blog/pid-regler-einstellen
+
+HIER BILDER vom Link und Beschreibung
+
+\subsection{Aufgabe A -- Regler-Einstellung mit Trial-and-Error}
+
+Gegeben ist die Strecke
+
+\begin{equation}
+G_S(s)=\frac{1}{2+0.5s} \cdot e^{-0.3s}
+\end{equation}
+
+mit der Totzeit
+
+\begin{equation}
+T_t = 0.3\,\mathrm{s}.
+\end{equation}
+
+Mithilfe des Trial-and-Error-Verfahrens soll ein PID-Regler in Simulink parametrisiert werden, der möglichst schnell auf einen Eingangssprung reagiert.
+
+\subsubsection{Versuchsaufbau}
+Zuerst wird in Matlab eine Variable für die Strecke angelegt, eine weitere für den Regler und eine Simulink Workspace.
+\begin{lstlisting}
+Gs = tf(1, [0.5, 2], 'IoDelay',0.3);%Strecke
+s=tf('s');
+
+Gr=0.8*(1+3/s);%Werte aus Simulink
+nyquist(Gr*Gs)
+\end{lstlisting}
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=1\textwidth]{Abbildungen/regelkreis_7_A1.pdf}
+    \caption{Simulink schematic of the control loop.}
+    \label{fig:simulink_circuit}
+\end{figure}
+
+Wir fangen mit dem P Anteil an, I und D auf Null einstellen. Wir wählen einen niedriegen P Anteil aus, zum Beispiel 1 und sehen uns dann, die Sprungantwort an. Dadudurch haben wir fix eine Bleibenderegelabweichung. Wir vergleichen unsere Sprungantwort mit denen (https://tlk-energy.de/blog/pid-regler-einstellen) hier Beschriebenden.
+
+P-Anteil wird auf 1 gesetzt.
+
+\begin{figure}[htbp]
+    \centering
+    
+    \newlength\figureheight
+    \newlength\figurewidth
+    \setlength\figureheight{6cm}
+    \setlength\figurewidth{0.8\textwidth}
+    
+    \input{Abbildungen/step_resp_aufgabe_7A_1.tikz}
+    
+    \caption{Sprungantwort der Strecke mit P=1}
+    \label{fig:step_response_P1}
+\end{figure}
+
+Im Vergleich mit dem Protokoll von TLK Energy erkennt man, dass man den P-Anteil noch leicht erhöhen kann. =>P=1.3
+
+\begin{figure}[htbp]
+    \centering
+    
+    \setlength\figureheight{6cm}
+    \setlength\figurewidth{0.8\textwidth}
+    
+    \input{Abbildungen/step_resp_aufgabe_7A_2.tikz}
+    
+    \caption{Sprungantwort der Strecke mit P=1.3}
+    \label{fig:step_response_P1k3}
+\end{figure}
+
+Da geht noch etwas. Ab 1.6 fängt es aber schon an stärker Überzuschwingen.
+
+
+\begin{figure}[htbp]
+    \centering
+    
+    \setlength\figureheight{6cm}
+    \setlength\figurewidth{0.8\textwidth}
+    
+    \input{Abbildungen/step_resp_aufgabe_7A_5.tikz}
+    
+    \caption{Sprungantwort der Strecke mit P=1.6}
+    \label{fig:step_response_P1k6}
+\end{figure}
+
+
+Diese Sprungantwort sieht fast genau so aus, wie die Beschriebene.
+Deswegen fahren wir nun mit dem I Anteil fort, um die Bleibenderegelabweichung zu eliminieren. I=1
+
+\begin{figure}[htbp]
+    \centering
+    
+    \setlength\figureheight{6cm}
+    \setlength\figurewidth{0.8\textwidth}
+    
+    \input{Abbildungen/step_resp_aufgabe_7A_6.tikz}
+    
+    \caption{Sprungantwort der Strecke mit P=1.6 und I=1}
+    \label{fig:step_response_I1}
+\end{figure}
+
+Anhand des Diagrammes sehen wir, das die bleibende Regelabweichung eliminiert wurde aber es ist nicht sehr schnell, deshalb I erhöhen. I=2
+
+\begin{figure}[htbp]
+    \centering
+    
+    \setlength\figureheight{6cm}
+    \setlength\figurewidth{0.8\textwidth}
+    
+    \input{Abbildungen/step_resp_aufgabe_7A_7.tikz}
+    
+    \caption{Sprungantwort der Strecke mit P=1.6 und I=5}
+    \label{fig:step_response_I5}
+\end{figure}
+
+Beim Vergleich, sehen wir, dass I zu groß ist. I auf 2.5
+
+\begin{figure}[htbp]
+    \centering
+    
+    \setlength\figureheight{6cm}
+    \setlength\figurewidth{0.8\textwidth}
+    
+    \input{Abbildungen/step_resp_aufgabe_7A_8.tikz}
+    
+    \caption{Sprungantwort der Strecke mit P=1.6 und I=2.5}
+    \label{fig:step_response_I2.5}
+\end{figure}
+
+Entspricht dem Diagramm von TLK Energy, deshalb fahren wir mit dem D Anteil fort.
+
+\subsubsection{Diskusion}
+Wie muss der Regler beschaffen sein, damit bei einem Eingangssprung keine bleibende Regelabweichung auftritt?
+Diskutieren Sie außerdem den jeweiligen Einfluss der P-, I- und D-Glieder.
+
+
+Die Reglerparameter wurden durch schrittweises Anpassen von $K_P$, $K_I$ und $K_D$ bestimmt.
+
+\begin{table}[H]
+\centering
+\begin{tabular}{|c|c|c|c|}
+\hline
+$K_P$ & $K_I$ & $K_D$ & Bemerkung \\
+\hline
+ & & & \\
+\hline
+\end{tabular}
+\caption{Ermittelte Reglerparameter (Trial-and-Error)}
+\end{table}
+
+\subsubsection{Einfluss der Regleranteile}
+
+\paragraph{P-Anteil:} Erhöht die Reaktionsgeschwindigkeit des Systems. Zu große Werte führen zu Überschwingen oder Instabilität.
+
+\paragraph{I-Anteil:} Beseitigt die bleibende Regelabweichung. Ein zu großer I-Anteil kann Schwingungen verursachen.
+
+\paragraph{D-Anteil:} Verbessert die Dämpfung und reduziert Überschwingen. Gleichzeitig reagiert er empfindlich auf Messrauschen.
+
+\paragraph{Bleibende Regelabweichung:} Damit bei einem Eingangssprung keine bleibende Regelabweichung auftritt, muss der Regler einen I-Anteil besitzen.
+
+\subsubsection{Sprungantwort}
+
+figure
+
+\subsection{Aufgabe B -- Regler-Einstellung nach Ziegler-Nichols}
+
+Die Strecke wird in die Form
+
+\begin{equation}
+G(s)=K\frac{e^{-sT_t}}{1+sT}
+\end{equation}
+
+gebracht. Für die gegebene Strecke gilt:
+
+\begin{equation}
+K=\frac{1}{2}=0.5
+\end{equation}
+
+\begin{equation}
+T=\frac{0.5}{2}=0.25\,\mathrm{s}
+\end{equation}
+
+\begin{equation}
+T_t=0.3\,\mathrm{s}
+\end{equation}
+
+Die Ziegler-Nichols-Parameter ergeben sich zu:
+
+\begin{equation}
+K_P = 1.2\frac{T}{K T_t} = 1.2\frac{0.25}{0.5 \cdot 0.3} = 2
+\end{equation}
+
+\begin{equation}
+T_N=2T_t=0.6\,\mathrm{s}
+\end{equation}
+
+\begin{equation}
+T_V=0.5T_t=0.15\,\mathrm{s}
+\end{equation}
+
+Damit lautet die Reglerübertragungsfunktion:
+
+\begin{equation}
+G_R(s)= 2 \left( 1+\frac{1}{0.6s} +0.15s \right)
+\end{equation}
+
+\subsubsection{Sprungantwort}
+
+figure
+
+\subsubsection{Vergleich der Regler}
+
+Der Trial-and-Error-Regler sowie der Ziegler-Nichols-Regler werden hinsichtlich Einschwingzeit, Überschwingen und stationärer Genauigkeit verglichen.
+
+\subsection{Aufgabe C -- Einfluss von Stellgrößenbeschränkungen}
+
+Es wurden zwei Sättigungsgrenzen untersucht:
+\begin{itemize}
+\item $\left[-3,3\right]$
+\item $\left[-1.5,1.5\right]$
+\end{itemize}
+
+\subsubsection{Ergebnisse}
+
+\begin{itemize}
+\item Bei der Begrenzung auf $\left[-3,3\right]$ tritt nur ein geringer Einfluss auf das Regelverhalten auf.
+\item Bei der stärkeren Begrenzung auf $\left[-1.5,1.5\right]$ steigt die Einschwingzeit deutlich an.
+\item Durch die Begrenzung kann der Regler nicht mehr die erforderliche Stellgröße ausgeben, wodurch die Dynamik des Systems reduziert wird.
+\end{itemize}
+
+\subsection{Aufgabe D -- Einfluss eines Störsignals}
+
+Als Störsignal wurde eine verzögerte Sprungfunktion verwendet, die auf die Stellgröße wirkt.
+
+\subsubsection{Beobachtungen}
+
+Nach dem Auftreten der Störung weicht die Regelgröße zunächst vom Sollwert ab. Der PID-Regler kompensiert diese Abweichung und führt die Regelgröße wieder auf den Sollwert zurück. Die Geschwindigkeit der Ausregelung hängt von der gewählten Parametrierung des Reglers ab.
+
+figure
+
+\subsection{Fazit}
+
+In dieser Übung wurde die Regelung einer Strecke mit Totzeit mittels PID-Regler untersucht. Die Parameter konnten sowohl durch Trial-and-Error als auch mit dem heuristischen Verfahren nach Ziegler-Nichols bestimmt werden. Zusätzlich wurde gezeigt, dass Stellgrößenbeschränkungen das dynamische Verhalten verschlechtern können und dass ein PID-Regler Störungen wirksam kompensieren kann. Für eine verschwindende stationäre Regelabweichung ist ein I-Anteil erforderlich.
+\end{document}
