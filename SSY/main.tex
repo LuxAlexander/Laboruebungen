@@ -7,6 +7,7 @@
 \usepackage{fontspec}
 \usepackage{tgheros}
 \setsansfont{texgyreheros}
+\usepackage{hyperref}
 \usepackage{setspace}
 \usepackage{enumitem}
 \usepackage{pgf}
@@ -60,6 +61,577 @@
 \setlength\figurewidth{0.8\textwidth}
 
 \begin{document}
+
+\begin{center}
+    % Header Section
+    {\Large\bfseries \underline{FH - Studiengang für}}\\[0.4em]
+    {\Large\bfseries \underline{Informationstechnik und System-Management}}\\[0.4em]
+    {\Large\bfseries \underline{Salzburg}}\\[3.5em]
+    
+    {\Large\bfseries Labor Signale und Systeme 2}\\[3.5em]
+    
+    % Main Title
+    {\Huge\bfseries Protokoll}\\[3.5em]
+    
+    % Subject Section
+    {\Large\bfseries Gegenstand der Übung}\\[1em]
+    \setlength{\fboxrule}{1.2pt} % Thicker border for the box
+    \framebox[\linewidth]{\rule[-0.5em]{0pt}{2em}\Large\bfseries Regler}\\[5em]
+\end{center}
+
+\vspace{\fill}
+
+% Metadata Table
+\noindent
+\begin{tabular}{|p{3.5cm}|r|}
+    \hline
+    \rule[-0.6em]{0pt}{2em}\textbf{Durchführung:} & \textbf{SS 2026} \\ \hline
+    \rule[-0.6em]{0pt}{2em}\textbf{Datum Abgabe:} & \textbf{14.06.2026} \\ \hline
+    \rule[-0.6em]{0pt}{2em}\textbf{Übungsgruppe:} & \textbf{C} \\ \hline
+    \rule[-0.6em]{0pt}{2em}\textbf{Autor:innen:}  & \textbf{Lastowicka, Lux} \\ \hline
+\end{tabular}
+
+\vspace{2.5em}
+
+% Participants Box
+\noindent
+\framebox[\linewidth]{\rule[-1.2em]{0pt}{3.5em}%
+    \parbox{\linewidth}{%
+        \hspace{0.5em}\textbf{Übungsteilnehmer:} \hspace{2em} Alexander Lux, Susanne Lastowicka
+    }%
+}
+
+\newpage % Erstellt eine neue Seite nach dem Deckblatt
+\pagenumbering{arabic} % Startet die Seitennummerierung (z.B. 1, 2, 3...)
+
+\tableofcontents % Erstellt automatisch das Inhaltsverzeichnis
+
+\newpage % Erstellt eine neue Seite nach dem Inhaltsverzeichnis
+\onehalfspacing % Zeilenabstand 1.5
+\section{Einleitung}
+Im vorliegenden Laborprotokoll werden die Themen Regler II und Regler III behandelt, die mithilfe von MATLAB erarbeitet wurden. Der Fokus bei Regler II liegt auf der korrekten Reglereinstellung anhand der Parameter Anstiegszeit, bleibende Regelabweichung und Phasenreserve. In Regler III wird dieser Ansatz durch die modellbasierte Auslegung eines PID-Reglers in Simulink ergänzt. Die Ergebnisse sowie deren Auswertung werden im Hauptteil dieser Arbeit erläutert.
+
+\newpage
+
+\section{Labor 6: Regler II}
+In diesem Labor liegt der Fokus auf dem richtigen Reglerentwurf anhand des Frequenz-Kennlinien Verfahrens. Bei diesem Verfahren werden mittels der Analyse des Bode Diagramms folgende Parameter bestimmt: bleibende Regelabweichung $e_{\mathrm{\infty}}$, Phasenreserve $\phi_{\mathrm{r}}$ und Durchtrittsfrequenz $\omega_{\mathrm{c}}$. Mit diesen Werten ist es möglich, die Anstiegszeit $t_{\mathrm{r}}$ und die Überschwingweite $u_{\mathrm{p}}$ zu berechnen: 
+$$ \phi_{\mathrm{r}} + u_{\mathrm{p}} = 70 $$
+$$ \omega_{\mathrm{c}} \cdot t_{\mathrm{r}} = 1.5 $$
+Zumeist ist die gewünschte Anstiegszeit und Überschwingweite gegeben, und die restlichen Werte sollen dementsprechend angepasst werden. Beispiele dafür werden in den folgenden 3 Übungen gezeigt. In allen dieser Übungen wurde nach diesem Schema vorgegeangen:
+\begin{enumerate}
+    \item Durchtrittsfrequenz und Phasenreserve ermitteln durch die gegebenen Formeln.
+    \item Regelabweichung bestimmen und wenn nötig ein Integratorelement ($G_{\mathrm{r}} = \frac{1}{s}$) hinzufügen.
+    \item Die Durchtrittsfrequenz mit einem P-Glied korrigieren, damit $\omega = \omega_{\mathrm{c}}$ ist.
+    \item Die Phase, wenn nötig, mit einem Lead-/Lag-Glied an der Durchtrittsfrequenz korrigieren, dann die Durchtrittsfrequenz noch einmal überprüfen.
+    \item Sollte die bleibende Regelabweichung nicht mit dem gewünschten Wert übereinstimmen, kann die Phase erneut mit einem Lag-Glied verändert werden.
+\end{enumerate}
+
+\subsection{Aufgabe A}
+In dieser Aufgabe soll ein Regler für die Strecke mit der Übertragungsfunktion $$G_{\mathrm{s}}(s) = \frac{10s + 5}{s^2 + 10s + 2}$$ entworfen werden. Dabei soll es zu keiner bleibenden Regelabweichung ($e_{\mathrm{\infty}} = 0$) kommen, die Anstiegszeit soll circa 0.5s und die Überschwingweite circa 10\% betragen. Die Annahme ist, dass keine dieser Voraussetzungen bereits zutreffen. Deshalb wird das Ausgangssystem zuerst analysiert.
+Im ersten Schritt konnen auf diese Werte die oben genannten Formeln angewendet werden. Dann wird das Bode-Diagramm im offenen System und die Sprungantwort im geschlossenen Systems ohne Regler analysiert.
+\begin{equation}
+\begin{aligned}
+    \phi_{\mathrm{r}} &= 70 - 10 = 60^{\circ} \\[1ex]
+    \omega_{\mathrm{c}} &= \frac{1.5}{0.5} = 3\,\text{rad/s}
+\end{aligned}
+\label{eq:regler_design}
+\end{equation}
+
+\begin{lstlisting}
+Gs = tf([10 5], [1 10 2]);
+tr = 0.5;
+up = 10;
+wc = 1.5 / tr; % Durchtrittsfrequenz
+phi = 70  - up; % Phasenreserve
+
+bode(Gs); grid on 
+
+step(Gs/(1+Gs)); grid on
+\end{lstlisting}
+
+\begin{figure}[H]
+    \centering
+    % Hier definierst du die Wunschgröße der Grafik:
+    %\newlength\figureheight
+    %\newlength\figurewidth
+    \setlength\figureheight{6cm}
+    \setlength\figurewidth{0.8\textwidth} % 80% der Textbreite
+    
+    % Hier wird die TikZ-Datei geladen:
+    \input{Abbildungen/bode_aufgabe_a_1.tikz}
+    
+    \caption{Bode-Diagramm der ungeregelten Strecke ($G_{\mathrm{s}}(s)$).}
+    \label{fig:matlab_plot1}
+\end{figure}
+
+\noindent Im Bode-Diagramm kann eine bleibende Regelabweichung bei $s \to 0$ festgestellt werden. Diese Beobachtung kann mit der Sprungantwort des Systems bestätigt werden.
+
+\begin{figure}[H]
+    \centering
+    % Hier definierst du die Wunschgröße der Grafik:
+    \setlength\figureheight{6cm}
+    \setlength\figurewidth{0.8\textwidth} % 80% der Textbreite
+    
+    % Hier wird die TikZ-Datei geladen:
+    \input{Abbildungen/step_resp_aufgabe_a_1.tikz}
+    
+    \caption{Sprungantwort der ungeregelten Strecke ($\frac{G_{\mathrm{s}}(s)}{1 + G_{\mathrm{s}}(s)}$).}
+    \label{fig:matlab_plot2}
+\end{figure}
+
+\noindent Das System nähert sich dem Endwert 0.7 an. Das bedeutet es gibt eine bleibende Regelabweichung von 0.3. Um die gewünschte Abweichung von 0 zu erhalten, wird im zweiten Schritt ein I-Glied (Integrator Glied) eingebaut. Das I-Glied ist:
+$$G_{\mathrm{r}}(s) = \frac{1}{s}$$
+
+\begin{lstlisting}
+Gr = tf(1, [1 0]); %I-Glied
+G0 = Gr * Gs;
+figure
+bode(G0); grid on
+\end{lstlisting}
+
+\begin{figure}[H]
+    \centering
+    % Hier definierst du die Wunschgröße der Grafik:
+    \setlength\figureheight{6cm}
+    \setlength\figurewidth{0.8\textwidth} % 80% der Textbreite
+    
+    % Hier wird die TikZ-Datei geladen:
+    \input{Abbildungen/bode_aufgabe_a_2.tikz}
+    
+    \caption{Bode-Diagramm der Strecke mit I-Glied ($G_{\mathrm{s}}(s) \cdot G_{\mathrm{r}}(s)$).}
+    \label{fig:matlab_plot3}
+\end{figure}
+
+\noindent Durch das I-Glied bleibt keine Regelabweichung übrig, was im Bode Diagramm durch den Verlauf der Verstärkung sichtbar ist. Bei $s \to 0$ ist die Verstärkung unendlich.
+
+\noindent Im dritten Schritt wird die Durchtrittsfrequenz angepasst, sodass $\omega = \omega_{\mathrm{c}}$ entspricht. Derzeit ist $\omega = 1$, $\omega_{\mathrm{c}}$ soll den Wert 3 rad/s haben. Also muss die Strecke verstärkt werden. Bei $\omega_{\mathrm{c}} = 3rad/s$ soll die Verstärkung 0 sein, derzeit liegt sie aber bei -10dB. Das bedeutet die Strecke muss um 10dB verstärkt werden. Dazu werden die Dezibel umgerechnet in den benötigten Verstärkungsfaktor K und mit der Strecke multipliziert.
+
+\begin{lstlisting}
+K = db2mag(10) % Umrechnung in Verstärkung
+Gr = Gr * K;
+G0 = Gr * Gs;
+figure
+bode(G0); grid on
+
+step(G0 / (1 + G0)); grid on
+\end{lstlisting}
+
+\begin{figure}[H]
+    \centering
+    % Hier definierst du die Wunschgröße der Grafik:
+    \setlength\figureheight{6cm}
+    \setlength\figurewidth{0.8\textwidth} % 80% der Textbreite
+    
+    % Hier wird die TikZ-Datei geladen:
+    \input{Abbildungen/bode_aufgabe_a_3.tikz}
+    
+    \caption{Bode-Diagramm der Strecke mit I-Glied und Verstärkung K ($G_{\mathrm{s}}(s) \cdot G_{\mathrm{r}}(s) \cdot K$).}
+    \label{fig:matlab_plot4}
+\end{figure}
+\noindent Die Durchtrittsfrequenz liegt jetzt bei 3rad/s, dem gewollten Wert. Als nächstes wird die Phasenreserve bei 0dB Verstärkung festgestellt. Es muss gelten $\phi_{\mathrm{r}} = \phi = 60°$. Aus dem Bode Diagramm kann eine Phasenreserve von etwas mehr als 60° abgelesen werden. Um zu sehen, ob die Phase gesenkt werden muss, wird die Sprungantwort analysiert.
+
+\begin{figure}[H]
+    \centering
+    % Hier definierst du die Wunschgröße der Grafik:
+    \setlength\figureheight{6cm}
+    \setlength\figurewidth{0.8\textwidth} % 80% der Textbreite
+    
+    % Hier wird die TikZ-Datei geladen:
+    \input{Abbildungen/step_resp_aufgabe_a_2.tikz}
+    
+    \caption{Sprungantwort der geregelten und verstärkten Strecke ($G_{\mathrm{0}}(s)$).}
+    \label{fig:matlab_plot5}
+\end{figure}
+
+\noindent In der Sprungantwort ist eine Überschwingweite von 10\% zu erkennen und die Anstiegszeit beträgt circa 0.5 Sekunden. Damit sind alle Kriterien erfüllt und der Regler, der für dieses System benötigt wird lautet:
+$$G_{\mathrm{r}} = \frac{3.162}{s}$$
+
+\subsection{Aufgabe B}
+
+Für diese Aufgabe wird folgende Strecke gegeben:
+$$G_{\mathrm{s}}(s) = \frac{s+1}{3s^2 + 4s + 2}$$
+Dieselben Anforderungen wie in Aufgabe A sollen auch für dieses System erfüllt werden. Die bleibende Regelabweichung soll $e_{\mathrm{\infty}} = 0$, die Anstiegszeit 0.5s und die Überschwingweite 10\% sein. Es wird wieder nach dem Frequenz-Kennlinien-Verfahren vorgegangen. Als erstes werden die Werte für $\omega_{\mathrm{c}}$ und $\phi_{\mathrm{r}}$ ermittelt. Da die Werte diesselben wie aus Aufgabe A sind, wird dasselbe Ergebnis verwendet. Für die Rechnung siehe Gleichung \eqref{eq:regler_design}. Auch von diesem System wird davon ausgegangen, dass keine der Anforderungen erfüllt sind.
+
+\noindent Als erstes wird die Sprungantwort und das Bode Diagramm des ungeregelten Systems dargestellt.
+
+\begin{lstlisting}
+Gs = tf([1 1], [3 4 2]);
+figure
+bode(Gs); grid on
+figure
+step(Gs / (1 + Gs)); grid on
+\end{lstlisting}
+
+\begin{figure}[H]
+    \centering
+    % Hier definierst du die Wunschgröße der Grafik:
+    \setlength\figureheight{6cm}
+    \setlength\figurewidth{0.8\textwidth} % 80% der Textbreite
+    
+    % Hier wird die TikZ-Datei geladen:
+    \input{Abbildungen/bode_aufgabe_b_1.tikz}
+    
+    \caption{Bode Diagramm der ungeregelten Strecke ($G_{\mathrm{0}}(s)$).}
+    \label{fig:matlab_plot6}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    % Hier definierst du die Wunschgröße der Grafik:
+    \setlength\figureheight{6cm}
+    \setlength\figurewidth{0.8\textwidth} % 80% der Textbreite
+    
+    % Hier wird die TikZ-Datei geladen:
+    \input{Abbildungen/step_resp_aufgabe_b_1.tikz}
+    
+    \caption{Sprungantwort der ungeregelten Strecke ($G_{\mathrm{0}}(s)$).}
+    \label{fig:matlab_plot7}
+\end{figure}
+
+\noindent Anhand der beiden Plots kann eine Regelabweichung erkannt werden, die wieder mit einem I-Glied korrigiert werden muss.
+
+\begin{lstlisting}
+Gr = tf(1, [1 0]);
+G0 = Gr * Gs;
+
+figure 
+bode(G0); grid on
+\end{lstlisting}
+
+\begin{figure}[H]
+    \centering
+    % Hier definierst du die Wunschgröße der Grafik:
+    \setlength\figureheight{6cm}
+    \setlength\figurewidth{0.8\textwidth} % 80% der Textbreite
+    
+    % Hier wird die TikZ-Datei geladen:
+    \input{Abbildungen/bode_aufgabe_b_2.tikz}
+    
+    \caption{Bode Diagramm der ungeregelten Strecke ($G_{\mathrm{0}}(s)$).}
+    \label{fig:matlab_plot8}
+\end{figure}
+
+\noindent Das Bode Diagramm zeigt, dass jetzt für die Regelabweichung $e_{\mathrm{\infty}} = 0$ gilt. Im nächsten Schritt wird die Durchtrittsfrequenz $\omega_{\mathrm{c}}$ auf 3rad/s korrigiert, mithilfe eines Verstärkergliedes K. Am Bode Diagramm ist die Verstärkung bei 3rad/s derzeit bei -29dB. Dieser Wert wird wieder in die tatsächliche Verstärkung umgerechnet und mit der Strecke multipliziert.
+
+\begin{lstlisting}
+tr = 0.5;
+wc = 1.5 / tr; % tr = 0.5, 1.5/0.5 = 3 = wc, Durchtrittsfrequenz
+
+k = db2mag(29)
+
+Gr = Gr * k;
+G0 = Gr * Gs;
+
+figure
+bode(G0); grid on 
+figure
+step(G0 / (1 + G0)); grid on 
+\end{lstlisting}
+
+\begin{figure}[H]
+    \centering
+    % Hier definierst du die Wunschgröße der Grafik:
+    \setlength\figureheight{6cm}
+    \setlength\figurewidth{0.8\textwidth} % 80% der Textbreite
+    
+    % Hier wird die TikZ-Datei geladen:
+    \input{Abbildungen/bode_aufgabe_b_3.tikz}
+    
+    \caption{Bode Diagramm der verstärkten Strecke ($G_{\mathrm{0}}(s)$).}
+    \label{fig:matlab_plot9}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    % Hier definierst du die Wunschgröße der Grafik:
+    \setlength\figureheight{6cm}
+    \setlength\figurewidth{0.8\textwidth} % 80% der Textbreite
+    
+    % Hier wird die TikZ-Datei geladen:
+    \input{Abbildungen/step_resp_aufgabe_b_3.tikz}
+    
+    \caption{Sprungantwort der verstärkten Strecke ($G_{\mathrm{0}}(s)$).}
+    \label{fig:matlab_plot10}
+\end{figure}
+
+Die Sprungantwort hat ein deutliches Überschwingen, was auf eine zu geringe Phasenreserve hindeutet. Wird das Bode Diagramm bezüglich $\phi_{\mathrm{r}}$ analysiert, ist die Phasenreserve nur 6° anstatt den gewollten 60°. Deshalb muss die Phase an der Durchtrittsfrequenz angehoben werden. Dazu wird ein Lead-Glied verwendet. Es hebt die Phase in einem vorgegebenen Bereich, der durch $\omega_{\mathrm{Z}}$ und $\omega_{\mathrm{N}}$ eingeschränkt wird, an. Die Parameter werden aus der folgenden Abbildung abgelesen und berechnet.
+
+\begin{figure}[H]
+    \centering
+    % In den eckigen Klammern bestimmst du die Breite (z. B. 80% der Textbreite)
+    \includegraphics[width=0.8\textwidth]{Abbildungen/Lead-Glied.png}
+    
+    % Hier kommt deine Bildunterschrift hin
+    \caption{Lead-Glied Dimensionierung.}
+    
+    % Der Label-Name, um im Text mit \ref{fig:mein_bild} darauf zu verweisen
+    \label{fig:Lead-Glied}
+\end{figure}
+
+\noindent Die Phase muss um circa 50° gehoben werden, weshalb $m_{\mathrm{h}} = 8$ verwendet wird. Für die Grenzen gilt:
+$$\omega_{\mathrm{N}} = m_{\mathrm{h}} \cdot \omega_{\mathrm{Z}}$$
+Durch Ablesen an der gwünschten Stelle im Diagramm ergibt sich für $\frac{\omega_{\mathrm{c}}}{\omega_{\mathrm{Z}}} = 2.7$. Außerdem werden noch diese Formeln benötigt für die Berechnung des Lead-Glieds:
+\begin{equation}
+\begin{aligned}
+    G(s) &= \frac{1 + Ts}{1 + \alpha Ts} \\[1.5ex]
+    \omega_{\mathrm{Z}} &= \frac{1}{T} \\[1.5ex]
+    \omega_{\mathrm{N}} &= \frac{1}{\alpha T}
+    \label{eq:lead_formeln}
+\end{aligned}
+\end{equation}
+
+\begin{lstlisting}
+wz = wc / 2.7;
+wn = 8*wz;
+T = 1/wz; % Umformen wz formel
+alpha = 1 / (wn * T) % Umformen wn formel
+G = tf([T 1], [alpha*T 1])
+Gr = Gr * G;
+G0 = Gs * Gr;
+bode(G0); grid on;
+\end{lstlisting}
+
+\begin{figure}[H]
+    \centering
+    % Hier definierst du die Wunschgröße der Grafik:
+    \setlength\figureheight{6cm}
+    \setlength\figurewidth{0.8\textwidth} % 80% der Textbreite
+    
+    % Hier wird die TikZ-Datei geladen:
+    \input{Abbildungen/bode_aufgabe_b_4.tikz}
+    
+    \caption{Sprungantwort der Phasenkorrigierten Strecke ($G_{\mathrm{0}}(s)$).}
+    \label{fig:matlab_plot11}
+\end{figure}
+
+\noindent An der Frequenz 3rad/s ist die Phasenreserve jetzt bei circa 60°, was den Anforderungen entspricht. Allerdings hat sich durch die Phasenkorrektur die Durchtrittsfrequenz verschoben. Die Verstärkung muss um 8.5dB gesenkt werden.
+
+\begin{lstlisting}
+k = db2mag(-8.5)
+Gr = Gr * k;
+G0 = Gr * Gs;
+bode(G0); grid on
+step(G0/(1+G0)); grid on
+\end{lstlisting}
+
+\begin{figure}[H]
+    \centering
+    % Hier definierst du die Wunschgröße der Grafik:
+    \setlength\figureheight{6cm}
+    \setlength\figurewidth{0.8\textwidth} % 80% der Textbreite
+    
+    % Hier wird die TikZ-Datei geladen:
+    \input{Abbildungen/bode_aufgabe_b_5.tikz}
+    
+    \caption{Bode Diagramm der korrigierten Strecke ($G_{\mathrm{0}}(s)$).}
+    \label{fig:matlab_plot12}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    % Hier definierst du die Wunschgröße der Grafik:
+    \setlength\figureheight{6cm}
+    \setlength\figurewidth{0.8\textwidth} % 80% der Textbreite
+    
+    % Hier wird die TikZ-Datei geladen:
+    \input{Abbildungen/step_resp_aufgabe_b_5.tikz}
+    
+    \caption{Sprungantwort der korrigierten Strecke ($G_{\mathrm{0}}(s)$).}
+    \label{fig:matlab_plot13}
+\end{figure}
+
+\noindent Die Überschwingweite beträgt 10\% und die Anstiegszeit 0.5s. Der passende Regler lautet:
+$$G_{\mathrm{r}}(s) = \frac{9.63s + 10.59}{0.1136s^2 + s}$$
+
+\subsection{Aufgabe C}
+
+\noindent In Aufgabe C soll wieder ein passender Regler für eine Strecke $G_{\mathrm{s}}(s)$ entworfen werden. Die Vorgaben lauten:
+\begin{equation}
+\begin{aligned}
+    e_{\infty} &= 0 \\
+    t_{\mathrm{r}} &\approx 0.2\,\text{s} \\
+    u_{\mathrm{p}} &\approx 10\%
+\end{aligned}
+\end{equation}
+$G_{\mathrm{s}}(s)$ wird dabei mit $$G_{\mathrm{s}}(s) = \frac{2s + 4}{s^2 + 5s + 2}$$ gegeben.
+
+\noindent Daraus errechnen sich die neuen Werte für die Durchtrittsfrequenz und Phasenreserve:
+\begin{equation}
+\begin{aligned}
+    \phi_{\mathrm{r}} &= 70 - 10 = 60^{\circ} \\[1.5ex]
+    \omega_{\mathrm{c}} &= \frac{1.5}{0.2} = 7.5\,\text{rad/s}
+\end{aligned}
+\end{equation}
+
+\noindent Im ersten Schritt werden die Sprungantwort und das Bode Diagramm erstellt. Es wird angenommen, dass die Vorgaben nicht erfüllt sind.
+
+\begin{lstlisting}
+Gs = tf([2 4], [1 5 2])
+figure
+bode(Gs); grid on
+figure
+step(Gs / (1 + Gs)); grid on
+\end{lstlisting}
+
+\begin{figure}[H]
+    \centering
+    % Hier definierst du die Wunschgröße der Grafik:
+    \setlength\figureheight{6cm}
+    \setlength\figurewidth{0.8\textwidth} % 80% der Textbreite
+    
+    % Hier wird die TikZ-Datei geladen:
+    \input{Abbildungen/bode_aufgabe_c_1.tikz}
+    
+    \caption{Bode Diagramm der ungeregelten Strecke ($G_{\mathrm{0}}(s)$).}
+    \label{fig:matlab_plot14}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    % Hier definierst du die Wunschgröße der Grafik:
+    \setlength\figureheight{6cm}
+    \setlength\figurewidth{0.8\textwidth} % 80% der Textbreite
+    
+    % Hier wird die TikZ-Datei geladen:
+    \input{Abbildungen/step_resp_aufgabe_c_1.tikz}
+    
+    \caption{Sprungantwort der ungeregelten Strecke ($G_{\mathrm{0}}(s)$).}
+    \label{fig:matlab_plot15}
+\end{figure}
+
+\noindent Ein Integrator-Glied wird eingebaut, um die bleibende Regelabweichung bei $t \to \infty$ von 0.37 zu beheben.
+
+\begin{lstlisting}
+Gr = tf(1, [1 0]);
+G0 = Gr * Gs;
+figure
+bode(G0); grid on;
+\end{lstlisting}
+
+\begin{figure}[H]
+    \centering
+    % Hier definierst du die Wunschgröße der Grafik:
+    \setlength\figureheight{6cm}
+    \setlength\figurewidth{0.8\textwidth} % 80% der Textbreite
+    
+    % Hier wird die TikZ-Datei geladen:
+    \input{Abbildungen/bode_aufgabe_c_2.tikz}
+    
+    \caption{Bode Diagramm der Strecke mit I-Glied ($G_{\mathrm{0}}(s)$).}
+    \label{fig:matlab_plot16}
+\end{figure}
+
+\noindent Die bleibende Regelabweichung wurde behoben. Als nächstes wird das Bode Diagramm auf die Anforderungen überprüft. Die Durchtrittsfrequenz wid als erstes angepasst auf 7.5rad/s. Dafür muss die Kurve um 30dB verstärkt werden.
+
+\begin{lstlisting}
+tr = 0.2;
+up = 10;
+phi = 70 - up;
+wc = 1.5 / tr;
+k = db2mag(30); 
+Gr = Gr * k; 
+G0 = Gr * Gs; 
+figure
+bode(G0); grid on; 
+\end{lstlisting}
+
+\begin{figure}[H]
+    \centering
+    % Hier definierst du die Wunschgröße der Grafik:
+    \setlength\figureheight{6cm}
+    \setlength\figurewidth{0.8\textwidth} % 80% der Textbreite
+    
+    % Hier wird die TikZ-Datei geladen:
+    \input{Abbildungen/bode_aufgabe_c_3.tikz}
+    
+    \caption{Bode Diagramm der verstärkten Strecke ($G_{\mathrm{0}}(s)$).}
+    \label{fig:matlab_plot17}
+
+\end{figure}
+
+\noindent Für die Durchtrittsfrequenz gilt jetzt $\omega_{\mathrm{c}} = \omega$. Derzeit liegt die Phasenreserve bei $\phi_{\mathrm{r}} = 20°$. Sie muss also um 40° gehoben werden. Das wird mithilfe des Lead-Glieds gemacht. Anhand der Abbildung \ref{fig:Lead-Glied} können die nötigen Parameter bestimmt werden. Für $m_{\mathrm{h}} = 5$ an der Stelle 2.3 ergeben sich folgende Gleichungen für die Grenzen:
+
+\begin{equation}
+\begin{aligned}
+    \omega_{\mathrm{Z}} &= \frac{\omega_{\mathrm{c}}}{2.3} = \frac{7.5}{2.3} \approx 3.26\,\text{rad/s} \\[1.5ex]
+    \omega_{\mathrm{N}} &= m_{\mathrm{h}} \cdot \omega_{\mathrm{Z}} + 15 = 5 \cdot 3.26 + 15 = 31.3\,\text{rad/s}
+\end{aligned}
+\end{equation}
+
+\noindent Zusätzlich mit den Formeln für die weitere Berechnung (siehe ~\eqref{eq:lead_formeln}) ergibt sich dieser Code. Zusätzlich wurden die Parameter entsprechend dem Endergebnis angepasst, da die Überschwingweite zu groß gewesen wäre mit der Phasenkorrektur von 40°. Deshalb wurde die Phase stärker gehoben.
+
+\begin{lstlisting}
+mh = 5;
+wz = wc / 2.3;
+wn = mh * wz + 15; % +15 dazu ausprobiert für ein besseres Ergebnis
+T = 1 / wz; % Umformen wz formel
+alpha = 1 / (wn * T) % Umformen wn formel
+G = tf([T 1], [alpha*T 1])
+Gr = Gr * G;
+G0 = Gs * Gr;
+bode(G0); grid on; 
+\end{lstlisting}
+
+\begin{figure}[H]
+    \centering
+    % Hier definierst du die Wunschgröße der Grafik:
+    \setlength\figureheight{6cm}
+    \setlength\figurewidth{0.8\textwidth} % 80% der Textbreite
+    
+    % Hier wird die TikZ-Datei geladen:
+    \input{Abbildungen/bode_aufgabe_c_4.tikz}
+    
+    \caption{Bode Diagramm der phasenkorrigierten Strecke ($G_{\mathrm{0}}(s)$).}
+    \label{fig:matlab_plot18}
+
+\end{figure}
+
+\noindent Nach der Phasenkorrektur wird $\omega_{\mathrm{c}}$ korrigiert. Die Verstärkung ist um 7dB zu hoch an der gewünschten Stelle. Mit einem P-Glied wird der Verlauf gedämpft.
+
+\begin{lstlisting}
+k = db2mag(-7);
+Gr = Gr * k; 
+G0 = Gr * Gs; 
+figure
+bode(G0); grid on;
+step(G0 / (1 + G0)); grid on; 
+\end{lstlisting}
+
+\begin{figure}[H]
+    \centering
+    % Hier definierst du die Wunschgröße der Grafik:
+    \setlength\figureheight{6cm}
+    \setlength\figurewidth{0.8\textwidth} % 80% der Textbreite
+    
+    % Hier wird die TikZ-Datei geladen:
+    \input{Abbildungen/bode_aufgabe_c_5.tikz}
+    
+    \caption{Bode Diagramm der korrigierten Strecke ($G_{\mathrm{0}}(s)$).}
+    \label{fig:matlab_plot19}
+
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    % Hier definierst du die Wunschgröße der Grafik:
+    \setlength\figureheight{6cm}
+    \setlength\figurewidth{0.8\textwidth} % 80% der Textbreite
+    
+    % Hier wird die TikZ-Datei geladen:
+    \input{Abbildungen/bode_aufgabe_c_5.tikz}
+    
+    \caption{Sprungantwort der korrigierten Strecke ($G_{\mathrm{0}}(s)$).}
+    \label{fig:matlab_plot20}
+
+\end{figure}
+
+\noindent Aus der Sprungantwort kann bestätigt werden, dass die Anforderungen mit der Anstiegszeit und der Überschwingweite von $t_{\mathrm{r}} \approx 0.2\,\text{s}$ und $u_{\mathrm{p}} \approx 10\%$ erüllt sind.
+
+\newpage
+\subsection{Fazit zu Labor 6}
+Jede der gegebenen Strecken konnte ausreichend mit dem Frequenz-Kennlinien-Verfahren korrigiert werden. Dabei ist besonders auf die vorgegebenen Parameter zu achten und auf erneute Verschiebungen durch das Lead/Lag Glied. Alle Parameter müssen am Ende anhand der Sprungantwort des Systems nochmals überprüft und gegebenfalls nachgestellt werden, um den passenden Regler zu finden.
+
+\newpage
 
 %\setcounter{section}{2}
 %\setcounter{page}{20}

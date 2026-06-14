@@ -1,0 +1,30 @@
+\babel@toc {ngerman}{}\relax 
+\contentsline {section}{\numberline {1}Einleitung}{2}{section.1}%
+\contentsline {section}{\numberline {2}Labor 6: Regler II}{3}{section.2}%
+\contentsline {subsection}{\numberline {2.1}Aufgabe A}{3}{subsection.2.1}%
+\contentsline {subsection}{\numberline {2.2}Aufgabe B}{8}{subsection.2.2}%
+\contentsline {subsection}{\numberline {2.3}Aufgabe C}{15}{subsection.2.3}%
+\contentsline {subsection}{\numberline {2.4}Fazit zu Labor 6}{21}{subsection.2.4}%
+\contentsline {section}{\numberline {3}Labor 7: Regler III}{22}{section.3}%
+\contentsline {subsection}{\numberline {3.1}Theoretische Grundlagen}{22}{subsection.3.1}%
+\contentsline {subsubsection}{\numberline {3.1.1}PID-Regler}{22}{subsubsection.3.1.1}%
+\contentsline {subsubsection}{\numberline {3.1.2}Parallele und serielle Form des PID-Reglers}{22}{subsubsection.3.1.2}%
+\contentsline {paragraph}{Serielle Form}{22}{section*.23}%
+\contentsline {paragraph}{Parallele Form}{22}{section*.24}%
+\contentsline {subsubsection}{\numberline {3.1.3}Störeinflüsse}{23}{subsubsection.3.1.3}%
+\contentsline {subsubsection}{\numberline {3.1.4}Stellgrößenbeschränkungen}{23}{subsubsection.3.1.4}%
+\contentsline {subsubsection}{\numberline {3.1.5}TLK Energy Schritt für Schritt den Regler einstellen}{23}{subsubsection.3.1.5}%
+\contentsline {subsection}{\numberline {3.2}Aufgabe A -- Regler-Einstellung mit Trial-and-Error}{25}{subsection.3.2}%
+\contentsline {subsubsection}{\numberline {3.2.1}Versuchsaufbau und Durchführung}{25}{subsubsection.3.2.1}%
+\contentsline {paragraph}{P-Anteils:}{25}{section*.27}%
+\contentsline {paragraph}{I-Anteils:}{27}{section*.31}%
+\contentsline {paragraph}{D-Anteils:}{28}{section*.35}%
+\contentsline {subsubsection}{\numberline {3.2.2}Fazit A}{31}{subsubsection.3.2.2}%
+\contentsline {subsection}{\numberline {3.3}Aufgabe B -- Regler-Einstellung nach Ziegler-Nichols}{32}{subsection.3.3}%
+\contentsline {subsubsection}{\numberline {3.3.1}Versuchsaufbau und Durchführung}{32}{subsubsection.3.3.1}%
+\contentsline {subsection}{\numberline {3.4}Aufgabe C -- Einfluss von Stellgrößenbeschränkungen}{36}{subsection.3.4}%
+\contentsline {subsubsection}{\numberline {3.4.1}Versuchsaufbau und Durchführung}{36}{subsubsection.3.4.1}%
+\contentsline {subsubsection}{\numberline {3.4.2}Ergebnisse}{38}{subsubsection.3.4.2}%
+\contentsline {subsection}{\numberline {3.5}Aufgabe D -- Einfluss eines Störsignals}{38}{subsection.3.5}%
+\contentsline {subsubsection}{\numberline {3.5.1}Versuchsaufbau und Durchführung}{38}{subsubsection.3.5.1}%
+\contentsline {subsubsection}{\numberline {3.5.2}Gemini Analyse zum Störverhalten}{39}{subsubsection.3.5.2}%
