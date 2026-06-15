@@ -61,9 +61,11 @@ static void audio_play_note(uint16_t freq_hz)
 // ---------------------------------------------------------------------------
 static void audio_init(void)
 {
+    // PD5 as output for OC1A, because that's where our speaker is connected
     AUDIO_DDR |= (1 << AUDIO_PIN);  // PD5 as output
 
     // CTC mode, prescaler 8
+    // Toggle OC1A on compare match, so the output frequency is F_CPU/(2*prescaler*(1+OCR1A))
     TCCR1A = (1 << COM1A0);         // Toggle OC1A on compare match
     TCCR1B = (1 << WGM12) | (1 << CS11);
 

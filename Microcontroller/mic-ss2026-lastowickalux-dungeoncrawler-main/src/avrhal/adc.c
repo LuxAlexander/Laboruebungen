@@ -14,6 +14,8 @@ static volatile uint16_t adc_result_ch_1 = 0;
 
 ISR(ADC_vect)
 {
+    // Determine which channel was just converted
+    // The channel number is stored in the lower 4 bits of ADMUX
     uint8_t current_channel = ADMUX & 0x0F;
 
     uint16_t value = ADC;

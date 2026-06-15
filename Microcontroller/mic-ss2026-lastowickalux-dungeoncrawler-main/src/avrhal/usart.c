@@ -21,12 +21,12 @@ static volatile uint8_t txPos = 0;
 
 static inline void enableTransmitBufferEmptyInterrupt() /* set UDRIE 1= enable data Register empty interrupt */
 {
-    BIT_SET(UCSRB, UDRIE);
+    BIT_SET(UCSRB, UDRIE);// Enable the USART Data Register Empty Interrupt
 }
 
 static inline void disableTransmitBufferEmptyInterrupt() /* set UDRIE 0= disable data Register empty interrupt */
 {
-    BIT_CLR(UCSRB, UDRIE);
+    BIT_CLR(UCSRB, UDRIE);// Disable the USART Data Register Empty Interrupt
 }
 
 uint8_t usartWriteString_P(const char* str_pgm)
@@ -65,7 +65,7 @@ void usartResetTransmission()
 ISR(USART_UDRE_vect)
 {
     if (txPos < txLength) {
-        UDR = txBuffer[txPos];
+        UDR = txBuffer[txPos];// Next byte to transmit
         txPos++;
 
     } else {
@@ -75,16 +75,21 @@ ISR(USART_UDRE_vect)
 
 void usartSetup(UsartBaudrate baud, UsartConfig config)
 {
+    //only supports 8N1, which is also the default after reset
     if (config != USART_CONFIG_8N1) {
         return; /* Unsupported */
     }
+    // Set frame format: 8data, No parity, 1stop bit
     UCSRC = BIT(URSEL) | BIT(UCSZ0) | BIT(UCSZ1);
 
+    // Calculate and set baud rate registers
+    //Datenblatt Seite 143: UBRR = (F_CPU / (16 * baud)) - 1
     uint16_t ubrrValue = (F_CPU / (16UL * baud)) - 1;
+    // Set baud rate registers
     UBRRL = ubrrValue & 0xFF;
-    //Changed from << to >>
     UBRRH = (ubrrValue >> 8) & 0xFF;
 
+    // Enable transmitter
     BIT_SET(UCSRB, TXEN);
 }
 

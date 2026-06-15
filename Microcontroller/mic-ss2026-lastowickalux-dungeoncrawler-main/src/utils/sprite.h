@@ -95,6 +95,8 @@ static Bitmap Player(uint8_t index)
         0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00};
 
     static const uint8_t* const bitmap[4] PROGMEM = { bitmap1, bitmap2, bitmap3, bitmap4 };
+    //pgm_read_ptr reads a pointer from program memory (flash) at the given address and returns it as a RAM pointer.
+    //&0x03 is like %4 but apperently faster since it'S bitwise
     return (Bitmap){.data = (const uint8_t *)pgm_read_ptr(&bitmap[index & 0x03]),.width = 32,.height = 32,.dataSize = 8};
 }
 

@@ -6,6 +6,8 @@
 
 void spiSetup()
 {
+    // Set MOSI and SCK as output, MISO as input
+    // DDRB: DDB3 (MOSI) = 1, DDB5 (SCK) = 1, DDB4 (MISO) = 0
     BIT_SET(SPI_DDR, SPI_MOSI);
     BIT_SET(SPI_DDR, SPI_SCK);
     BIT_CLR(SPI_DDR, SPI_MISO);

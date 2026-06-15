@@ -13,16 +13,22 @@
 #include "utils/audio.h"
 
 #define GAME_TICK_MS 30
+#define PLAYER_FRAMES 4
+#define StartUpSFX 2
+#define SEED 42
+#define ADC_X 0
+#define ADC_Y 1
 
 int main(void)
 {
     uint16_t loop_counter = 0;
 
+    //USART_B9600, USART_CONFIG_8N1 means 9600 baud, 8 data bits, no parity, 1 stop bit
     usartSetup(USART_B9600, USART_CONFIG_8N1);
     adcSetup();
     audio_init();
 
-    mapInitRandomRooms(42);
+    mapInitRandomRooms(SEED);
 
     sei();
     adcSetupFreeRunning();
@@ -31,7 +37,7 @@ int main(void)
     mapDrawOverview();
 
     // Trigger the startup jingle once
-    audio_trigger_sfx(1);
+    audio_trigger_sfx(StartUpSFX);
 
     uint16_t adc_x = 0;
     uint16_t adc_y = 0;
@@ -40,10 +46,10 @@ int main(void)
     while (1) {
         displayClearBuffer();
 
-        // Read ADC safely
+        // Read ADC free-running values atomically to avoid race conditions
         ATOMIC_BLOCK(ATOMIC_RESTORESTATE) {
-            adc_x = adcLastRead(0);
-            adc_y = adcLastRead(1);
+            adc_x = adcLastRead(ADC_X);
+            adc_y = adcLastRead(ADC_Y);
         }
 
         // Advance the audio state machine every loop iteration
@@ -54,7 +60,7 @@ int main(void)
         mapHandleInput(adc_x, adc_y, loop_counter);
         mapUpdateDisplay();
 
-        _delay_ms(50); // debounce / CPU relief
+        _delay_ms(50);//small delay to avoid too fast input handling
 
         // Scale ADC (0–1023) to display coordinates
         uint8_t posX = adc_x / 10; // ~0–102
@@ -66,7 +72,7 @@ int main(void)
         displayUpdate();
 
         index++;
-        if (index >= 4) index = 0;
+        if (index >= PLAYER_FRAMES) index = 0;
 
         _delay_ms(GAME_TICK_MS);
     }

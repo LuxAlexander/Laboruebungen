@@ -89,6 +89,7 @@ static uint8_t mapTriggerOledQTE(uint16_t timeout_ms) {
 
         // Balken berechnen (Breite max. 100 Pixel auf dem OLED)
         uint8_t balkenBreite = (uint8_t)((uint32_t)verbleibendeZeit * 100 / timeout_ms);
+        // Balken zeichnen, der sich von voll (100 Pixel) auf leer (0 Pixel) reduziert
         displayDrawRectangle(14, 40, 100, 10);
         if (balkenBreite > 0) {
             displayDrawFilledRectangle(14, 40, balkenBreite, 10);
@@ -165,9 +166,12 @@ static void mapInitRandomRooms(uint16_t seed)
 
 static void mapClearTerminal(void)
 {
+    //this works on Standard Linux/Unix consoles, macOS Terminal, and modern Linux terminal emulators
+    //Modern Windows
+    //clear the screen and reset the cursor position
     usartWriteString_P(PSTR("\033[2J\033[H"));
     for(uint8_t i = 0; i < 25; i++) {
-        usartWriteString_P(PSTR("\r\n"));
+        usartWriteString_P(PSTR("\r\n"));//25 Zeilen, weiter Rücken, fallback
     }
 }
 
@@ -181,7 +185,7 @@ static void mapDrawOverview(void)
         usartWriteString_P(PSTR("           +---------+\r\n")); 
         usartPrint("           |    %c    |\r\n", mapGetRoomIcon(dungeonMap[POS_TOP]));
         usartWriteString_P(PSTR("           +---------+\r\n"));
-    }
+    }//might look the same but it'S if a room is selected = or not -
 
     usartWriteString_P(PSTR("                ^\r\n"));
 
@@ -214,6 +218,7 @@ static void mapDrawOverview(void)
 
 static void drawHealthRoom(void)
 {
+    //\033[36m = Cyan, \033[0m = Reset
     usartWriteString_P(PSTR("\033[36m                      HEALTH ROOM\r\n\033[0m"));    
     usartWriteString_P(PSTR("+------------------------------------------------------------+\r\n"));
     usartWriteString_P(PSTR("|   |   |            _|_             _ _                     |\r\n"));
@@ -232,6 +237,7 @@ static void drawHealthRoom(void)
 
 static void drawGameOver(void)
 {
+    //\033[31m = Rot, \033[0m = Reset
     usartWriteString_P(PSTR("\033[31m                      GAME OVER\r\n\033[0m"));    
     usartWriteString_P(PSTR("+------------------------------------------------------------+\r\n"));
     usartWriteString_P(PSTR("|                                                            |\r\n"));
@@ -242,6 +248,7 @@ static void drawGameOver(void)
 
 static void drawShop(void)
 {
+    //\033[33m = Gelb, \033[0m = Reset
     usartWriteString_P(PSTR("\033[33m                    DORFSCHMIEDE (SHOP)\r\n\033[0m"));    
     usartWriteString_P(PSTR("+------------------------------------------------------------+\r\n"));
     usartWriteString_P(PSTR("|      /| ________________                                   |\r\n"));

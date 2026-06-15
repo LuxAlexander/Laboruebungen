@@ -6,7 +6,7 @@
 
 #define HEALTH_BAR_WIDTH 10
 #define DAMAGE_INCREASE 5
-#define DEFENSE_INCREASE 10 
+#define DEFENSE_INCREASE 10
 
 typedef struct {
     int16_t health;
