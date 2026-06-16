@@ -64,7 +64,7 @@ int main(void)
 
         // Scale ADC (0–1023) to display coordinates
         uint8_t posX = adc_x / 10; // ~0–102
-        uint8_t posY = adc_y / 20; // ~0–51
+        uint8_t posY = 51 - adc_y / 20; // ~0–51, 51 - ... because we want to switch up-down
 
         Bitmap player = Player(index);
         displayDrawBitmap(posX, posY, &player);

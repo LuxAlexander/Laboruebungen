@@ -152,4 +152,9 @@ static void playerBuy(uint16_t amount, uint16_t option)
     }
 }
 
+uint16_t getKills() {
+    return player.kills;
+} 
+
+
 #endif

@@ -12,18 +12,17 @@
 // How many ms each "tick" advances (must match how often audio_tick() is called)
 #define AUDIO_TICK_MS 50
 
-// ---------------------------------------------------------------------------
 // SFX note tables
 // NOTE: frequencies are in plain Hz (not tenths-of-Hz)
-// ---------------------------------------------------------------------------
-static const uint16_t sfx_cat_pet_notes[]   = { 880, 1320 };
-static const uint8_t  sfx_cat_pet_dur[]     = { 8,   6    };
 
-static const uint16_t sfx_enemy_die_notes[] = { 523, 659, 784, 1046 };
-static const uint8_t  sfx_enemy_die_dur[]   = { 12,  12,  12,  4    };
+static const uint16_t sfx_cat_pet_notes[]   = {880, 1320};
+static const uint8_t  sfx_cat_pet_dur[]     = {8, 6};
 
-static const uint16_t sfx_gameover_notes[]  = { 392, 349, 311, 246 };
-static const uint8_t  sfx_gameover_dur[]    = { 4,   4,   4,   2   };
+static const uint16_t sfx_enemy_die_notes[] = {523, 659, 784, 1046};
+static const uint8_t  sfx_enemy_die_dur[]   = {12, 12, 12, 4};
+
+static const uint16_t sfx_gameover_notes[]  = {392, 349, 311, 246};
+static const uint8_t  sfx_gameover_dur[]    = {4, 4, 4, 2};
 
 typedef struct {
     const uint16_t* notes;
@@ -32,17 +31,13 @@ typedef struct {
     uint16_t        wholeNoteDurationMs;
 } SoundEffect;
 
-// ---------------------------------------------------------------------------
-// State machine variables  (one definition per TU — keep this in one .c if
-// the header is ever included from multiple files)
-// ---------------------------------------------------------------------------
+
 static SoundEffect currentSFX;
 static int16_t     sfxNoteIndex        = -1; // -1 = no SFX running
 static uint32_t    sfxNoteRemainingMs  = 0;
 
-// ---------------------------------------------------------------------------
 // Internal: write a frequency to Timer1 CTC, or silence the output
-// ---------------------------------------------------------------------------
+
 static void audio_play_note(uint16_t freq_hz)
 {
     if (freq_hz == 0) {
@@ -56,9 +51,9 @@ static void audio_play_note(uint16_t freq_hz)
     TCCR1A |= (1 << COM1A0);
 }
 
-// ---------------------------------------------------------------------------
+
 // Call once at startup (before sei())
-// ---------------------------------------------------------------------------
+
 static void audio_init(void)
 {
     // PD5 as output for OC1A, because that's where our speaker is connected
@@ -77,9 +72,8 @@ static void audio_init(void)
     sfxNoteRemainingMs = 0;
 }
 
-// ---------------------------------------------------------------------------
-// Trigger a sound effect — call this on game events, NOT every loop tick
-// ---------------------------------------------------------------------------
+// Trigger a sound effect - call this on game events, NOT every loop tick
+
 void audio_trigger_sfx(uint8_t sfx_type)
 {
     if (sfx_type == 1) {
@@ -105,10 +99,6 @@ void audio_trigger_sfx(uint8_t sfx_type)
     sfxNoteRemainingMs = 0; // force immediate note load on next tick
 }
 
-// ---------------------------------------------------------------------------
-// THE MISSING ENGINE — call this once per main-loop iteration (every ~50 ms)
-// It advances the SFX state machine and writes OCR1A.
-// ---------------------------------------------------------------------------
 static void audio_tick(void)
 {
     // Nothing queued

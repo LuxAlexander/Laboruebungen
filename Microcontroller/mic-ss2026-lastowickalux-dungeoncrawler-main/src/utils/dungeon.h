@@ -19,6 +19,8 @@
 #define FLAT_HEAL 20
 #define ENEMY_ATK 5
 #define ENEMY_HP 25
+#define TEN_PERCENT 10
+#define MAX_KILL_CAP 9
 
 // health, max_health; kills; money; dmg, def
 static PlayerState enemy = {25, 25, 0, 5, 5, 1};
@@ -69,7 +71,11 @@ static char mapGetRoomIcon(RoomId room)
  */
 static uint8_t mapTriggerOledQTE(uint16_t timeout_ms) {
     uint8_t eventTyp = rand() % 2; // 0 = Links, 1 = Rechts
-    uint16_t verbleibendeZeit = timeout_ms;
+
+    uint16_t kills = getKills();
+    if (kills > MAX_KILL_CAP) kills = MAX_KILL_CAP; // Begrenzt die Kills auf maximal 10
+
+    uint16_t verbleibendeZeit = (timeout_ms * (TEN_PERCENT - kills)) / TEN_PERCENT;
     uint8_t erfolg = 0;
     const uint8_t tick_ms = 20;
 
@@ -82,9 +88,9 @@ static uint8_t mapTriggerOledQTE(uint16_t timeout_ms) {
         // Titel und Aufforderung
         displayPrint(20, 0, "!!! QTE !!!");
         if (eventTyp == 0) {
-            displayPrint(4, 16, "<--- LINKS SCHNELL!");
+            displayPrint(4, 16, "<--- LINKS!");
         } else {
-            displayPrint(4, 16, "RECHTS SCHNELL! --->");
+            displayPrint(4, 16, "RECHTS! --->");
         }
 
         // Balken berechnen (Breite max. 100 Pixel auf dem OLED)
@@ -130,7 +136,7 @@ static uint8_t mapTriggerOledQTE(uint16_t timeout_ms) {
         displayPrint(12, 36, "Katze verfehlt");
     } else {
         displayPrint(32, 20, "TREFFER!");
-        displayPrint(16, 36, "Du verlierst HP");
+        displayPrint(12, 36, "Du verlierst HP");
     }
     displayUpdate();
     _delay_ms(1500);
@@ -441,7 +447,21 @@ static void mapHandleInput(uint16_t adc_x, uint16_t adc_y, uint16_t dynamic_seed
                 uint8_t geblockt = mapTriggerOledQTE(1500); 
                 
                 if (!geblockt) {
-                    playerTakeDamage(FLAT_DAMAGE * ENEMY_ATK / playerDef());
+                    uint32_t base_damage = (uint32_t)FLAT_DAMAGE * ENEMY_ATK;
+
+                    uint32_t calculated_damage = (base_damage * TEN_PERCENT) / playerDef();
+
+                    uint32_t min_damage = base_damage / TEN_PERCENT;
+
+                    if (calculated_damage < min_damage) {
+                        calculated_damage = min_damage;
+                    }
+
+                    if (calculated_damage > base_damage) {
+                        calculated_damage = base_damage;
+                    }
+
+                    playerTakeDamage((uint16_t)calculated_damage);
                 } else {
                     enemy.health -= playerAtk();
                     if(enemy.health < 0){
@@ -468,6 +488,7 @@ static void mapHandleInput(uint16_t adc_x, uint16_t adc_y, uint16_t dynamic_seed
                 mapInitRandomRooms(dynamic_seed);
                 enemy.health = enemy.max_health; 
                 playerAddMoney(enemy.money);
+                playerAddKill();
                 needsRedraw = 1;
                 lock = 1;
                 return;

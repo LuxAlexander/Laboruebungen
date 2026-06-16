@@ -3,7 +3,7 @@
 
 #include <avr/pgmspace.h>
 #include <stdint.h>
-#include "../avrhal/bitmap/bitmap.h"
+#include "avrhal/bitmap/bitmap.h"
 
 //made with https://www.piskelapp.com/p/create/sprite/
 static Bitmap imageCharacter(uint8_t index){

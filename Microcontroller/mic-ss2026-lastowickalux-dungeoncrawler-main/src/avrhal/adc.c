@@ -7,7 +7,6 @@
 #include <avr/io.h>
 
 
-
 static volatile uint16_t adc_result_ch_0 = 0;
 static volatile uint16_t adc_result_ch_1 = 0;
 

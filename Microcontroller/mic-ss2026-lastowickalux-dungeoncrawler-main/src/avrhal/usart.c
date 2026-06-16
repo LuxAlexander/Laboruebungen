@@ -19,7 +19,7 @@ static uint8_t txBuffer[TX_BUF_SIZE] = { 0 };
 static volatile uint8_t txLength = 0;
 static volatile uint8_t txPos = 0;
 
-static inline void enableTransmitBufferEmptyInterrupt() /* set UDRIE 1= enable data Register empty interrupt */
+static inline void enableTransmitBufferEmptyInterrupt() /* set UDRIE 1= enable data Register and allow empty interrupt */
 {
     BIT_SET(UCSRB, UDRIE);// Enable the USART Data Register Empty Interrupt
 }
@@ -115,6 +115,12 @@ uint8_t usartWriteString(const char* str)
     return txLength;
 }
 
+
+//... Variable Argumentliste für die Platzhalter
+// Platzhalte zB %d
+
+
+
 uint8_t usartPrint(const char* format, ...)
 {
     const uint8_t bufferSize = 255;
@@ -125,6 +131,9 @@ uint8_t usartPrint(const char* format, ...)
 
     va_list args;
     va_start(args, format);
+
+    //vsnprintf nimmt den Format-Text (z.B. "Wert: %d") und die Variablenliste (args), 
+    //wandelt die Zahlen in Text um und fügt alles im buffer zusammen
     vsnprintf(buffer, bufferSize, format, args);
     va_end(args);
 
