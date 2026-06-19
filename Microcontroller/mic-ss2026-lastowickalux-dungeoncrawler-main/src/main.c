@@ -16,8 +16,14 @@
 #define PLAYER_FRAMES 4
 #define StartUpSFX 2
 #define SEED 42
+
 #define ADC_X 0
 #define ADC_Y 1
+
+#define X_Scale 8
+#define Y_Scale 16
+// The Y_Max value is used for inversion
+#define Y_Max 1023
 
 int main(void)
 {
@@ -60,11 +66,11 @@ int main(void)
         mapHandleInput(adc_x, adc_y, loop_counter);
         mapUpdateDisplay();
 
-        _delay_ms(50);//small delay to avoid too fast input handling
+        _delay_ms(2*GAME_TICK_MS);//small delay to avoid too fast input handling
 
         // Scale ADC (0–1023) to display coordinates
-        uint8_t posX = adc_x / 10; // ~0–102
-        uint8_t posY = 51 - adc_y / 20; // ~0–51, 51 - ... because we want to switch up-down
+        uint8_t posX = adc_x / X_Scale; // 1023/8
+        uint8_t posY = (Y_Max/Y_Scale) - adc_y / Y_Scale; // Max Y-value minus Y_Pos to invert the Y-axis
 
         Bitmap player = Player(index);
         displayDrawBitmap(posX, posY, &player);

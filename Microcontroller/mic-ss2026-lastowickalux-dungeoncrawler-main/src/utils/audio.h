@@ -24,6 +24,8 @@ static const uint8_t  sfx_enemy_die_dur[]   = {12, 12, 12, 4};
 static const uint16_t sfx_gameover_notes[]  = {392, 349, 311, 246};
 static const uint8_t  sfx_gameover_dur[]    = {4, 4, 4, 2};
 
+
+
 typedef struct {
     const uint16_t* notes;
     const uint8_t*  durations;
