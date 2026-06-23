@@ -8,6 +8,15 @@
 #define DAMAGE_INCREASE 5
 #define DEFENSE_INCREASE 10
 
+#define SWORD 1
+#define ARMOR 2
+
+#define BASE_DEF 1
+#define BASE_GOLD 0
+#define BASE_DMG 10
+#define BASE_HEALTH 100
+#define BASE_KILLS 0
+
 typedef struct {
     int16_t health;
     int16_t max_health;
@@ -18,19 +27,19 @@ typedef struct {
 } PlayerState;
 
 // Globaler Spieler-Status (Statisch initialisiert für das einfache Einbinden)
-static PlayerState player = {100, 100, 0, 0, 10, 1};
+static PlayerState player = {BASE_HEALTH, BASE_HEALTH, BASE_KILLS, BASE_GOLD, BASE_DMG, BASE_DEF};
 
 /**
  * Setzt den Spieler auf die Startwerte zurück
  */
 static void playerReset(void)
 {
-    player.health = 100;
-    player.max_health = 100;
-    player.kills = 0;
-    player.money = 0;
-    player.dmg = 10;
-    player.def = 1;
+    player.health = BASE_HEALTH;
+    player.max_health = BASE_HEALTH;
+    player.kills = BASE_KILLS;
+    player.money = BASE_GOLD;
+    player.dmg = BASE_DMG;
+    player.def = BASE_DEF;
 }
 
 /**
@@ -141,9 +150,9 @@ static void playerBuy(uint16_t amount, uint16_t option)
     if (amount <= player.money) {
         player.money -= amount;
         usartWriteString_P(PSTR("Transaktion erfolgreich!\r\n"));
-        if (option == 1) {
+        if (option == SWORD) {
             playerAddDmg(DAMAGE_INCREASE);
-        } else if (option == 2) {
+        } else if (option == ARMOR) {
             playerAddDef(DEFENSE_INCREASE);
         }
     }

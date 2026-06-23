@@ -9,8 +9,9 @@
 #include <util/atomic.h>
 
 #include "utils/sprite.h"
-#include "utils/dungeon.h"
 #include "utils/audio.h"
+#include "utils/dungeon.h"
+
 
 #define GAME_TICK_MS 30
 #define PLAYER_FRAMES 4

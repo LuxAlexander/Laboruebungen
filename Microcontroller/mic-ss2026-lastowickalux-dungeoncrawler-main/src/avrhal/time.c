@@ -18,12 +18,3 @@ static inline void disableTimerInterrupt()
 }
 
 static volatile uint32_t counter;
-
-void timeSetup()
-{
-}
-
-uint32_t timeUSec()
-{
-    return 0;
-}

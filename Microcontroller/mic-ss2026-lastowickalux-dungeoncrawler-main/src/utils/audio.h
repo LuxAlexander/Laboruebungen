@@ -11,19 +11,32 @@
 
 // How many ms each "tick" advances (must match how often audio_tick() is called)
 #define AUDIO_TICK_MS 50
+#define TIMER1_PRESCALER_8  8UL
+
+typedef enum {
+    SFX_NONE = 0,
+    SFX_CAT_PET,
+    SFX_ENEMY_DIE,
+    SFX_GAMEOVER
+} SfxType;
 
 // SFX note tables
 // NOTE: frequencies are in plain Hz (not tenths-of-Hz)
 
 static const uint16_t sfx_cat_pet_notes[]   = {880, 1320};
 static const uint8_t  sfx_cat_pet_dur[]     = {8, 6};
+#define SFX_CAT_PET_LEN (sizeof(sfx_cat_pet_notes) / sizeof(sfx_cat_pet_notes[0]))
 
 static const uint16_t sfx_enemy_die_notes[] = {523, 659, 784, 1046};
 static const uint8_t  sfx_enemy_die_dur[]   = {12, 12, 12, 4};
+#define SFX_ENEMY_DIE_LEN (sizeof(sfx_enemy_die_notes) / sizeof(sfx_enemy_die_notes[0]))
 
 static const uint16_t sfx_gameover_notes[]  = {392, 349, 311, 246};
 static const uint8_t  sfx_gameover_dur[]    = {4, 4, 4, 2};
+#define SFX_GAMEOVER_LEN (sizeof(sfx_gameover_notes) / sizeof(sfx_gameover_notes[0]))
 
+#define INVALID -1
+#define NO_SFX_RUNNING 0
 
 
 typedef struct {
@@ -34,21 +47,37 @@ typedef struct {
 } SoundEffect;
 
 
+static const SoundEffect SFX_DATABASE[] = {
+    // SFX_NONE (Index 0)
+    { 0, 0, 0, 0 }, 
+    
+    // SFX_CAT_PET (Index 1)
+    { sfx_cat_pet_notes, sfx_cat_pet_dur, SFX_CAT_PET_LEN, 800 },
+    
+    // SFX_ENEMY_DIE (Index 2)
+    { sfx_enemy_die_notes, sfx_enemy_die_dur, SFX_ENEMY_DIE_LEN, 1000 },
+    
+    // SFX_GAMEOVER (Index 3)
+    { sfx_gameover_notes, sfx_gameover_dur, SFX_GAMEOVER_LEN, 1600 }
+};
+#define TOTAL_SFX (sizeof(SFX_DATABASE) / sizeof(SFX_DATABASE[0]))
+
+
 static SoundEffect currentSFX;
-static int16_t     sfxNoteIndex        = -1; // -1 = no SFX running
+static int16_t     sfxNoteIndex        = INVALID; // INVALID = no SFX running
 static uint32_t    sfxNoteRemainingMs  = 0;
 
 // Internal: write a frequency to Timer1 CTC, or silence the output
 
 static void audio_play_note(uint16_t freq_hz)
 {
-    if (freq_hz == 0) {
+    if (freq_hz == NO_SFX_RUNNING) {
         // Disconnect OC1A so the pin goes silent
         TCCR1A &= ~(1 << COM1A0);
         return;
     }
-    // OCR1A = (F_CPU / (2 * prescaler * freq)) - 1   [prescaler = 8]
-    OCR1A = (uint16_t)((F_CPU / (2UL * 8UL * freq_hz)) - 1);
+    // OCR1A = (F_CPU / (2 * prescaler * freq)) - 1   [prescaler = 8], Seite 99
+    OCR1A = (uint16_t)((F_CPU / (2UL * TIMER1_PRESCALER_8 * freq_hz)) - 1);
     // Re-connect OC1A in case it was silenced before
     TCCR1A |= (1 << COM1A0);
 }
@@ -70,41 +99,30 @@ static void audio_init(void)
     OCR1A = 0xFFFF;
     TCCR1A &= ~(1 << COM1A0);
 
-    sfxNoteIndex       = -1;
+    sfxNoteIndex       = INVALID;
     sfxNoteRemainingMs = 0;
 }
 
 // Trigger a sound effect - call this on game events, NOT every loop tick
 
-void audio_trigger_sfx(uint8_t sfx_type)
+void audio_trigger_sfx(SfxType sfx_type)
 {
-    if (sfx_type == 1) {
-        currentSFX.notes             = sfx_cat_pet_notes;
-        currentSFX.durations         = sfx_cat_pet_dur;
-        currentSFX.length            = 2;
-        currentSFX.wholeNoteDurationMs = 800;
-    } else if (sfx_type == 2) {
-        currentSFX.notes             = sfx_enemy_die_notes;
-        currentSFX.durations         = sfx_enemy_die_dur;
-        currentSFX.length            = 4;
-        currentSFX.wholeNoteDurationMs = 1000;
-    } else if (sfx_type == 3) {
-        currentSFX.notes             = sfx_gameover_notes;
-        currentSFX.durations         = sfx_gameover_dur;
-        currentSFX.length            = 4;
-        currentSFX.wholeNoteDurationMs = 1600;
-    } else {
-        return; // unknown type — ignore
+    // Bounds check
+    if (sfx_type <= SFX_NONE || sfx_type >= TOTAL_SFX) {
+        return; // Unknown type or NONE — ignore
     }
 
+    // Direct assignment from table
+    currentSFX = SFX_DATABASE[sfx_type];
+
     sfxNoteIndex       = 0;
-    sfxNoteRemainingMs = 0; // force immediate note load on next tick
+    sfxNoteRemainingMs = 0;
 }
 
 static void audio_tick(void)
 {
     // Nothing queued
-    if (sfxNoteIndex < 0) {
+    if (sfxNoteIndex == INVALID) {
         return;
     }
 
@@ -119,8 +137,8 @@ static void audio_tick(void)
 
     if (sfxNoteIndex >= currentSFX.length) {
         // SFX finished — silence output
-        sfxNoteIndex = -1;
-        audio_play_note(0);
+        sfxNoteIndex = INVALID;
+        audio_play_note(NO_SFX_RUNNING);
         return;
     }
 

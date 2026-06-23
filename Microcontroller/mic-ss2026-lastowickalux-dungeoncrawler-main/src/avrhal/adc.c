@@ -6,6 +6,9 @@
 #include "avrhal/adc.h"
 #include <avr/io.h>
 
+#define ERROR_INVALID_ADC_CHANNEL -1
+#define ADC_CHANNEL_0 0
+#define ADC_CHANNEL_1 1
 
 static volatile uint16_t adc_result_ch_0 = 0;
 static volatile uint16_t adc_result_ch_1 = 0;
@@ -23,12 +26,13 @@ ISR(ADC_vect)
     {
         adc_result_ch_0 = value;
 
-        ADMUX = (ADMUX & 0xF0) | 1;
+        adcSetChannel(ADC_CHANNEL_1); // Switch to channel 1 for the next conversion
     }
     else
     {
         adc_result_ch_1 = value;
-        ADMUX = (ADMUX & 0xF0) | 0;
+
+        adcSetChannel(ADC_CHANNEL_0); // Switch back to channel 0 for the next conversion
     }
 }
 
@@ -96,16 +100,16 @@ void adcSetupFreeRunning()
 
 int16_t adcLastRead(uint8_t channel)
 {
-    if (channel == 0)
+    if (channel == ADC_CHANNEL_0)
     {
         return adc_result_ch_0;
     }
-    else if (channel == 1)
+    else if (channel == ADC_CHANNEL_1)
     {
         return adc_result_ch_1;
     }
     else
     {
-        return -1; // Invalid channel
+        return ERROR_INVALID_ADC_CHANNEL; // Invalid channel
     }
 }

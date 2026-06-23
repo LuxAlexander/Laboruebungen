@@ -6,6 +6,7 @@
 
 #include "avrhal/bitmap.h"
 
+#define FRAMES 4
 
 static Bitmap Player(uint8_t index)
 {
@@ -88,10 +89,10 @@ static Bitmap Player(uint8_t index)
         0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
     };
 
-    static const uint8_t* const bitmap[4] PROGMEM = { bitmap1, bitmap2, bitmap3, bitmap4 };
+    static const uint8_t* const bitmap[FRAMES] PROGMEM = { bitmap1, bitmap2, bitmap3, bitmap4 };
     //pgm_read_ptr reads a pointer from program memory (flash) at the given address and returns it as a RAM pointer.
-    //&0x03 is like %4 but apperently faster since it'S bitwise
-    return (Bitmap){.data = (const uint8_t *)pgm_read_ptr(&bitmap[index & 0x03]),.width = 32,.height = 32,.dataSize = 8};
+    //&0x03 is like %4 but apperently faster since it'S bitwise, FRAMES-1 is as fast as 0x03 with define
+    return (Bitmap){.data = (const uint8_t *)pgm_read_ptr(&bitmap[index & (FRAMES - 1)]),.width = 32,.height = 32,.dataSize = 8};
 }
 
 #endif /* SPRITE_H_ */
