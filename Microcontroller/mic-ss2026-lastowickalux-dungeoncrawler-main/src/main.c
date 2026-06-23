@@ -1,6 +1,5 @@
 #include "avrhal/adc.h"
 #include "avrhal/display.h"
-#include "avrhal/time.h"
 #include "avrhal/usart.h"
 
 #include <avr/interrupt.h>
