@@ -1,0 +1,14 @@
+prefix=../../Laboruebungen/LAB_3/Abgabe/libs
+exec_prefix=${prefix}
+libdir=../../Laboruebungen/LAB_3/Abgabe/libs/lib
+includedir=../../Laboruebungen/LAB_3/Abgabe/libs/include
+
+Name: libavutil
+Description: FFmpeg utility library
+Version: 60.8.100
+Requires: 
+Requires.private: 
+Conflicts:
+Libs: -L${libdir}  -lavutil -lm -latomic -pthread
+Libs.private: 
+Cflags: -I${includedir}

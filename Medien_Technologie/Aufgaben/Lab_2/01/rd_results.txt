@@ -1,0 +1,37 @@
+QP Size(bytes) PSNR_Y
+2 10598595 fps,
+Avg
+Avg
+Y:58.793
+8 6523855 fps,
+Avg
+Avg
+Y:52.147
+14 3539661 fps,
+Avg
+Avg
+Y:47.537
+20 1587711 fps,
+Avg
+Avg
+Y:42.447
+26 644150 fps,
+Avg
+Avg
+Y:38.215
+32 287624 fps,
+Avg
+Avg
+Y:34.538
+38 143206 fps,
+Avg
+Avg
+Y:31.262
+44 79930 fps,
+Avg
+Avg
+Y:28.258
+51 42399 fps,
+Avg
+Avg
+Y:24.634
