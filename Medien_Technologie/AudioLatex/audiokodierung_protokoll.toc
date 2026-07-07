@@ -1,0 +1,24 @@
+\babel@toc {ngerman}{}\relax 
+\contentsline {section}{\numberline {1}Einführung und Grundlagen}{2}{section.1}%
+\contentsline {subsection}{\numberline {1.1}Praktische FFmpeg-Parameter}{2}{subsection.1.1}%
+\contentsline {subsection}{\numberline {1.2}Datenratensteuerung}{2}{subsection.1.2}%
+\contentsline {subsection}{\numberline {1.3}Weitere nützliche CLI-Parameter}{2}{subsection.1.3}%
+\contentsline {section}{\numberline {2}LB-AK 01: Standard-AAC-Kodierung mit FFmpeg}{4}{section.2}%
+\contentsline {subsection}{\numberline {2.1}a) Kodierung in verschiedene Bitraten}{4}{subsection.2.1}%
+\contentsline {subsection}{\numberline {2.2}Subjektive Qualitätsbewertung (Hörtests)}{4}{subsection.2.2}%
+\contentsline {subsection}{\numberline {2.3}b) Vergleich mit MP3 (MPEG-1 Layer III)}{4}{subsection.2.3}%
+\contentsline {subsection}{\numberline {2.4}Analyse mittels ffprobe}{5}{subsection.2.4}%
+\contentsline {section}{\numberline {3}LB-AK 02: Erweiterte AAC-Profile mit Nero AAC}{6}{section.3}%
+\contentsline {subsection}{\numberline {3.1}Befehlskonfigurationen}{6}{subsection.3.1}%
+\contentsline {subsection}{\numberline {3.2}a) Vergleich von LC mit AAC bei gleicher Bitrate}{6}{subsection.3.2}%
+\contentsline {subsection}{\numberline {3.3}b) Verbesserung von HE und HE v2 gegenüber LC}{6}{subsection.3.3}%
+\contentsline {section}{\numberline {4}LB-AK 03: Objektive Frequenz- und Spektralanalyse}{6}{section.4}%
+\contentsline {subsection}{\numberline {4.1}a) Vergleich der Spektren der Music File bei unterschiedlichen Bitraten}{7}{subsection.4.1}%
+\contentsline {subsection}{\numberline {4.2}b)Vergleich der Spektren bei unterschiedlichen Encodern (AAC-LC, HE-AAC, HE-AAC v2) bei gleicher Bitrate (32k)}{9}{subsection.4.2}%
+\contentsline {subsection}{\numberline {4.3}Generelle Beobachtungen}{11}{subsection.4.3}%
+\contentsline {section}{\numberline {5}LB-AK 04}{12}{section.5}%
+\contentsline {subsection}{\numberline {5.1}a)}{12}{subsection.5.1}%
+\contentsline {subsubsection}{\numberline {5.1.1}Schritt 1: Installation der System-Abhängigkeiten}{12}{subsubsection.5.1.1}%
+\contentsline {subsubsection}{\numberline {5.1.2}Schritt 2: Quellcode herunterladen, kompilieren und installieren}{12}{subsubsection.5.1.2}%
+\contentsline {subsubsection}{\numberline {5.1.3}Schritt 3: Kompilation und Ausführung des Programms}{12}{subsubsection.5.1.3}%
+\contentsline {subsection}{\numberline {5.2}b) Siehe Codefile}{13}{subsection.5.2}%
