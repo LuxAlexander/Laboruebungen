@@ -1,0 +1,27 @@
+# Normalize line endings across platforms.
+# Without this, Git for Windows (core.autocrlf=true) checks out shell scripts with CRLF.
+# A script with a `#!/bin/sh\r` shebang fails inside Linux containers with the misleading
+# error "exec ...: no such file or directory" (the *interpreter* is not found, not the file).
+* text=auto
+
+# files that must keep LF, they are consumed by Linux/containers
+*.sh            text eol=lf
+Dockerfile      text eol=lf
+*.conf          text eol=lf
+*.yaml          text eol=lf
+*.yml           text eol=lf
+*.py            text eol=lf
+*.sql           text eol=lf
+justfile        text eol=lf
+
+# windows-only scripts keep CRLF
+*.ps1           text eol=crlf
+*.bat           text eol=crlf
+*.cmd           text eol=crlf
+
+# binaries, never touch
+*.png           binary
+*.jpg           binary
+*.ico           binary
+*.pdf           binary
+*.sqlite3       binary

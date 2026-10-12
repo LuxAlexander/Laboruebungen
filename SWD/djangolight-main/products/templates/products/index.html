@@ -1,0 +1,53 @@
+{% extends 'core/base.html' %}
+{% block title %}Products · SWD Demo Shop{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+  <div>
+    <h1 class="h3 mb-1">Products</h1>
+    <p class="text-body-secondary mb-0">Select the products you want to order.</p>
+  </div>
+  <a class="btn btn-outline-primary" href="{% url 'orders:basket_overview' %}">
+    <i class="bi bi-basket"></i> Basket
+    <span class="badge text-bg-primary">{{ basket_count }}</span>
+  </a>
+</div>
+
+{% if products_list %}
+  <div class="row row-cols-1 row-cols-md-2 row-cols-xl-3 g-4">
+    {% for product in products_list %}
+      <div class="col">
+        <div class="card h-100 shadow-sm">
+          <div class="card-body d-flex flex-column">
+            <div class="d-flex align-items-start mb-3">
+              <div class="product-thumb rounded bg-primary-subtle text-primary d-flex align-items-center justify-content-center me-3">
+                <i class="bi bi-box-seam fs-3"></i>
+              </div>
+              <div>
+                <h2 class="h5 card-title mb-1">{{ product.name }}</h2>
+                <span class="badge text-bg-light border">#{{ product.id }}</span>
+              </div>
+            </div>
+            <p class="card-text text-body-secondary flex-grow-1">{{ product.description }}</p>
+            <div class="d-flex justify-content-between align-items-center mt-3">
+              <span class="fs-5 fw-bold">{{ product.price|floatformat:2 }} &euro;</span>
+              <form action="{% url 'orders:add_to_basket' %}" method="post">
+                {% csrf_token %}
+                <input type="hidden" name="product_id" value="{{ product.id }}">
+                <button type="submit" class="btn btn-primary btn-sm">
+                  <i class="bi bi-cart-plus"></i> Add to basket
+                </button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+{% else %}
+  <div class="alert alert-info d-flex align-items-center" role="alert">
+    <i class="bi bi-info-circle me-2"></i>
+    <div>No products are available yet. Load the catalog with <code>manage.py seed_catalog</code>.</div>
+  </div>
+{% endif %}
+{% endblock %}

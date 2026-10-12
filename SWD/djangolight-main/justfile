@@ -1,0 +1,46 @@
+# Task runner for the SWD Django demo, see https://github.com/casey/just
+# Run `just` to list the available recipes.
+
+# on Windows, run recipes in PowerShell instead of sh (which is not installed by default)
+set windows-shell := ["powershell.exe", "-NoLogo", "-Command"]
+
+compose := "docker compose -f ./containers/compose.yaml"
+compose_test := "docker compose -f ./containers/compose.test.yaml"
+
+# list the available recipes
+default:
+    @just --list --unsorted
+
+# 🤖 create an admin user via django
+adminuser:
+    uv run python manage.py createsuperuser
+
+# 📜 execute the database migrations
+migrate:
+    uv run python manage.py migrate
+
+# 🌱 load the initial product catalog (idempotent)
+seed:
+    uv run python manage.py seed_catalog
+
+# 🧪 execute the unit tests
+test:
+    uv run python manage.py test -v 2
+
+# 🧪 execute the unit tests against MariaDB in containers, like production (needs docker)
+test-mariadb *args:
+    # when tests fail, just stops before the last line and the test database keeps running (in memory only);
+    # the first line removes it on the next run
+    {{compose_test}} down --volumes
+    {{compose_test}} run --rm --build tests {{args}}
+    {{compose_test}} down --volumes
+
+# 🚀 start the django development server
+runserver:
+    uv run python manage.py runserver
+
+# 🚀 collect the static files and start the containers with docker compose
+compose:
+    uv run python manage.py collectstatic --clear --noinput
+    {{compose}} down
+    {{compose}} up --build

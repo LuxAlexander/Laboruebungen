@@ -1,0 +1,70 @@
+{% extends 'core/base.html' %}
+{% block title %}My orders · SWD Demo Shop{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+  <div>
+    <h1 class="h3 mb-1">My orders</h1>
+    <p class="text-body-secondary mb-0">{{ orders|length }} order{{ orders|length|pluralize }} placed by {{ user.username }}</p>
+  </div>
+  <a class="btn btn-outline-secondary" href="{% url 'products:index' %}">
+    <i class="bi bi-grid"></i> Products
+  </a>
+</div>
+
+{% if orders %}
+  <div class="accordion shadow-sm" id="orders">
+    {% for order in orders %}
+      <div class="accordion-item">
+        <h2 class="accordion-header">
+          <button class="accordion-button {% if not forloop.first %}collapsed{% endif %}" type="button"
+                  data-bs-toggle="collapse" data-bs-target="#order-{{ order.order_number }}"
+                  aria-expanded="{% if forloop.first %}true{% else %}false{% endif %}" aria-controls="order-{{ order.order_number }}">
+            <span class="fw-semibold me-3">Order #{{ order.order_number }}</span>
+            <span class="text-body-secondary small me-auto">{{ order.created_at|date:"d.m.Y H:i" }}</span>
+            <span class="badge rounded-pill text-bg-secondary me-3">{{ order.lines|length }} position{{ order.lines|length|pluralize }}</span>
+            <span class="fw-bold me-3">{{ order.total_price|floatformat:2 }} &euro;</span>
+          </button>
+        </h2>
+        <div id="order-{{ order.order_number }}" class="accordion-collapse collapse {% if forloop.first %}show{% endif %}" data-bs-parent="#orders">
+          <div class="accordion-body p-0">
+            <table class="table table-sm align-middle mb-0">
+              <thead class="table-light">
+                <tr>
+                  <th scope="col" class="ps-3">#</th>
+                  <th scope="col">Product</th>
+                  <th scope="col" class="text-center">Quantity</th>
+                  <th scope="col" class="text-end">Unit price</th>
+                  <th scope="col" class="text-end pe-3">Total</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for line in order.lines %}
+                  <tr>
+                    <td class="ps-3 text-body-secondary">{{ line.pos }}</td>
+                    <td>
+                      <div class="fw-semibold">{{ line.product.name }}</div>
+                      <div class="small text-body-secondary">{{ line.product.description }}</div>
+                    </td>
+                    <td class="text-center">{{ line.quantity }}</td>
+                    <td class="text-end">{{ line.price|floatformat:2 }} &euro;</td>
+                    <td class="text-end pe-3 fw-semibold">{{ line.total|floatformat:2 }} &euro;</td>
+                  </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+{% else %}
+  <div class="card shadow-sm text-center py-5">
+    <div class="card-body">
+      <i class="bi bi-receipt display-4 text-body-tertiary"></i>
+      <p class="lead mt-3 mb-4">You have not placed any orders yet.</p>
+      <a class="btn btn-primary" href="{% url 'products:index' %}"><i class="bi bi-grid"></i> Browse products</a>
+    </div>
+  </div>
+{% endif %}
+{% endblock %}

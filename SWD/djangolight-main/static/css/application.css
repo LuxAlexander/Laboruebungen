@@ -1,0 +1,20 @@
+/* project specific styles, Bootstrap does the rest */
+.product-thumb {
+  width: 3.5rem;
+  height: 3.5rem;
+  flex-shrink: 0;
+}
+
+/* theme switch in the user menu: the check mark is only shown on the active choice */
+[data-bs-theme-value] .theme-check {
+  display: none;
+}
+
+[data-bs-theme-value].active .theme-check {
+  display: inline;
+}
+
+.product-thumb-sm {
+  width: 2.75rem;
+  height: 2.75rem;
+}

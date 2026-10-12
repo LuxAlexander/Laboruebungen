@@ -1,0 +1,7 @@
+[
+  {"name": "Espresso Cup", "description": "Porcelain cup, 80 ml, dishwasher safe", "price": 7.90},
+  {"name": "Pour-Over Kettle", "description": "Gooseneck kettle, 1 l, stainless steel", "price": 39.50},
+  {"name": "Coffee Grinder", "description": "Manual burr grinder with 18 grind settings", "price": 64.00},
+  {"name": "Filter Papers", "description": "100 unbleached paper filters, size 02", "price": 4.20},
+  {"name": "Arabica Beans", "description": "Single origin, medium roast, 500 g", "price": 15.80}
+]

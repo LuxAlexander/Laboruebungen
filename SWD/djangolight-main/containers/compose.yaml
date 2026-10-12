@@ -1,0 +1,77 @@
+services:
+  
+  # use mariadb (= mysql derivate) as the database
+  database:
+    image: mariadb:lts
+    restart: always
+    volumes:
+      # https://hub.docker.com/_/mariadb @ Initializing the database contents
+      - "./initial_data.sql:/docker-entrypoint-initdb.d/1.sql"
+    networks:
+      - backend
+    environment:
+      - MYSQL_DATABASE=django-database
+      - MYSQL_ROOT_PASSWORD=${DJANGO_DB_PASSWORD:-root-password}
+    healthcheck:
+      # healthcheck.sh ships with the official image and only reports healthy once the *final*
+      # server (not the temporary init server) accepts connections and InnoDB is initialized.
+      # https://mariadb.com/kb/en/using-healthcheck-sh/
+      test: ["CMD", "healthcheck.sh", "--connect", "--innodb_initialized"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+      # the first start initializes the data directory and loads initial_data.sql, which takes
+      # ~10s. failures within start_period do not count against `retries`.
+      start_period: 60s
+    ports:
+     - 3306:3306  
+  
+  # the Django app is run via gunicorn
+  app:
+      hostname: django-backend
+      build:
+        context: ../
+        dockerfile: ./containers/django-app/Dockerfile
+      image: django-app
+      # secrets are passed in from the shell environment (or a containers/.env file); the defaults after `:-`
+      # are for the local lab setup only and must be overridden for any real deployment
+      environment:
+        - DJANGO_SECRET_KEY=${DJANGO_SECRET_KEY:-local-compose-only-secret-key-change-me}
+        - DJANGO_DB_PASSWORD=${DJANGO_DB_PASSWORD:-root-password}
+        - DJANGO_SUPERUSER_PASSWORD=${DJANGO_SUPERUSER_PASSWORD:-admin}
+      networks:
+        - backend
+      healthcheck:
+        test: ["CMD", "curl", "--fail", "http://localhost:8000/health"]
+        interval: 5s
+        timeout: 5s
+        retries: 10
+        # the entrypoint runs the migrations before gunicorn starts listening
+        start_period: 30s
+      depends_on:
+        database:
+          condition: service_healthy
+
+  # nginx is used to serve both the Django-app and static files
+  # only nginx exposes ports, `app` and `database` do not expose ports
+  # of the containers to the `outside` world
+  nginx:
+    build:
+        context: ../
+        dockerfile: ./containers/nginx/Dockerfile
+    image: nginx
+    volumes:
+      - ../static_dir:/home/app/web/staticfiles
+    ports:
+      # expose the nginx port of 80 (default http) and map it to 8000 on localhost
+      - 8000:80
+    networks:
+      - backend
+      - frontend
+    depends_on:
+        app:
+          condition: service_healthy
+
+networks:
+  backend:
+  frontend:

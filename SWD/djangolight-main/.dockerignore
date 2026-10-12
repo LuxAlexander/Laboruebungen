@@ -1,0 +1,16 @@
+db.sqlite3
+.git/
+.venv/
+.vscode/
+# secrets, also containers/.env (see README)
+**/.env
+.gitignore
+.python-version
+.dockerignore
+cli.ps1
+compose.yaml
+README.md
+Dockerfile
+__pycache__/
+# Ignore generated files
+**/*.pyc

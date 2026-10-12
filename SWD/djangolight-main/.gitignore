@@ -1,0 +1,17 @@
+.idea
+__pycache__
+db.sqlite3
+venv/
+.venv/
+env/
+.pcy
+.DS_Store
+*.log
+.env
+static_dir/
+.claude/
+.serena/
+# python packaging output (uv build)
+build/
+dist/
+*.egg-info/

@@ -1,0 +1,51 @@
+[project]
+name = "swd-django-demo"
+version = "0.1.0"
+description = "A sample Django application used for the Software-Design Lab"
+readme = "README.md"
+requires-python = ">=3.14"
+authors = [{name = "Bernhard Danninger"}, {name = "Henrik Binggl"}]
+license = "MIT"
+license-files = ["LICENSE"]
+keywords = ["python", "django", "demo", "software-design", "FH Salzburg"]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Programming Language :: Python",
+    "Programming Language :: Python :: 3.14"
+]
+dependencies = [
+    "dependency-injector>=4.49.1",
+    "django>=6.1.1",
+    "djangorestframework>=3.18.0",
+    "marshmallow>=4.3.1",
+]
+
+[dependency-groups]
+dev = [
+    "pip",
+    "setuptools",
+    "wheel",
+]
+prod = [
+    "gunicorn>=26.2.0",
+    "mysqlclient>=2.2.8",
+]
+
+
+[tool.uv]
+# an application, run from its source folder: uv must not install it into the virtual environment
+# (`uv build` still works, see [build-system])
+package = false
+
+[build-system]
+# setuptools >= 77 understands the SPDX `license` expression and `license-files` (PEP 639)
+requires = ["setuptools>=77"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools.packages.find]
+# flat layout: name the Django apps explicitly, so static/, containers/ etc. are not mistaken for packages
+include = ["core", "core.*", "customers", "customers.*", "products", "products.*", "orders", "orders.*",
+           "swd_django_demo", "swd_django_demo.*"]
+
+[tool.setuptools.package-data]
+"*" = ["templates/**/*", "data/*.json"]

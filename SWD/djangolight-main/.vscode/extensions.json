@@ -1,0 +1,9 @@
+{
+    "recommendations": [
+        "ms-python.python",
+        "ms-python.debugpy",
+        "ms-python.flake8",
+        "EditorConfig.EditorConfig",
+        "ryanluker.vscode-coverage-gutters"
+    ]
+}

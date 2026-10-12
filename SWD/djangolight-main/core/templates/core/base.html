@@ -1,0 +1,124 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{% block title %}SWD Demo Shop{% endblock %}</title>
+
+    <link rel="apple-touch-icon" sizes="180x180" href="{% static 'img/apple-touch-icon.png' %}">
+    <link rel="icon" type="image/png" sizes="32x32" href="{% static 'img/favicon-32x32.png' %}">
+    <link rel="icon" type="image/png" sizes="16x16" href="{% static 'img/favicon-16x16.png' %}">
+
+    <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
+    <link href="{% static 'css/bootstrap-icons.min.css' %}" rel="stylesheet">
+    <link href="{% static 'css/application.css' %}" rel="stylesheet">
+    <!-- runs before the body renders so the stored color mode applies without a flash -->
+    <script src="{% static 'js/theme.js' %}"></script>
+  </head>
+  <body class="d-flex flex-column min-vh-100 bg-body-tertiary">
+
+    {% with view_name=request.resolver_match.view_name %}
+    <nav class="navbar navbar-expand-lg bg-body border-bottom sticky-top">
+      <div class="container">
+        <a class="navbar-brand fw-semibold" href="{% url 'products:index' %}">
+          <i class="bi bi-shop me-1"></i> SWD Demo Shop
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNav"
+                aria-controls="mainNav" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="mainNav">
+          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+            <li class="nav-item">
+              <a class="nav-link {% if view_name == 'products:index' %}active{% endif %}" href="{% url 'products:index' %}">
+                <i class="bi bi-grid"></i> Products
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link {% if view_name == 'orders:basket_overview' %}active{% endif %}" href="{% url 'orders:basket_overview' %}">
+                <i class="bi bi-basket"></i> Basket
+                <span class="badge rounded-pill text-bg-primary align-text-top" id="basket-count">{{ basket_count }}</span>
+              </a>
+            </li>
+          </ul>
+
+          <ul class="navbar-nav">
+            {% if user.is_authenticated %}
+              <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                  <i class="bi bi-person-circle"></i> {{ user.username }}
+                </a>
+                <ul class="dropdown-menu dropdown-menu-end">
+                  <li>
+                    <a class="dropdown-item {% if view_name == 'orders:order_list' %}active{% endif %}" href="{% url 'orders:order_list' %}">
+                      <i class="bi bi-receipt"></i> My orders
+                    </a>
+                  </li>
+                  <li><hr class="dropdown-divider"></li>
+                  <li><h6 class="dropdown-header"><i data-bs-theme-icon class="bi bi-circle-half me-1"></i> Theme</h6></li>
+                  <li>
+                    <button type="button" class="dropdown-item d-flex align-items-center" data-bs-theme-value="light" aria-pressed="false">
+                      <i class="bi bi-sun-fill me-2"></i> Light <i class="bi bi-check2 ms-auto theme-check"></i>
+                    </button>
+                  </li>
+                  <li>
+                    <button type="button" class="dropdown-item d-flex align-items-center" data-bs-theme-value="dark" aria-pressed="false">
+                      <i class="bi bi-moon-stars-fill me-2"></i> Dark <i class="bi bi-check2 ms-auto theme-check"></i>
+                    </button>
+                  </li>
+                  <li>
+                    <button type="button" class="dropdown-item d-flex align-items-center" data-bs-theme-value="auto" aria-pressed="false">
+                      <i class="bi bi-circle-half me-2"></i> Auto <i class="bi bi-check2 ms-auto theme-check"></i>
+                    </button>
+                  </li>
+                  <li><hr class="dropdown-divider"></li>
+                  {% if user.is_staff %}
+                    <li><a class="dropdown-item" href="{% url 'admin:index' %}"><i class="bi bi-gear"></i> Admin site</a></li>
+                    <li><hr class="dropdown-divider"></li>
+                  {% endif %}
+                  <li>
+                    <form method="post" action="{% url 'core:logout' %}">
+                      {% csrf_token %}
+                      <button type="submit" class="dropdown-item"><i class="bi bi-box-arrow-right"></i> Log out</button>
+                    </form>
+                  </li>
+                </ul>
+              </li>
+            {% else %}
+              <li class="nav-item">
+                <a class="btn btn-outline-primary btn-sm" href="{% url 'admin:login' %}?next={{ request.path }}">
+                  <i class="bi bi-box-arrow-in-right"></i> Log in
+                </a>
+              </li>
+            {% endif %}
+          </ul>
+        </div>
+      </div>
+    </nav>
+    {% endwith %}
+
+    <main class="container py-4 flex-grow-1">
+      {% if messages %}
+        {% for message in messages %}
+          <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+            {{ message }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+          </div>
+        {% endfor %}
+      {% endif %}
+
+      {% block content %}{% endblock %}
+    </main>
+
+    <footer class="border-top py-3 bg-body">
+      <div class="container d-flex justify-content-between small text-body-secondary">
+        <span>SWD Demo Shop &middot; Software Design Lab</span>
+        <a class="link-secondary" href="{% url 'core:health_check' %}">health</a>
+      </div>
+    </footer>
+
+    <script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
+  </body>
+</html>

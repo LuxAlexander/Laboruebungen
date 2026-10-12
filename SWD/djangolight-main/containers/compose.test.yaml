@@ -1,0 +1,29 @@
+# Runs the test suite inside the app image against MariaDB: `just test-mariadb`.
+# Separate project name and no published ports, so it does not collide with the `just compose` stack.
+name: djangolight-test
+
+services:
+  database:
+    image: mariadb:lts
+    environment:
+      - MYSQL_ROOT_PASSWORD=${DJANGO_DB_PASSWORD:-root-password}
+    healthcheck:
+      test: ["CMD", "healthcheck.sh", "--connect", "--innodb_initialized"]
+      interval: 2s
+      timeout: 5s
+      retries: 30
+    # no initial data: Django creates and drops its own test database
+    tmpfs:
+      - /var/lib/mysql
+
+  tests:
+    build:
+      context: ../
+      dockerfile: ./containers/django-app/Dockerfile
+    environment:
+      - DJANGO_SECRET_KEY=${DJANGO_SECRET_KEY:-local-compose-only-secret-key-change-me}
+      - DJANGO_DB_PASSWORD=${DJANGO_DB_PASSWORD:-root-password}
+    entrypoint: ["python", "manage.py", "test", "--noinput"]
+    depends_on:
+      database:
+        condition: service_healthy
