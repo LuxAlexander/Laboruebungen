@@ -1,119 +1,119 @@
 <mxfile host="app.diagrams.net">
   <diagram name="Seite-1" id="5qztB01OmTWNoyABDWn7">
-    <mxGraphModel dx="896" dy="489" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1169" pageHeight="827" math="0" shadow="0">
+    <mxGraphModel dx="1030" dy="562" grid="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="0" pageScale="1" pageWidth="1169" pageHeight="827" background="light-dark(#FFFFFF,#FFFFFF)" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
-        <mxCell id="p0XC-E2LQg3or-_TQ7__-1" parent="1" style="ellipse;whiteSpace=wrap;html=1;fontStyle=1;fontSize=14;" value="Ticketing (Soccer)" vertex="1">
+        <mxCell id="p0XC-E2LQg3or-_TQ7__-1" parent="1" style="ellipse;whiteSpace=wrap;html=1;fontStyle=1;fontSize=14;labelBackgroundColor=none;fillColor=#EEEEEE;strokeColor=#FFFFFF;fontColor=#1A1A1A;" value="Ticketing (Soccer)" vertex="1">
           <mxGeometry height="110" width="200" x="400" y="345" as="geometry" />
         </mxCell>
-        <mxCell id="p0XC-E2LQg3or-_TQ7__-3" parent="1" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;outlineConnect=0;" value="&lt;div&gt;RB Salzburg&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;" vertex="1">
+        <mxCell id="p0XC-E2LQg3or-_TQ7__-3" parent="1" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;outlineConnect=0;labelBackgroundColor=none;fillColor=#EEEEEE;strokeColor=#FFFFFF;fontColor=#1A1A1A;" value="&lt;div&gt;&lt;span style=&quot;color: light-dark(rgb(0, 0, 0), rgb(0, 0, 0));&quot;&gt;RB Salzburg&lt;/span&gt;&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;" vertex="1">
           <mxGeometry height="60" width="30" x="485" y="30" as="geometry" />
         </mxCell>
-        <mxCell id="957q-2tk2beJXoEivtg1-8" parent="1" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;outlineConnect=0;" value="&lt;div&gt;Security/Staff&lt;/div&gt;" vertex="1">
+        <mxCell id="957q-2tk2beJXoEivtg1-8" parent="1" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;outlineConnect=0;labelBackgroundColor=none;fillColor=#EEEEEE;strokeColor=#FFFFFF;fontColor=#1A1A1A;fontFamily=Helvetica;fontSize=12;fontStyle=0;align=center;" value="&lt;div&gt;&lt;font style=&quot;color: light-dark(rgb(0, 0, 0), rgb(0, 0, 0));&quot;&gt;Security/Staff&lt;/font&gt;&lt;/div&gt;" vertex="1">
           <mxGeometry height="60" width="30" x="930" y="150" as="geometry" />
         </mxCell>
-        <mxCell id="p0XC-E2LQg3or-_TQ7__-4" parent="1" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;outlineConnect=0;" value="&lt;div&gt;Customer&lt;/div&gt;" vertex="1">
+        <mxCell id="p0XC-E2LQg3or-_TQ7__-4" parent="1" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;outlineConnect=0;labelBackgroundColor=none;fillColor=#EEEEEE;strokeColor=#FFFFFF;fontColor=#1A1A1A;fontFamily=Helvetica;fontSize=12;fontStyle=0;align=center;" value="&lt;div&gt;&lt;font style=&quot;line-height: 110%; color: light-dark(rgb(26, 26, 26), rgb(0, 0, 0));&quot;&gt;Customer&lt;/font&gt;&lt;/div&gt;" vertex="1">
           <mxGeometry height="60" width="30" x="930" y="620" as="geometry" />
         </mxCell>
-        <mxCell id="p0XC-E2LQg3or-_TQ7__-7" parent="1" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;outlineConnect=0;" value="Fan/ITS Fan Club" vertex="1">
+        <mxCell id="p0XC-E2LQg3or-_TQ7__-7" parent="1" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;outlineConnect=0;labelBackgroundColor=none;fillColor=#EEEEEE;strokeColor=#FFFFFF;fontColor=#1A1A1A;" value="&lt;span style=&quot;color: light-dark(rgb(0, 0, 0), rgb(0, 0, 0));&quot;&gt;Fan/ITS Fan Club&lt;/span&gt;" vertex="1">
           <mxGeometry height="60" width="30" x="485" y="790" as="geometry" />
         </mxCell>
-        <mxCell id="957q-2tk2beJXoEivtg1-10" parent="1" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;outlineConnect=0;" value="&lt;div&gt;Statistic&lt;/div&gt;" vertex="1">
+        <mxCell id="957q-2tk2beJXoEivtg1-10" parent="1" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;outlineConnect=0;labelBackgroundColor=none;fillColor=#EEEEEE;strokeColor=#FFFFFF;fontColor=#1A1A1A;" value="&lt;div&gt;&lt;span style=&quot;color: light-dark(rgb(0, 0, 0), rgb(0, 0, 0));&quot;&gt;Statistic&lt;/span&gt;&lt;/div&gt;" vertex="1">
           <mxGeometry height="60" width="30" x="40" y="620" as="geometry" />
         </mxCell>
-        <mxCell id="957q-2tk2beJXoEivtg1-2" parent="1" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;outlineConnect=0;" value="&lt;div&gt;Entry Gate&lt;/div&gt;" vertex="1">
+        <mxCell id="957q-2tk2beJXoEivtg1-2" parent="1" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;outlineConnect=0;labelBackgroundColor=none;fillColor=#EEEEEE;strokeColor=#FFFFFF;fontColor=#1A1A1A;" value="&lt;div&gt;&lt;span style=&quot;color: light-dark(rgb(0, 0, 0), rgb(0, 0, 0));&quot;&gt;Entry Gate&lt;/span&gt;&lt;/div&gt;" vertex="1">
           <mxGeometry height="60" width="30" x="40" y="150" as="geometry" />
         </mxCell>
-        <mxCell id="p0XC-E2LQg3or-_TQ7__-17" edge="1" parent="1" source="p0XC-E2LQg3or-_TQ7__-3" style="rounded=0;html=1;endArrow=block;endFill=1;exitX=0.500;exitY=1.000;exitDx=0;exitDy=0;entryX=0.500;entryY=0.000;entryDx=0;entryDy=0;" target="p0XC-E2LQg3or-_TQ7__-1">
+        <mxCell id="p0XC-E2LQg3or-_TQ7__-17" edge="1" parent="1" source="p0XC-E2LQg3or-_TQ7__-3" style="rounded=0;html=1;endArrow=block;endFill=1;exitX=0.500;exitY=1.000;exitDx=0;exitDy=0;entryX=0.500;entryY=0.000;entryDx=0;entryDy=0;labelBackgroundColor=none;strokeColor=#FFFFFF;fontColor=default;" target="p0XC-E2LQg3or-_TQ7__-1">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="cd-l-17" connectable="0" parent="p0XC-E2LQg3or-_TQ7__-17" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=10;labelBackgroundColor=#FFFFFF;" value="provides master data: stadiums, sectors,&lt;br&gt;matches, competitions, teams, prices" vertex="1">
+        <mxCell id="cd-l-17" connectable="0" parent="p0XC-E2LQg3or-_TQ7__-17" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=11;labelBackgroundColor=none;fontColor=light-dark(#1A1A1A,#000000);fontFamily=Helvetica;fontStyle=0;" value="provides master data: stadiums, sectors,&lt;br&gt;matches, competitions, teams, prices" vertex="1">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint as="offset" />
+            <mxPoint x="-7" y="-26" as="offset" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="cd-e-gate-in" edge="1" parent="1" source="957q-2tk2beJXoEivtg1-2" style="rounded=0;html=1;endArrow=block;endFill=1;exitX=1.000;exitY=0.200;exitDx=0;exitDy=0;entryX=0.090;entryY=0.213;entryDx=0;entryDy=0;" target="p0XC-E2LQg3or-_TQ7__-1">
+        <mxCell id="cd-e-gate-in" edge="1" parent="1" source="957q-2tk2beJXoEivtg1-2" style="rounded=0;html=1;endArrow=block;endFill=1;exitX=1.000;exitY=0.200;exitDx=0;exitDy=0;entryX=0.090;entryY=0.213;entryDx=0;entryDy=0;labelBackgroundColor=none;strokeColor=#FFFFFF;fontColor=default;" target="p0XC-E2LQg3or-_TQ7__-1">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="cd-l-gate-in" connectable="0" parent="cd-e-gate-in" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=10;labelBackgroundColor=#FFFFFF;" value="sends ticket number,&lt;br&gt;logs entry / exit scan" vertex="1">
+        <mxCell id="cd-l-gate-in" connectable="0" parent="cd-e-gate-in" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=11;labelBackgroundColor=none;fontColor=light-dark(#1A1A1A,#000000);fontFamily=Helvetica;fontStyle=0;" value="sends ticket number,&lt;br&gt;logs entry / exit scan" vertex="1">
           <mxGeometry relative="1" as="geometry">
             <mxPoint x="20" y="-45" as="offset" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="cd-e-gate-out" edge="1" parent="1" source="p0XC-E2LQg3or-_TQ7__-1" style="rounded=0;html=1;endArrow=block;endFill=1;exitX=0.017;exitY=0.371;exitDx=0;exitDy=0;entryX=1.000;entryY=0.900;entryDx=0;entryDy=0;" target="957q-2tk2beJXoEivtg1-2">
+        <mxCell id="cd-e-gate-out" edge="1" parent="1" source="p0XC-E2LQg3or-_TQ7__-1" style="rounded=0;html=1;endArrow=block;endFill=1;exitX=0.017;exitY=0.371;exitDx=0;exitDy=0;entryX=1.000;entryY=0.900;entryDx=0;entryDy=0;labelBackgroundColor=none;strokeColor=#FFFFFF;fontColor=default;" target="957q-2tk2beJXoEivtg1-2">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="cd-l-gate-out" connectable="0" parent="cd-e-gate-out" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=10;labelBackgroundColor=#FFFFFF;" value="grants / denies entry: valid for active&lt;br&gt;match or series, not yet used" vertex="1">
+        <mxCell id="cd-l-gate-out" connectable="0" parent="cd-e-gate-out" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=11;labelBackgroundColor=none;fontColor=light-dark(#1A1A1A,#000000);fontFamily=Helvetica;fontStyle=0;" value="grants / denies entry: valid for active&lt;br&gt;match or series, not yet used" vertex="1">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="-25" y="45" as="offset" />
+            <mxPoint x="-39" y="45" as="offset" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="cd-e-sec-out" edge="1" parent="1" source="p0XC-E2LQg3or-_TQ7__-1" style="rounded=0;html=1;endArrow=block;endFill=1;exitX=0.910;exitY=0.213;exitDx=0;exitDy=0;entryX=0.000;entryY=0.200;entryDx=0;entryDy=0;" target="957q-2tk2beJXoEivtg1-8">
+        <mxCell id="cd-e-sec-out" edge="1" parent="1" source="p0XC-E2LQg3or-_TQ7__-1" style="rounded=0;html=1;endArrow=block;endFill=1;exitX=0.910;exitY=0.213;exitDx=0;exitDy=0;entryX=0.000;entryY=0.200;entryDx=0;entryDy=0;labelBackgroundColor=none;strokeColor=#FFFFFF;fontColor=default;" target="957q-2tk2beJXoEivtg1-8">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="cd-l-sec-out" connectable="0" parent="cd-e-sec-out" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=10;labelBackgroundColor=#FFFFFF;" value="notifies on repeated&lt;br&gt;ticket number" vertex="1">
+        <mxCell id="cd-l-sec-out" connectable="0" parent="cd-e-sec-out" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=11;labelBackgroundColor=none;fontColor=light-dark(#1A1A1A,#000000);fontFamily=Helvetica;fontStyle=0;" value="notifies on repeated&lt;br&gt;ticket number" vertex="1">
           <mxGeometry relative="1" as="geometry">
             <mxPoint x="-20" y="-40" as="offset" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="cd-e-sec-in" edge="1" parent="1" source="957q-2tk2beJXoEivtg1-8" style="rounded=0;html=1;endArrow=block;endFill=1;exitX=0.000;exitY=0.900;exitDx=0;exitDy=0;entryX=0.983;entryY=0.371;entryDx=0;entryDy=0;" target="p0XC-E2LQg3or-_TQ7__-1">
+        <mxCell id="cd-e-sec-in" edge="1" parent="1" source="957q-2tk2beJXoEivtg1-8" style="rounded=0;html=1;endArrow=block;endFill=1;exitX=0.000;exitY=0.900;exitDx=0;exitDy=0;entryX=0.983;entryY=0.371;entryDx=0;entryDy=0;labelBackgroundColor=none;strokeColor=#FFFFFF;fontColor=default;" target="p0XC-E2LQg3or-_TQ7__-1">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="cd-l-sec-in" connectable="0" parent="cd-e-sec-in" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=10;labelBackgroundColor=#FFFFFF;" value="sells tickets at counter (cash, anonymous),&lt;br&gt;cancels reservations (FR-07, FR-13)" vertex="1">
+        <mxCell id="cd-l-sec-in" connectable="0" parent="cd-e-sec-in" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=11;labelBackgroundColor=none;fontColor=light-dark(#1A1A1A,#000000);fontFamily=Helvetica;fontStyle=0;" value="sells tickets at counter (cash, anonymous),&lt;br&gt;cancels reservations (FR-07, FR-13)" vertex="1">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="25" y="40" as="offset" />
+            <mxPoint x="84" y="33" as="offset" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="cd-e-stat-out" edge="1" parent="1" source="p0XC-E2LQg3or-_TQ7__-1" style="rounded=0;html=1;endArrow=block;endFill=1;exitX=0.017;exitY=0.629;exitDx=0;exitDy=0;entryX=1.000;entryY=0.100;entryDx=0;entryDy=0;" target="957q-2tk2beJXoEivtg1-10">
+        <mxCell id="cd-e-stat-out" edge="1" parent="1" source="p0XC-E2LQg3or-_TQ7__-1" style="rounded=0;html=1;endArrow=block;endFill=1;exitX=0.017;exitY=0.629;exitDx=0;exitDy=0;entryX=1.000;entryY=0.100;entryDx=0;entryDy=0;labelBackgroundColor=none;strokeColor=#FFFFFF;fontColor=default;" target="957q-2tk2beJXoEivtg1-10">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="cd-l-stat-out" connectable="0" parent="cd-e-stat-out" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=10;labelBackgroundColor=#FFFFFF;" value="match statistics: tickets sold, used,&lt;br&gt;occupancy; series &amp;amp; period statistics" vertex="1">
+        <mxCell id="cd-l-stat-out" connectable="0" parent="cd-e-stat-out" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=11;labelBackgroundColor=none;fontColor=light-dark(#1A1A1A,#000000);fontFamily=Helvetica;fontStyle=0;rotation=0;" value="match statistics: tickets sold, used,&lt;br&gt;occupancy; series &amp;amp; period statistics" vertex="1">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="-30" y="-45" as="offset" />
+            <mxPoint x="-46" y="-42" as="offset" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="cd-e-stat-in" edge="1" parent="1" source="957q-2tk2beJXoEivtg1-10" style="rounded=0;html=1;endArrow=block;endFill=1;exitX=1.000;exitY=0.800;exitDx=0;exitDy=0;entryX=0.090;entryY=0.787;entryDx=0;entryDy=0;" target="p0XC-E2LQg3or-_TQ7__-1">
+        <mxCell id="cd-e-stat-in" edge="1" parent="1" source="957q-2tk2beJXoEivtg1-10" style="rounded=0;html=1;endArrow=block;endFill=1;exitX=1.000;exitY=0.800;exitDx=0;exitDy=0;entryX=0.090;entryY=0.787;entryDx=0;entryDy=0;labelBackgroundColor=none;strokeColor=#FFFFFF;fontColor=default;" target="p0XC-E2LQg3or-_TQ7__-1">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="cd-l-stat-in" connectable="0" parent="cd-e-stat-in" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=10;labelBackgroundColor=#FFFFFF;" value="requests statistics for a period&lt;br&gt;(match, season, Champions League)" vertex="1">
+        <mxCell id="cd-l-stat-in" connectable="0" parent="cd-e-stat-in" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=11;labelBackgroundColor=none;fontColor=light-dark(#1A1A1A,#000000);fontFamily=Helvetica;fontStyle=0;" value="requests statistics for a period&lt;br&gt;(match, season, Champions League)" vertex="1">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="-5" y="45" as="offset" />
+            <mxPoint x="92" y="-2" as="offset" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="p0XC-E2LQg3or-_TQ7__-13" edge="1" parent="1" source="p0XC-E2LQg3or-_TQ7__-7" style="rounded=0;html=1;endArrow=block;endFill=1;exitX=0.200;exitY=0.000;exitDx=0;exitDy=0;entryX=0.413;entryY=0.992;entryDx=0;entryDy=0;" target="p0XC-E2LQg3or-_TQ7__-1">
+        <mxCell id="p0XC-E2LQg3or-_TQ7__-13" edge="1" parent="1" source="p0XC-E2LQg3or-_TQ7__-7" style="rounded=0;html=1;endArrow=block;endFill=1;exitX=0.200;exitY=0.000;exitDx=0;exitDy=0;entryX=0.413;entryY=0.992;entryDx=0;entryDy=0;labelBackgroundColor=none;strokeColor=#FFFFFF;fontColor=default;" target="p0XC-E2LQg3or-_TQ7__-1">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="cd-l-13" connectable="0" parent="p0XC-E2LQg3or-_TQ7__-13" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=10;labelBackgroundColor=#FFFFFF;" value="buys fan ticket (sector C),&lt;br&gt;reserves tickets (max. 4),&lt;br&gt;cancels reservation" vertex="1">
+        <mxCell id="cd-l-13" connectable="0" parent="p0XC-E2LQg3or-_TQ7__-13" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=11;labelBackgroundColor=none;fontColor=light-dark(#1A1A1A,#000000);fontFamily=Helvetica;fontStyle=0;" value="buys fan ticket (sector C),&lt;br&gt;reserves tickets (max. 4),&lt;br&gt;cancels reservation" vertex="1">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="-95" y="75" as="offset" />
+            <mxPoint x="-76" y="45" as="offset" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="cd-e-fan-out" edge="1" parent="1" source="p0XC-E2LQg3or-_TQ7__-1" style="rounded=0;html=1;endArrow=block;endFill=1;exitX=0.587;exitY=0.992;exitDx=0;exitDy=0;entryX=0.800;entryY=0.000;entryDx=0;entryDy=0;" target="p0XC-E2LQg3or-_TQ7__-7">
+        <mxCell id="cd-e-fan-out" edge="1" parent="1" source="p0XC-E2LQg3or-_TQ7__-1" style="rounded=0;html=1;endArrow=block;endFill=1;exitX=0.587;exitY=0.992;exitDx=0;exitDy=0;entryX=0.800;entryY=0.000;entryDx=0;entryDy=0;labelBackgroundColor=none;strokeColor=#FFFFFF;fontColor=default;" target="p0XC-E2LQg3or-_TQ7__-7">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="cd-l-fan-out" connectable="0" parent="cd-e-fan-out" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=10;labelBackgroundColor=#FFFFFF;" value="verifies fan club membership,&lt;br&gt;shows available seats &amp;amp; prices" vertex="1">
+        <mxCell id="cd-l-fan-out" connectable="0" parent="cd-e-fan-out" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=11;labelBackgroundColor=none;fontColor=light-dark(#1A1A1A,#000000);" value="verifies fan club membership,&lt;br&gt;shows available seats &amp;amp; prices" vertex="1">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="105" y="75" as="offset" />
+            <mxPoint x="79" y="56" as="offset" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="p0XC-E2LQg3or-_TQ7__-16" edge="1" parent="1" source="p0XC-E2LQg3or-_TQ7__-4" style="rounded=0;html=1;endArrow=block;endFill=1;exitX=0.000;exitY=0.800;exitDx=0;exitDy=0;entryX=0.910;entryY=0.787;entryDx=0;entryDy=0;" target="p0XC-E2LQg3or-_TQ7__-1">
+        <mxCell id="p0XC-E2LQg3or-_TQ7__-16" edge="1" parent="1" source="p0XC-E2LQg3or-_TQ7__-4" style="rounded=0;html=1;endArrow=block;endFill=1;exitX=0.000;exitY=0.800;exitDx=0;exitDy=0;entryX=0.910;entryY=0.787;entryDx=0;entryDy=0;labelBackgroundColor=none;strokeColor=#FFFFFF;fontColor=default;" target="p0XC-E2LQg3or-_TQ7__-1">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="957q-2tk2beJXoEivtg1-3" connectable="0" parent="p0XC-E2LQg3or-_TQ7__-16" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=10;labelBackgroundColor=#FFFFFF;" value="wants to buy a ticket: selects match,&lt;br&gt;sector &amp;amp; seat, buys max. 4 tickets,&lt;br&gt;pays cash or card" vertex="1">
+        <mxCell id="957q-2tk2beJXoEivtg1-3" connectable="0" parent="p0XC-E2LQg3or-_TQ7__-16" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=11;labelBackgroundColor=none;fontColor=light-dark(#1A1A1A,#000000);fontFamily=Helvetica;fontStyle=0;" value="wants to buy a ticket: selects match,&lt;br&gt;sector &amp;amp; seat, buys max. 4 tickets,&lt;br&gt;pays cash or card" vertex="1">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="15" y="55" as="offset" />
+            <mxPoint x="-67" y="31" as="offset" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="957q-2tk2beJXoEivtg1-6" edge="1" parent="1" source="p0XC-E2LQg3or-_TQ7__-1" style="rounded=0;html=1;endArrow=block;endFill=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;entryPerimeter=0;exitX=0.995;exitY=0.651;exitDx=0;exitDy=0;exitPerimeter=0;" target="p0XC-E2LQg3or-_TQ7__-4">
+        <mxCell id="957q-2tk2beJXoEivtg1-6" edge="1" parent="1" source="p0XC-E2LQg3or-_TQ7__-1" style="rounded=0;html=1;endArrow=block;endFill=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;entryPerimeter=0;exitX=0.995;exitY=0.651;exitDx=0;exitDy=0;exitPerimeter=0;labelBackgroundColor=none;strokeColor=#FFFFFF;fontColor=default;" target="p0XC-E2LQg3or-_TQ7__-4">
           <mxGeometry relative="1" as="geometry">
             <mxPoint x="600" y="420" as="sourcePoint" />
             <mxPoint x="930" y="610" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="957q-2tk2beJXoEivtg1-7" connectable="0" parent="957q-2tk2beJXoEivtg1-6" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=10;labelBackgroundColor=#FFFFFF;" value="shows available seats&lt;br&gt;displays prices&lt;br&gt;assigns sector and seat, issues ticket" vertex="1">
+        <mxCell id="957q-2tk2beJXoEivtg1-7" connectable="0" parent="957q-2tk2beJXoEivtg1-6" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=11;labelBackgroundColor=none;fontColor=light-dark(#1A1A1A,#000000);fontFamily=Helvetica;fontStyle=0;" value="shows available seats&lt;br&gt;displays prices&lt;br&gt;assigns sector and seat, issues ticket" vertex="1">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="40" y="-45" as="offset" />
+            <mxPoint x="58" y="-43" as="offset" />
           </mxGeometry>
         </mxCell>
       </root>
