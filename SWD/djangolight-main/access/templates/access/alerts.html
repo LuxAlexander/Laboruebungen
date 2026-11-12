@@ -1,0 +1,31 @@
+{% extends 'core/base.html' %}
+{% block title %}Security alerts · FC ITS Ticketing{% endblock %}
+
+{% block content %}
+<h1 class="h3 mb-3"><i class="bi bi-shield-exclamation"></i> Double entry attempts</h1>
+<div class="table-responsive">
+<table class="table align-middle">
+  <thead><tr><th>Time</th><th>Ticket</th><th>Attempt</th><th>Gate</th><th>Match</th><th></th></tr></thead>
+  <tbody>
+    {% for a in alerts %}
+      <tr class="{% if not a.acknowledged %}table-warning{% endif %}">
+        <td>{{ a.created_at|date:"d.m.Y H:i:s" }}</td>
+        <td class="font-monospace">{{ a.ticket_number }}</td>
+        <td>{{ a.attempt_count }}{% if a.repeated %} <span class="badge text-bg-danger">repeated</span>{% endif %}</td>
+        <td>{{ a.gate.name }}</td>
+        <td>{{ a.match.home_team }} vs {{ a.match.away_team }}</td>
+        <td class="text-end">
+          {% if not a.acknowledged %}
+            <form method="post" action="{% url 'access:acknowledge' a.pk %}">{% csrf_token %}
+              <button class="btn btn-sm btn-outline-secondary">Acknowledge</button>
+            </form>
+          {% endif %}
+        </td>
+      </tr>
+    {% empty %}
+      <tr><td colspan="6" class="text-body-secondary">No alerts.</td></tr>
+    {% endfor %}
+  </tbody>
+</table>
+</div>
+{% endblock %}

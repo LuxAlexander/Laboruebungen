@@ -1,31 +1,36 @@
 """
-In this file, a Container class is defined that uses dependency_injector to manage the dependencies of the application.
-The container declares the adapters at the seams: product_service, customer_service and order_service are
-singletons that provide instances of ProductService, CustomerService and OrderService, respectively.
+The dependency-injection container: it declares the adapters at the seams between the apps and wires them
+together. Views receive them via Provide["name"]; tests can override any provider.
 """
 
 from dependency_injector import containers, providers
 
+from access.services import AccessService, SecurityAlertService
 from customers.services import CustomerService
+from orders.payments import SimulatedPaymentService
 from orders.services import OrderService
-from products.services import ProductService
+from stadiums.services import MatchCatalogService
+from stadiums.statistics import StatisticsService
+from tickets.services import TicketService
 
 
-# define a container class and declare its dependencies
 class Container(containers.DeclarativeContainer):
-    # configuration provider
     config = providers.Configuration()
 
-    # Singleton provider for ProductService
-    product_service = providers.Singleton(
-        ProductService,
-    )
+    # adapters of the core.interfaces Protocols
+    match_catalog = providers.Singleton(MatchCatalogService)
+    statistics_service = providers.Singleton(StatisticsService)
+    customer_service = providers.Singleton(CustomerService)
+    payment_service = providers.Singleton(SimulatedPaymentService)
+    alert_service = providers.Singleton(SecurityAlertService)
+    ticket_service = providers.Singleton(TicketService, catalog=match_catalog)
 
-    customer_service = providers.Singleton(
-        CustomerService,
-    )
-
-    # Singleton provider for OrderService with product_service as a dependency
+    # use case services
     order_service = providers.Singleton(
-        OrderService, product_service=product_service, customer_service=customer_service
+        OrderService, catalog=match_catalog, tickets=ticket_service, customers=customer_service,
+        payments=payment_service, statistics=statistics_service,
+    )
+    access_service = providers.Singleton(
+        AccessService, catalog=match_catalog, tickets=ticket_service, statistics=statistics_service,
+        alerts=alert_service,
     )

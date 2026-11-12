@@ -6,9 +6,9 @@ from django.urls import reverse
 
 
 class TestSiteRoot(TestCase):
-    def test_root_redirects_to_products(self):
+    def test_root_redirects_to_matches(self):
         response = self.client.get("/")
-        self.assertRedirects(response, reverse("products:index"), fetch_redirect_response=False)
+        self.assertRedirects(response, reverse("orders:match_list"), fetch_redirect_response=False)
 
 
 class TestHealthCheck(TestCase):

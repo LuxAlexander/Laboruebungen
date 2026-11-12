@@ -44,8 +44,8 @@ build-backend = "setuptools.build_meta"
 
 [tool.setuptools.packages.find]
 # flat layout: name the Django apps explicitly, so static/, containers/ etc. are not mistaken for packages
-include = ["core", "core.*", "customers", "customers.*", "products", "products.*", "orders", "orders.*",
-           "swd_django_demo", "swd_django_demo.*"]
+include = ["core", "core.*", "customers", "customers.*", "stadiums", "stadiums.*", "tickets", "tickets.*",
+           "orders", "orders.*", "access", "access.*", "swd_django_demo", "swd_django_demo.*"]
 
 [tool.setuptools.package-data]
 "*" = ["templates/**/*", "data/*.json"]

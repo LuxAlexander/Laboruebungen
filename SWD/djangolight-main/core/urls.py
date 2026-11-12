@@ -12,5 +12,5 @@ urlpatterns = [
     path("", index, name="index"),
     path("health", views.health_check, name="health_check"),
     # logout must be a POST (Django >= 5); the navigation renders a small form for it
-    path("logout", LogoutView.as_view(next_page="products:index"), name="logout"),
+    path("logout", LogoutView.as_view(next_page="orders:match_list"), name="logout"),
 ]

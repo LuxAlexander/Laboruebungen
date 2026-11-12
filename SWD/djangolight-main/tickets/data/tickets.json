@@ -1,0 +1,19 @@
+{
+  "prices": {
+    "league":           {"cat1": 45.00, "cat2": 35.00, "cat3": 25.00, "fan": 15.00},
+    "cup":              {"cat1": 30.00, "cat2": 25.00, "cat3": 20.00, "fan": 12.00},
+    "europa_league":    {"cat1": 70.00, "cat2": 55.00, "cat3": 40.00, "fan": 25.00},
+    "champions_league": {"cat1": 90.00, "cat2": 70.00, "cat3": 50.00, "fan": 30.00},
+    "friendly":         {"cat1": 20.00, "cat2": 15.00, "cat3": 10.00, "fan": 8.00}
+  },
+  "season_ticket_prices": {"cat1": 520.00, "cat2": 400.00, "cat3": 290.00, "fan": 170.00},
+  "season_tickets": {
+    "competition": "Admiral Bundesliga",
+    "season": "2026/27",
+    "sector": "B",
+    "row": 1,
+    "holders": ["season01", "season02", "season03", "season04", "season05"],
+    "seats_per_holder": 4,
+    "password": "season123"
+  }
+}

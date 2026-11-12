@@ -1,0 +1,27 @@
+{% extends 'core/base.html' %}
+{% block title %}Register · FC ITS Ticketing{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+  <div class="col-md-8 col-lg-6">
+    <div class="card shadow-sm">
+      <div class="card-body">
+        <h1 class="h4 mb-3">Create a customer account</h1>
+        <form method="post">
+          {% csrf_token %}
+          {% for field in form %}
+            <div class="mb-3">
+              <label class="form-label" for="{{ field.id_for_label }}">{{ field.label }}</label>
+              <input class="form-control" type="{{ field.field.widget.input_type }}" name="{{ field.html_name }}"
+                     id="{{ field.id_for_label }}" value="{{ field.value|default_if_none:'' }}" {% if field.field.required %}required{% endif %}>
+              {% for error in field.errors %}<div class="text-danger small">{{ error }}</div>{% endfor %}
+            </div>
+          {% endfor %}
+          <input type="hidden" name="next" value="{{ next }}">
+          <button class="btn btn-primary w-100" type="submit"><i class="bi bi-person-plus"></i> Register</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

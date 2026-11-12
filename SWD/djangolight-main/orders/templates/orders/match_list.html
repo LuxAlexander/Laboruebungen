@@ -1,0 +1,27 @@
+{% extends 'core/base.html' %}
+{% block title %}Matches · FC ITS Ticketing{% endblock %}
+
+{% block content %}
+<h1 class="h3 mb-1">Upcoming matches</h1>
+<p class="text-body-secondary">Choose a match to buy single-match tickets (max. 4 per person).</p>
+
+{% if matches %}
+  <div class="list-group shadow-sm">
+    {% for match in matches %}
+      <a class="list-group-item list-group-item-action d-flex justify-content-between align-items-center"
+         href="{% url 'orders:match_detail' match.id %}">
+        <div>
+          <div class="fw-semibold">{{ match.home_team }} vs {{ match.away_team }}</div>
+          <div class="small text-body-secondary">{{ match.competition_name }} · {{ match.stadium_name }}</div>
+        </div>
+        <div class="text-end">
+          <div>{{ match.kickoff|date:"D d.m.Y H:i" }}</div>
+          {% if match.status == "active" %}<span class="badge text-bg-success">gates open</span>{% endif %}
+        </div>
+      </a>
+    {% endfor %}
+  </div>
+{% else %}
+  <div class="alert alert-info">No upcoming matches. Load the demo data with <code>just seed</code>.</div>
+{% endif %}
+{% endblock %}

@@ -14,4 +14,4 @@ class ProjectConfig(AppConfig):
 
         self.container = Container()
         self.container.config.from_dict(settings.__dict__)
-        self.container.wire(modules=["products.views", "orders.views"])
+        self.container.wire(modules=["orders.views", "access.views", "stadiums.views"])

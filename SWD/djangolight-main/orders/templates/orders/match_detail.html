@@ -1,0 +1,59 @@
+{% extends 'core/base.html' %}
+{% block title %}{{ match }} · FC ITS Ticketing{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-3">
+  <div>
+    <h1 class="h3 mb-1">{{ match.home_team }} vs {{ match.away_team }}</h1>
+    <p class="text-body-secondary mb-0">{{ match.competition_name }} · {{ match.kickoff|date:"D d.m.Y H:i" }} · {{ match.stadium_name }}</p>
+  </div>
+  <a class="btn btn-primary" href="{% url 'orders:basket_overview' %}">
+    <i class="bi bi-ticket-perforated"></i> Selected seats <span class="badge text-bg-light">{{ selected_ids|length }}</span>
+  </a>
+</div>
+
+<h2 class="h5">1. Sector</h2>
+<div class="row row-cols-2 row-cols-md-4 g-2 mb-4">
+  {% for s in sectors %}
+    <div class="col">
+      <a class="card card-body h-100 text-decoration-none {% if sector and sector.id == s.sector.id %}border-primary border-2{% endif %}"
+         href="?sector={{ s.sector.id }}">
+        <div class="fw-semibold">Sector {{ s.sector.name }}</div>
+        <div class="small text-body-secondary">{{ s.sector.category.label }}</div>
+        <div class="small">{{ s.free }} / {{ s.sector.capacity }} free</div>
+        <div class="fw-bold">{{ s.price|floatformat:2 }} &euro;</div>
+      </a>
+    </div>
+  {% endfor %}
+</div>
+
+{% if sector %}
+  <h2 class="h5">2. Row in sector {{ sector.name }}</h2>
+  <form method="get" class="d-flex gap-2 mb-3" style="max-width: 20rem">
+    <input type="hidden" name="sector" value="{{ sector.id }}">
+    <select class="form-select" name="row" aria-label="Row" onchange="this.form.submit()">
+      {% for r in rows %}<option value="{{ r }}" {% if r == row %}selected{% endif %}>Row {{ r }}</option>{% endfor %}
+    </select>
+    <noscript><button class="btn btn-secondary">Show</button></noscript>
+  </form>
+
+  <h2 class="h5">3. Seat</h2>
+  <div class="d-flex flex-wrap gap-1 mb-2">
+    {% for s in seats %}
+      {% if s.seat.id in selected_ids %}
+        <span class="btn btn-sm btn-primary disabled seat-btn" title="selected">{{ s.seat.number }}</span>
+      {% elif s.free %}
+        <form method="post" action="{% url 'orders:add_seat' %}">
+          {% csrf_token %}
+          <input type="hidden" name="match_id" value="{{ match.id }}">
+          <input type="hidden" name="seat_id" value="{{ s.seat.id }}">
+          <button class="btn btn-sm btn-outline-success seat-btn" title="Seat {{ s.seat.label }}">{{ s.seat.number }}</button>
+        </form>
+      {% else %}
+        <span class="btn btn-sm btn-outline-secondary disabled seat-btn" title="not available">&times;</span>
+      {% endif %}
+    {% endfor %}
+  </div>
+  <p class="small text-body-secondary">Green: available · blue: selected · &times;: sold or season ticket</p>
+{% endif %}
+{% endblock %}

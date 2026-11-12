@@ -41,8 +41,10 @@ INSTALLED_APPS = [
     "rest_framework",
     "core.apps.CoreConfig",
     "customers.apps.CustomersConfig",
-    "products.apps.ProductsConfig",
+    "stadiums.apps.StadiumsConfig",
+    "tickets.apps.TicketsConfig",
     "orders.apps.OrdersConfig",
+    "access.apps.AccessConfig",
     # must stay last: its ready() builds the dependency-injection container
     "swd_django_demo.apps.ProjectConfig",
 ]
@@ -188,8 +190,9 @@ STATICFILES_DIRS = [
 STATIC_ROOT = os.path.join(BASE_DIR, "static_dir")
 MEDIA_ROOT = os.path.join(BASE_DIR, "media_dir")
 
-# we are going to reuse the existing admin login page also for users
-LOGIN_URL = "/admin/login/"
+# customers log in on their own page (customers/login.html)
+LOGIN_URL = "customers:login"
+LOGIN_REDIRECT_URL = "orders:match_list"
 
 
 # Default primary key field type

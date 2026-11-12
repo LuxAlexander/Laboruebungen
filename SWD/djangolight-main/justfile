@@ -19,9 +19,10 @@ adminuser:
 migrate:
     uv run python manage.py migrate
 
-# 🌱 load the initial product catalog (idempotent)
+# 🌱 load stadium master data, prices and demo season tickets (idempotent)
 seed:
-    uv run python manage.py seed_catalog
+    uv run python manage.py seed_stadium
+    uv run python manage.py seed_tickets
 
 # 🧪 execute the unit tests
 test:

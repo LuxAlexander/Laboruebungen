@@ -1,0 +1,32 @@
+{
+  "stadium": {"name": "Red Bull Arena", "street": "Stadionstraße 2/3", "postal_code": "5071", "city": "Wals-Siezenheim"},
+  "seats_per_row": 50,
+  "sectors": [
+    {"name": "A", "capacity": 8000, "category": "cat1"},
+    {"name": "B", "capacity": 8000, "category": "cat1"},
+    {"name": "C", "capacity": 4000, "category": "fan"},
+    {"name": "D", "capacity": 4000, "category": "cat2"},
+    {"name": "E", "capacity": 2000, "category": "cat3"},
+    {"name": "F", "capacity": 2000, "category": "cat3"},
+    {"name": "G", "capacity": 2000, "category": "cat3"},
+    {"name": "H", "capacity": 2000, "category": "cat3"}
+  ],
+  "gates": ["Gate North", "Gate East", "Gate South", "Gate West"],
+  "teams": ["FC Red Bull Salzburg", "SK Sturm Graz", "SK Rapid Wien", "FK Austria Wien", "LASK", "Wolfsberger AC",
+            "Real Madrid", "FC Bayern München", "Paris Saint-Germain"],
+  "competitions": [
+    {"name": "Admiral Bundesliga", "type": "league", "season": "2026/27"},
+    {"name": "UEFA Champions League", "type": "champions_league", "season": "2026/27"},
+    {"name": "ÖFB Cup", "type": "cup", "season": "2026/27"}
+  ],
+  "matches": [
+    {"competition": "Admiral Bundesliga", "home": "FC Red Bull Salzburg", "away": "LASK", "days_from_today": -42, "time": "17:00", "status": "conducted", "tickets_sold": 24510, "tickets_used": 22870},
+    {"competition": "UEFA Champions League", "home": "FC Red Bull Salzburg", "away": "Paris Saint-Germain", "days_from_today": -21, "time": "21:00", "status": "conducted", "tickets_sold": 31900, "tickets_used": 31240},
+    {"competition": "Admiral Bundesliga", "home": "FC Red Bull Salzburg", "away": "SK Rapid Wien", "days_from_today": 0, "time": "20:30", "status": "active"},
+    {"competition": "Admiral Bundesliga", "home": "FC Red Bull Salzburg", "away": "SK Sturm Graz", "days_from_today": 10, "time": "17:00", "status": "planned"},
+    {"competition": "UEFA Champions League", "home": "FC Red Bull Salzburg", "away": "Real Madrid", "days_from_today": 17, "time": "21:00", "status": "planned"},
+    {"competition": "ÖFB Cup", "home": "FC Red Bull Salzburg", "away": "Wolfsberger AC", "days_from_today": 24, "time": "18:00", "status": "planned"},
+    {"competition": "Admiral Bundesliga", "home": "FC Red Bull Salzburg", "away": "FK Austria Wien", "days_from_today": 31, "time": "14:30", "status": "planned"},
+    {"competition": "UEFA Champions League", "home": "FC Red Bull Salzburg", "away": "FC Bayern München", "days_from_today": 38, "time": "21:00", "status": "planned"}
+  ]
+}

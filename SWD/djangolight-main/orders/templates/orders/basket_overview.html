@@ -1,87 +1,77 @@
 {% extends 'core/base.html' %}
-{% block title %}Basket · SWD Demo Shop{% endblock %}
+{% block title %}Selected seats · FC ITS Ticketing{% endblock %}
 
 {% block content %}
-<div class="d-flex justify-content-between align-items-center mb-4">
-  <div>
-    <h1 class="h3 mb-1">Your basket</h1>
-    <p class="text-body-secondary mb-0">{{ basket_count }} item{{ basket_count|pluralize }}</p>
-  </div>
-  <a class="btn btn-outline-secondary" href="{% url 'products:index' %}">
-    <i class="bi bi-arrow-left"></i> Continue shopping
-  </a>
-</div>
+<h1 class="h3 mb-3">Selected seats</h1>
 
 {% if order.lines %}
 <div class="row g-4">
-  <div class="col-lg-8">
+  <div class="col-lg-7">
     <div class="card shadow-sm">
       <div class="card-body">
-        {% for line in order.lines %}
-          <div class="row align-items-center {% if not forloop.last %}border-bottom pb-3 mb-3{% endif %}">
-            <div class="col-2 col-md-1">
-              <div class="product-thumb product-thumb-sm rounded bg-primary-subtle text-primary d-flex align-items-center justify-content-center">
-                <i class="bi bi-box-seam fs-4"></i>
-              </div>
-            </div>
-            <div class="col-10 col-md-5">
-              <div class="fw-semibold">{{ line.product.name }}</div>
-              <div class="small text-body-secondary">{{ line.product.description }}</div>
-            </div>
-            <div class="col-4 col-md-2 text-md-center mt-2 mt-md-0">
-              <span class="badge rounded-pill text-bg-secondary">&times; {{ line.quantity }}</span>
-            </div>
-            <div class="col-4 col-md-2 text-md-end text-body-secondary mt-2 mt-md-0">
-              {{ line.price|floatformat:2 }} &euro;
-            </div>
-            <div class="col-4 col-md-2 text-end fw-bold mt-2 mt-md-0">
-              {{ line.total|floatformat:2 }} &euro;
-            </div>
-          </div>
-        {% endfor %}
+        <h2 class="h5">{{ order.match }}</h2>
+        <p class="small text-body-secondary">{{ order.match.competition_name }} · {{ order.match.kickoff|date:"D d.m.Y H:i" }}</p>
+        <table class="table align-middle mb-0">
+          <thead><tr><th>Seat</th><th class="text-end">Price</th><th></th></tr></thead>
+          <tbody>
+          {% for line in order.lines %}
+            <tr>
+              <td>Sector {{ line.seat.sector_name }}, row {{ line.seat.row }}, seat {{ line.seat.number }}</td>
+              <td class="text-end">{{ line.price|floatformat:2 }} &euro;</td>
+              <td class="text-end">
+                <form method="post" action="{% url 'orders:remove_seat' %}">
+                  {% csrf_token %}<input type="hidden" name="seat_id" value="{{ line.seat.id }}">
+                  <button class="btn btn-sm btn-outline-danger" title="Remove"><i class="bi bi-x"></i></button>
+                </form>
+              </td>
+            </tr>
+          {% endfor %}
+          </tbody>
+          <tfoot><tr><th>Total</th><th class="text-end">{{ order.total_price|floatformat:2 }} &euro;</th><th></th></tr></tfoot>
+        </table>
+        <a class="btn btn-link px-0 mt-2" href="{% url 'orders:match_detail' order.match.id %}"><i class="bi bi-plus"></i> Add seats (max. {{ max_tickets }})</a>
       </div>
     </div>
   </div>
 
-  <div class="col-lg-4">
+  <div class="col-lg-5">
     <div class="card shadow-sm">
       <div class="card-body">
-        <h2 class="h5 card-title mb-3">Order summary</h2>
-        <div class="d-flex justify-content-between mb-2">
-          <span class="text-body-secondary">Positions</span>
-          <span>{{ order.lines|length }}</span>
-        </div>
-        <div class="d-flex justify-content-between mb-2">
-          <span class="text-body-secondary">Items</span>
-          <span>{{ basket_count }}</span>
-        </div>
-        <hr>
-        <div class="d-flex justify-content-between mb-3">
-          <span class="fw-bold">Total</span>
-          <span class="fs-5 fw-bold">{{ order.total_price|floatformat:2 }} &euro;</span>
-        </div>
-
-        {% if user.is_authenticated %}
+        <h2 class="h5 mb-3">Payment</h2>
+        <p class="small text-body-secondary">Sales channel: {{ channel.label }}{% if channel == "counter" %} (anonymous sale){% endif %}</p>
+        {% if needs_login %}
+          <div class="alert alert-warning small">
+            Anonymous online purchases are limited to 1 ticket. Please log in or register to buy more.
+          </div>
+          <a class="btn btn-primary w-100 mb-2" href="{% url 'customers:login' %}?next={% url 'orders:basket_overview' %}">Log in</a>
+          <a class="btn btn-outline-primary w-100" href="{% url 'customers:register' %}?next={% url 'orders:basket_overview' %}">Register</a>
+        {% else %}
           <form method="post" action="{% url 'orders:place_order' %}">
             {% csrf_token %}
-            <button type="submit" class="btn btn-primary w-100">
-              <i class="bi bi-credit-card"></i> Place order
-            </button>
+            <div class="mb-3">
+              <div class="form-check">
+                <input class="form-check-input" type="radio" name="payment_method" id="pm-card" value="card" checked>
+                <label class="form-check-label" for="pm-card">Credit card</label>
+              </div>
+              {% if cash_allowed %}
+              <div class="form-check">
+                <input class="form-check-input" type="radio" name="payment_method" id="pm-cash" value="cash">
+                <label class="form-check-label" for="pm-cash">Cash (ticket counter)</label>
+              </div>
+              {% endif %}
+            </div>
+            <div class="mb-3">
+              <label class="form-label" for="card_number">Card number</label>
+              <input class="form-control" id="card_number" name="card_number" inputmode="numeric" autocomplete="cc-number"
+                     placeholder="4111 1111 1111 1111">
+              <div class="form-text">Simulated payment: 4111 1111 1111 1111 succeeds, 4000 0000 0000 0002 is declined.</div>
+            </div>
+            <button type="submit" class="btn btn-primary w-100"><i class="bi bi-credit-card"></i> Buy {{ order.lines|length }} ticket{{ order.lines|length|pluralize }}</button>
           </form>
-        {% else %}
-          <div class="alert alert-warning small mb-3" role="alert">
-            <i class="bi bi-lock"></i> Please log in to place an order.
-          </div>
-          <a class="btn btn-primary w-100" href="{% url 'admin:login' %}?next={% url 'orders:basket_overview' %}">
-            <i class="bi bi-box-arrow-in-right"></i> Log in
-          </a>
         {% endif %}
-
         <form method="post" action="{% url 'orders:clear_basket' %}">
           {% csrf_token %}
-          <button type="submit" class="btn btn-outline-danger w-100 mt-2">
-            <i class="bi bi-trash"></i> Clear basket
-          </button>
+          <button type="submit" class="btn btn-outline-danger w-100 mt-2"><i class="bi bi-trash"></i> Clear selection</button>
         </form>
       </div>
     </div>
@@ -90,9 +80,9 @@
 {% else %}
   <div class="card shadow-sm text-center py-5">
     <div class="card-body">
-      <i class="bi bi-basket display-4 text-body-tertiary"></i>
-      <p class="lead mt-3 mb-4">Your basket is empty.</p>
-      <a class="btn btn-primary" href="{% url 'products:index' %}"><i class="bi bi-grid"></i> Browse products</a>
+      <i class="bi bi-ticket-perforated display-4 text-body-tertiary"></i>
+      <p class="lead mt-3 mb-4">No seats selected.</p>
+      <a class="btn btn-primary" href="{% url 'orders:match_list' %}">Choose a match</a>
     </div>
   </div>
 {% endif %}

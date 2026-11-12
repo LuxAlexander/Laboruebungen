@@ -18,3 +18,8 @@
   width: 2.75rem;
   height: 2.75rem;
 }
+
+/* seat picker: equal-width seat buttons */
+.seat-btn {
+  min-width: 2.6rem;
+}

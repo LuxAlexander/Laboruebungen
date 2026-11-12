@@ -1,6 +1,7 @@
-# this can be seen as our repository for our model
+# repository for orders
 from django.db import models
 
 
 class OrderManager(models.Manager):
-    pass
+    def with_details(self) -> models.QuerySet:
+        return self.get_queryset().prefetch_related("positions__ticket__seat__sector")

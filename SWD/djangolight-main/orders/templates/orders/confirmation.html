@@ -1,0 +1,22 @@
+{% extends 'core/base.html' %}
+{% block title %}Order #{{ order.order_number }} · FC ITS Ticketing{% endblock %}
+
+{% block content %}
+<h1 class="h3 mb-1">Order #{{ order.order_number }}</h1>
+<p class="text-body-secondary">{{ order.match }} · {{ order.match.kickoff|date:"D d.m.Y H:i" }} · paid {{ order.total_price|floatformat:2 }} &euro; ({{ order.payment_method.label }})</p>
+
+<div class="row row-cols-1 row-cols-md-2 g-3">
+  {% for line in order.lines %}
+    <div class="col">
+      <div class="card shadow-sm">
+        <div class="card-body">
+          <div class="small text-body-secondary">Ticket number (show at the gate)</div>
+          <div class="fs-3 font-monospace fw-bold">{{ line.ticket_number }}</div>
+          <div>Sector {{ line.seat.sector_name }}, row {{ line.seat.row }}, seat {{ line.seat.number }}</div>
+        </div>
+      </div>
+    </div>
+  {% endfor %}
+</div>
+<a class="btn btn-outline-primary mt-4" href="{% url 'orders:match_list' %}">Back to matches</a>
+{% endblock %}
